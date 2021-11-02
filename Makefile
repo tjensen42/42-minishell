@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
+#    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/02 18:09:44 by tjensen          ###   ########.fr        #
+#    Updated: 2021/11/02 18:22:11 by hepple           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ OBJS		:= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
 LIBDIRS		:= $(wildcard libs/*)
 LDLIBS		:= $(addprefix -L./, $(LIBDIRS)) $(LDLIBS)
 INCLUDES	:= -I./include/ $(addprefix -I./, $(LIBDIRS)) \
-			   $(addprefix -I./, $(addsuffix /include, $(LIBDIRS)))
+			   $(addprefix -I./, $(addsuffix /include, $(LIBDIRS))) \
+			   $(addprefix -I./, $(addsuffix /inc, $(LIBDIRS)))
 
 # COLORS
 LB   		= \033[0;36m
