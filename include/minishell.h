@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   project.h                                          :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 21:27:45 by tjensen           #+#    #+#             */
-/*   Updated: 2021/10/28 14:59:24 by tjensen          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:09:39 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROJECT_H
-# define PROJECT_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <unistd.h>
 
