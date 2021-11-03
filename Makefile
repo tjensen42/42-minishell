@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/03 09:51:47 by tjensen          ###   ########.fr        #
+#    Updated: 2021/11/03 13:32:16 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@
 
 NAME		:= minishell
 
-SRCS		:= minishell.c
-LDLIBS		:= -lft
+SRCS		:= minishell.c lexer.c
+LDLIBS		:= -lft -lreadline
 
 # **************************************************************************** #
 #	GENERAL VARIABLES														   #
@@ -66,7 +66,7 @@ endef
 #	RULES																	   #
 # **************************************************************************** #
 
-.PHONY: all $(NAME) header prep clean fclean re bonus debug release libs
+.PHONY: all $(NAME) header prep clean fclean re bonus debug release libs test
 
 all: $(NAME)
 
