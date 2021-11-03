@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
+#    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/02 18:22:11 by hepple           ###   ########.fr        #
+#    Updated: 2021/11/03 09:17:42 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,3 +111,6 @@ ifeq ($(MAKECMDGOALS), $(filter $(MAKECMDGOALS), clean fclean re debug release))
 else
 	@$(call MAKE_LIBS,all)
 endif
+
+test:
+	@cd tests && bash tester.sh
