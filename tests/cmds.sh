@@ -8,3 +8,5 @@ echo 2 > tmp1 && echo 1 | grep 1
 echo "1\"2"
 
 ("ec"ho 1) | grep 1
+
+< test.txt && ls
