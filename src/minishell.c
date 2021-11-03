@@ -1,6 +1,5 @@
+#include "parser.h"
 #include "minishell.h"
-
-char *input_get(void);
 
 char *input_get(void)
 {
@@ -34,7 +33,6 @@ int	main(void)
 			ft_lstclear(&token_lst, lexer_destroy_token_content);
 		}
 	}
-
 	return (0);
 }
 

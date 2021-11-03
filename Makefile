@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/03 18:42:17 by tjensen          ###   ########.fr        #
+#    Updated: 2021/11/03 19:23:06 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@
 
 NAME		:= minishell
 
-SRCS		:= minishell.c lexer.c
+SRCS		:= minishell.c
+SRCS		+= lexer.c lexer_token.c lexer_len.c
 LDLIBS		:= -lft -lreadline
 
 # **************************************************************************** #
@@ -74,7 +75,7 @@ $(NAME): libs header prep $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
 	@printf "$(G)======= $(NAME)$(X)\n"
 
-$(ODIR)/%.o: $(SDIR)/%.c
+$(ODIR)/%.o: $(SDIR)/%.c |
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@printf "%-57b %b" "$(B)compile $(LB)$@" "$(G)[✓]$(X)\n"
 
