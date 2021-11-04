@@ -4,6 +4,19 @@
 static int	lexer_text(char *str, int *i, t_list **l_token);
 static int	lexer_check_brackets(t_list *l_token);
 
+void	lexer_print(t_list *l_token)
+{
+	if (l_token != NULL)
+	{
+		while (l_token->next != NULL)
+		{
+			printf("%s : ", token_content(l_token)->string);
+			l_token = l_token->next;
+		}
+		printf("%s\n", token_content(l_token)->string);
+	}
+}
+
 void	lexer_bin_op(char *str, int *i, t_list **l_token)
 {
 	t_list	*token;
@@ -90,8 +103,10 @@ t_list	*lexer(char *input)
 		ft_lstclear(&l_token, lexer_destroy_token_content);
 		return (NULL);
 	}
+	lexer_print(l_token);
 	return (l_token);
 }
+
 
 int	lexer_text(char *str, int *i, t_list **l_token)
 {
