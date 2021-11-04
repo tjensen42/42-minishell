@@ -14,23 +14,23 @@ char *minishell_get_line(void)
 
 int	main(void)
 {
-	t_list	*token_lst;
+	t_list	*l_token;
 	char	*input;
 
 	while (1)
 	{
 		input = minishell_get_line();
-		token_lst = lexer(input);
+		l_token = lexer(input);
 
-		if (token_lst != NULL)
+		if (l_token != NULL)
 		{
-			while (token_lst->next != NULL)
+			while (l_token->next != NULL)
 			{
-				printf("%s : ", ((t_token_content *)(token_lst->content))->string);
-				token_lst = token_lst->next;
+				printf("%s : ", token_content(l_token)->string);
+				l_token = l_token->next;
 			}
-			printf("%s\n", ((t_token_content *)(token_lst->content))->string);
-			ft_lstclear(&token_lst, lexer_destroy_token_content);
+			printf("%s\n", token_content(l_token)->string);
+			ft_lstclear(&l_token, lexer_destroy_token_content);
 		}
 	}
 	return (0);

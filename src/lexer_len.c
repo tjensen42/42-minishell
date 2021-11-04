@@ -36,7 +36,7 @@ int		lexer_quote_len(char *str)
 	i = 1;
 	while (str[i])
 	{
-		if (str[i] == mark && str[i - 1] != '\\')
+		if (str[i] == mark) // && str[i - 1] != '\\'
 			break ;
 		i++;
 	}
