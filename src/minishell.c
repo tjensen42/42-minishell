@@ -21,17 +21,17 @@ int	main(void)
 	{
 		input = minishell_get_line();
 		l_token = lexer(input);
-
-		if (l_token != NULL)
-		{
-			while (l_token->next != NULL)
-			{
-				printf("%s : ", token_content(l_token)->string);
-				l_token = l_token->next;
-			}
-			printf("%s\n", token_content(l_token)->string);
-			ft_lstclear(&l_token, lexer_destroy_token_content);
-		}
+		parser(l_token);
+		// if (l_token != NULL)
+		// {
+		// 	while (l_token->next != NULL)
+		// 	{
+		// 		printf("%s : ", token_content(l_token)->string);
+		// 		l_token = l_token->next;
+		// 	}
+		// 	printf("%s\n", token_content(l_token)->string);
+		// 	ft_lstclear(&l_token, lexer_destroy_token_content);
+		// }
 	}
 	return (0);
 }

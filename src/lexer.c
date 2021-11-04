@@ -11,7 +11,7 @@ void	lexer_bin_op(char *str, int *i, t_list **l_token)
 	if ((str[*i] == '&' && str[*i + 1] == '&')
 		|| (str[*i] == '|' && str[*i + 1] == '|'))
 	{
-		token = lexer_get_token(ft_substr(str, *i, 2), TYPE_BIN_OP);
+		token = lexer_get_token(ft_substr(str, *i, 2), TOK_BIN_OP);
 		ft_lstadd_back(l_token, token);
 		*i += 2;
 	}
@@ -30,7 +30,7 @@ void	lexer_redir(char *str, int *i, t_list **l_token)
 		if (str[*i + len] == str[*i + len + 1])
 			len++;
 		len++;
-		token = lexer_get_token(ft_substr(str, *i, len), TYPE_REDIR);
+		token = lexer_get_token(ft_substr(str, *i, len), TOK_REDIR);
 		ft_lstadd_back(l_token, token);
 		*i += len;
 	}
@@ -42,7 +42,7 @@ void	lexer_pipe(char *str, int *i, t_list **l_token)
 
 	if (str[*i] == '|')
 	{
-		token = lexer_get_token(ft_substr(str, *i, 1), TYPE_PIPE);
+		token = lexer_get_token(ft_substr(str, *i, 1), TOK_PIPE);
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}
@@ -54,7 +54,7 @@ void	lexer_bracket(char *str, int *i, t_list **l_token)
 
 	if (str[*i] == ')' || str[*i] == '(')
 	{
-		token = lexer_get_token(ft_substr(str, *i, 1), TYPE_BRACKET);
+		token = lexer_get_token(ft_substr(str, *i, 1), TOK_BRACKET);
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}
@@ -103,7 +103,7 @@ int	lexer_text(char *str, int *i, t_list **l_token)
 		return (ERROR);
 	if (len > 0)
 	{
-		token = lexer_get_token(ft_substr(str, *i, len), TYPE_TEXT);
+		token = lexer_get_token(ft_substr(str, *i, len), TOK_TEXT);
 		ft_lstadd_back(l_token, token);
 		*i += len;
 	}
@@ -117,7 +117,7 @@ static int	lexer_check_brackets(t_list *l_token)
 	count = 0;
 	while (l_token)
 	{
-		if (token_content(l_token)->type == TYPE_BRACKET)
+		if (token_content(l_token)->type == TOK_BRACKET)
 		{
 			if ((token_content(l_token)->string)[0] == '(')
 				count++;
@@ -141,14 +141,14 @@ int	lexer_redir_mark_files(t_list *l_token)
 {
 	while (l_token)
 	{
-		if (token_content(l_token)->type == TYPE_REDIR)
+		if (token_content(l_token)->type == TOK_REDIR)
 		{
-			if (l_token->next == NULL || token_content(l_token->next)->type != TYPE_TEXT)
+			if (l_token->next == NULL || token_content(l_token->next)->type != TOK_TEXT)
 			{
 				printf("minishell: Syntax error: Incomplete redirection\n");
 				return (ERROR);
 			}
-			token_content(l_token->next)->type = TYPE_REDIR_FILE;
+			token_content(l_token->next)->type = TOK_REDIR_FILE;
 		}
 		l_token = l_token->next;
 	}

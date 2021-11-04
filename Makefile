@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/03 19:23:06 by tjensen          ###   ########.fr        #
+#    Updated: 2021/11/04 17:24:36 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ NAME		:= minishell
 
 SRCS		:= minishell.c
 SRCS		+= lexer.c lexer_token.c lexer_len.c
+SRCS		+= parser.c
 LDLIBS		:= -lft -lreadline
 
 # **************************************************************************** #
