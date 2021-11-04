@@ -41,7 +41,10 @@ int		lexer_quote_len(char *str)
 		i++;
 	}
 	if (str[i] != mark)
+	{
+		printf("minishell: Syntax error: Unclosed quotation mark\n");
 		return (ERROR);
+	}
 	return (i + 1);
 }
 

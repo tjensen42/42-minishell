@@ -1,7 +1,7 @@
 #include "parser.h"
 #include "minishell.h"
 
-char *input_get(void)
+char *minishell_get_line(void)
 {
 	char	*input;
 
@@ -19,7 +19,7 @@ int	main(void)
 
 	while (1)
 	{
-		input = input_get();
+		input = minishell_get_line();
 		token_lst = lexer(input);
 
 		if (token_lst != NULL)
