@@ -12,7 +12,7 @@ t_list *lexer_get_token(char *string, int type)
 	return (ft_lstnew(c_token));
 }
 
-void	lexer_destroy_token_content(void *c_token)
+void	lexer_c_token_destroy(void *c_token)
 {
 	free(((t_c_token *)c_token)->string);
 	((t_c_token *)c_token)->string = NULL;

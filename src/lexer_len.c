@@ -1,3 +1,4 @@
+#include "minishell.h"
 #include "parser.h"
 
 int	lexer_general_len(char *str)
@@ -23,7 +24,7 @@ int	lexer_general_len(char *str)
 	return (i);
 }
 
-int		lexer_quote_len(char *str)
+int	lexer_quote_len(char *str)
 {
 	int 	i;
 	char	mark;
@@ -36,13 +37,13 @@ int		lexer_quote_len(char *str)
 	i = 1;
 	while (str[i])
 	{
-		if (str[i] == mark) // && str[i - 1] != '\\'
+		if (str[i] == mark)
 			break ;
 		i++;
 	}
 	if (str[i] != mark)
 	{
-		printf("minishell: Syntax error: Unclosed quotation mark\n");
+		print_error(ERR_QUOTE);
 		return (ERROR);
 	}
 	return (i + 1);

@@ -25,19 +25,3 @@ int	main(void)
 	}
 	return (0);
 }
-
-// void    sig_handler(int signal)
-// {
-// 	if (signal == SIGINT)
-// 	{
-// 		printf("\b\b\n");
-// 		rl_on_new_line();
-// 		rl_replace_line("", 0);
-// 		rl_redisplay();
-// 	}
-// 	else if (signal == SIGQUIT)
-// 	{
-// 		rl_replace_line("", 0);
-// 		rl_redisplay();
-// 	}
-// }
