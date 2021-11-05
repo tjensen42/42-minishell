@@ -63,7 +63,7 @@ bool		parser_token_is_cmd(t_list *token);
 
 t_c_element	*parser_c_element_get(t_list *l_token);
 void		parser_c_element_destroy(void *c_element);
-t_c_element *element_content(t_list *command);
+t_c_element *element_content(t_list *element);
 
 int			parser_get_type(t_list *token);
 char		**parser_get_redirs(t_list *l_token, int i_redir);

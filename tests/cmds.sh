@@ -15,13 +15,13 @@ echo "'$HOME'"
 
 echo '"$HOME"'
 
-ARG=echo && $ARG 1
+export ARG=echo && $ARG 1
 
 touch tmp99 && touch tmp98 && echo hallo > tmp9* && diff tmp99 tmp98
 
-arg=2 && echo $arg
+export arg=2 && echo $arg
 
-arg=5 echo $arg
+export arg=5 echo $arg
 
 echo >/dev/null 1
 
@@ -32,3 +32,7 @@ echo >/dev/null 1 | echo 2
 grep 2>tmp-error-redirected
 
 echo 1 > tmp-17 | grep 1 0<tmp-17
+
+echo $"ARG"
+
+export ARG="*" && echo $ARG && echo "$ARG"
