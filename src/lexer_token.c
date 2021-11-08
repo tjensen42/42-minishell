@@ -8,7 +8,7 @@ t_list *lexer_get_token(char *string, int type)
 	if (c_token == NULL)
 		return (NULL);
 	c_token->string = string;
-	c_token->type = type;
+	c_token->flags = type;
 	return (ft_lstnew(c_token));
 }
 

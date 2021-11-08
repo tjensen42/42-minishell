@@ -1,10 +1,10 @@
 #include "minishell.h"
 #include "parser.h"
 
-int	lexer_general_len(char *str)
+int	lexer_text_len(char *str)
 {
 	int	i;
-	int	quote_len;
+//	int	quote_len;
 
 	i = 0;
 	while (str[i])
@@ -13,13 +13,16 @@ int	lexer_general_len(char *str)
 			break ;
 		else if (lexer_special_len(&str[i]) > 0)
 			break ;
-		quote_len = lexer_quote_len(&str[i]);
-		if (quote_len < 0)
-			return (ERROR);
-		if (quote_len == 0)
-			i++;
-		else
-			i += quote_len;
+		else if (ft_strchr(QUOT_MARKS, str[i]))
+			break ;
+		i++;
+		// quote_len = lexer_quote_len(&str[i]);
+		// if (quote_len < 0)
+		// 	return (ERROR);
+		// if (quote_len == 0)
+		// 	i++;
+		// else
+		// 	i += quote_len;
 	}
 	return (i);
 }

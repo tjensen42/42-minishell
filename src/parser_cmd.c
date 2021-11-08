@@ -35,7 +35,7 @@ static char **parser_cmd_get(t_list *l_token, int i_text)
 	i = 0;
 	while (i < i_text)
 	{
-		if (token_content(l_token)->type == TOK_TEXT)
+		if (token_content(l_token)->flags & TOK_TEXT)
 		{
 			cmd[i] = ft_strdup(token_content(l_token)->string);
 			if (cmd[i] == NULL)
@@ -53,15 +53,13 @@ static char **parser_cmd_get(t_list *l_token, int i_text)
 static int	parser_cmd_count_redir(t_list *l_token)
 {
 	int	i;
-	int	type;
 
 	i = 0;
 	while (l_token)
 	{
-		type = token_content(l_token)->type;
-		if (type == TOK_REDIR)
+		if (token_content(l_token)->flags & TOK_REDIR)
 			i++;
-		else if (type != TOK_TEXT && type != TOK_REDIR_FILE)
+		else if (parser_token_is_cmd(l_token) == false)
 			break ;
 		l_token = l_token->next;
 	}
@@ -71,15 +69,13 @@ static int	parser_cmd_count_redir(t_list *l_token)
 static int	parser_cmd_count_text(t_list *l_token)
 {
 	int	i;
-	int	type;
 
 	i = 0;
 	while (l_token)
 	{
-		type = token_content(l_token)->type;
-		if (type == TOK_TEXT)
+		if (token_content(l_token)->flags & TOK_TEXT)
 			i++;
-		else if (type != TOK_REDIR && type != TOK_REDIR_FILE)
+		else if (parser_token_is_cmd(l_token) == false)
 			break ;
 		l_token = l_token->next;
 	}

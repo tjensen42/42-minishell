@@ -4,16 +4,16 @@ int	parser_get_type(t_list *token)
 {
 	if (parser_token_is_cmd(token))
 		return (PAR_CMD);
-	else if (token_content(token)->type == TOK_BIN_OP)
+	else if (token_content(token)->flags & TOK_BIN_OP)
 	{
 		if (token_content(token)->string[0] == '&')
 			return (PAR_AND);
 		else if (token_content(token)->string[0] == '|')
 			return (PAR_OR);
 	}
-	else if (token_content(token)->type == TOK_PIPE)
+	else if (token_content(token)->flags & TOK_PIPE)
 		return (PAR_PIPE);
-	else if (token_content(token)->type == TOK_BRACKET)
+	else if (token_content(token)->flags & TOK_BRACKET)
 	{
 		if (token_content(token)->string[0] == '(')
 			return (PAR_O_BRACKET);
@@ -34,7 +34,7 @@ char	**parser_get_redirs(t_list *l_token, int i_redir)
 	i = 0;
 	while (i < i_redir)
 	{
-		if (token_content(l_token)->type == TOK_REDIR)
+		if (token_content(l_token)->flags & TOK_REDIR)
 		{
 			redirs[i] = ft_strdup(token_content(l_token)->string);
 			i++;
@@ -56,7 +56,7 @@ char	**parser_get_redir_files(t_list *l_token, int i_redir)
 	i = 0;
 	while (i < i_redir)
 	{
-		if (token_content(l_token)->type == TOK_REDIR_FILE)
+		if (token_content(l_token)->flags & TOK_REDIR_FILE)
 		{
 			files[i] = ft_strdup(token_content(l_token)->string);
 			i++;

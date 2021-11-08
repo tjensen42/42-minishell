@@ -9,6 +9,7 @@
 /* ************************************************************************** */
 /* DEFINES																	  */
 /* ************************************************************************** */
+
 # define ERROR				-1
 
 # define ERR_UNO_BRACKET	"minishell: Syntax error: Unopened brackets"
@@ -16,12 +17,17 @@
 # define ERR_REDIR			"minishell: Syntax error: Incomplete redirection"
 # define ERR_QUOTE			"minishell: Syntax error: Unclosed quotation mark"
 
-# define TOK_TEXT			0
-# define TOK_BIN_OP			1
-# define TOK_PIPE			2
-# define TOK_BRACKET		3
-# define TOK_REDIR			4
-# define TOK_REDIR_FILE		5
+# define TOK_TEXT			1<<1
+# define TOK_S_QUOTE		1<<10
+# define TOK_D_QUOTE		1<<11
+# define TOK_REDIR_FILE		1<<12
+# define TOK_CONNECTED		1<<13
+
+# define TOK_BIN_OP			1<<2
+# define TOK_PIPE			1<<3
+# define TOK_BRACKET		1<<4
+# define TOK_REDIR			1<<5
+
 
 # define PAR_CMD			10
 # define PAR_AND			11
@@ -39,7 +45,7 @@
 
 typedef struct s_token_content
 {
-	int		type;
+	int		flags;
 	char	*string;
 }	t_c_token;
 
@@ -78,8 +84,9 @@ void		lexer_token_redir(char *str, int *i, t_list **l_token);
 void		lexer_token_pipe(char *str, int *i, t_list **l_token);
 void		lexer_token_bracket(char *str, int *i, t_list **l_token);
 int			lexer_token_text(char *str, int *i, t_list **l_token);
+int			lexer_token_quote(char *str, int *i, t_list **l_token);
 
-int			lexer_general_len(char *str);
+int			lexer_text_len(char *str);
 int			lexer_quote_len(char *str);
 int			lexer_special_len(char *chr);
 

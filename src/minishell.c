@@ -17,8 +17,8 @@ int	main(void)
 		{
 			l_parse = parser(l_token);
 			ft_lstclear(&l_token, lexer_c_token_destroy);
-			if (l_parse != NULL)
-				expander(l_parse);
+//			if (l_parse != NULL)
+//				expander(l_parse);
 		}
 	}
 	return (0);

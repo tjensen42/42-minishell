@@ -7,7 +7,10 @@ void	lexer_printer(t_list *l_token)
 	{
 		while (l_token->next != NULL)
 		{
-			printf("%s : ", token_content(l_token)->string);
+			if (token_content(l_token)->flags & TOK_CONNECTED)
+				printf("%s \033[0;35m+ \033[m", token_content(l_token)->string);
+			else
+				printf("%s \033[0;32m: \033[m", token_content(l_token)->string);
 			l_token = l_token->next;
 		}
 		printf("%s\n", token_content(l_token)->string);
@@ -23,7 +26,6 @@ void	parser_printer(t_list *l_command)
 	{
 		if (element_content(l_command)->type == PAR_CMD)
 		{
-			//printf("cmd:\t");
 			i = 0;
 			while (element_content(l_command)->cmd[i])
 			{
@@ -36,7 +38,7 @@ void	parser_printer(t_list *l_command)
 			i = 0;
 			while (element_content(l_command)->redirs[i])
 			{
-				printf("\033[0;36m%s \033[m", element_content(l_command)->redirs[i]);
+				printf("\033[0;35m%s \033[m", element_content(l_command)->redirs[i]);
 				printf("\033[0;34m%s \033[m", element_content(l_command)->files[i]);
 				i++;
 			}
