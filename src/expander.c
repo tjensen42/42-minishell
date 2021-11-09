@@ -5,7 +5,7 @@ t_list	*expander(t_list *l_parse)
 {
 	while (l_parse != NULL)
 	{
-		if (element_content(l_parse)->type == PAR_CMD)
+		if (scmd_content(l_parse)->type == PAR_SCMD)
 		{
 
 		}

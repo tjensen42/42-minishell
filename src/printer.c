@@ -1,6 +1,9 @@
 #include "parser.h"
 #include "minishell.h"
 
+static void	parser_printer_s1_scmd(t_c_scmd *scmd);
+static void	parser_printer_s1_other(t_list *l_scmd);
+
 void	lexer_printer(t_list *l_token)
 {
 	if (l_token != NULL)
@@ -17,49 +20,67 @@ void	lexer_printer(t_list *l_token)
 	}
 }
 
-void	parser_printer(t_list *l_command)
+void	parser_printer_s1(t_list *l_scmd)
 {
-	int i;
-	int type;
-
-	while (l_command)
+	while (l_scmd)
 	{
-		if (element_content(l_command)->type == PAR_CMD)
+		if (scmd_content(l_scmd)->type == PAR_SCMD)
 		{
-			i = 0;
-			while (element_content(l_command)->cmd[i])
-			{
-				if (i == 0)
-					printf("\033[0;33m%s \033[m", element_content(l_command)->cmd[i]);
-				else
-					printf("\033[0;32m%s \033[m", element_content(l_command)->cmd[i]);
-				i++;
-			}
-			i = 0;
-			while (element_content(l_command)->redirs[i])
-			{
-				printf("\033[0;35m%s \033[m", element_content(l_command)->redirs[i]);
-				printf("\033[0;34m%s \033[m", element_content(l_command)->files[i]);
-				i++;
-			}
+			parser_printer_s1_scmd(scmd_content(l_scmd));
 		}
 		else
 		{
-			type = element_content(l_command)->type;
-			if (type == PAR_AND)
-				printf("\033[0;31m&& \033[m");
-			else if (type == PAR_OR)
-				printf("\033[0;31m|| \033[m");
-			else if (type == PAR_PIPE)
-				printf("\033[0;31m| \033[m");
-			else if (type == PAR_O_BRACKET)
-				printf("\033[0;31m( \033[m");
-			else if (type == PAR_C_BRACKET)
-				printf("\033[0;31m) \033[m");
-			else
-				printf("DEAD ");
+			parser_printer_s1_other(l_scmd);
 		}
-		l_command = l_command->next;
+		l_scmd = l_scmd->next;
 	}
 	printf("\n");
+}
+
+static void	parser_printer_s1_scmd(t_c_scmd *scmd)
+{
+	t_list	*tmp;
+	bool	command;
+
+	command = true;
+	tmp = scmd->l_argv;
+	while (tmp)
+	{
+		if (command == true)
+		{
+			printf("\033[0;33m%s \033[m", token_content(tmp)->string);
+			command = false;
+		}
+		else
+			printf("\033[0;32m%s \033[m", token_content(tmp)->string);
+		tmp = tmp->next;
+	}
+	tmp = scmd->l_redir;
+	while (tmp)
+	{
+		if (token_content(tmp)->flags & TOK_REDIR)
+			printf("\033[0;35m%s \033[m", token_content(tmp)->string);
+		else
+			printf("\033[0;34m%s \033[m", token_content(tmp)->string);
+		tmp = tmp->next;
+	}
+}
+
+static void	parser_printer_s1_other(t_list *l_scmd)
+{
+	int	type;
+
+	type = scmd_content(l_scmd)->type;
+	if (type == PAR_AND)
+		printf("\033[0;31m&& \033[m");
+	else if (type == PAR_OR)
+		printf("\033[0;31m|| \033[m");
+	else if (type == PAR_PIPE)
+		printf("\033[0;31m| \033[m");
+	else if (type == PAR_O_BRACKET)
+		printf("\033[0;31m( \033[m");
+	else if (type == PAR_C_BRACKET)
+		printf("\033[0;31m) \033[m");
+	else
+		printf("DEAD ");
 }

@@ -14,7 +14,7 @@
 
 # define ERR_UNO_BRACKET	"minishell: Syntax error: Unopened brackets"
 # define ERR_UNC_BRACKET	"minishell: Syntax error: Unclosed brackets"
-# define ERR_REDIR			"minishell: Syntax error: Incomplete redirection"
+# define ERR_REDIR			"minishell: Syntax error: Invalid redirection"
 # define ERR_QUOTE			"minishell: Syntax error: Unclosed quotation mark"
 
 # define TOK_TEXT			1<<1
@@ -29,7 +29,8 @@
 # define TOK_REDIR			1<<5
 
 
-# define PAR_CMD			10
+# define PAR_SCMD			10
+# define PAR_PIPELINE		16
 # define PAR_AND			11
 # define PAR_OR				12
 # define PAR_PIPE			13
@@ -49,13 +50,18 @@ typedef struct s_token_content
 	char	*string;
 }	t_c_token;
 
-typedef struct s_element_content
+typedef struct s_scmd_content
 {
 	int		type;
-	char	**cmd;
-	char	**redirs;
-	char	**files;
-}	t_c_element;
+	t_list	*l_argv;
+	t_list	*l_redir;
+}	t_c_scmd;
+
+typedef struct s_pipeline
+{
+	int		type;
+	t_list	*l_scmd;
+}	t_pipeline;
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
@@ -64,18 +70,18 @@ typedef struct s_element_content
 // PARSER
 t_list		*parser(t_list *l_token);
 
-int			parser_cmd_set(t_c_element *c_element, t_list *l_token);
+int			parser_scmd_set(t_c_scmd *c_element, t_list **l_token);
 bool		parser_token_is_cmd(t_list *token);
 
-t_c_element	*parser_c_element_get(t_list *l_token);
-void		parser_c_element_destroy(void *c_element);
-t_c_element *element_content(t_list *element);
+t_c_scmd	*parser_c_scmd_get(t_list **l_token);
+void		parser_c_scmd_destroy(void *c_element);
+t_c_scmd	*scmd_content(t_list *element);
 
-int			parser_get_type(t_list *token);
+int			parser_get_scmd_type(t_list *token);
 char		**parser_get_redirs(t_list *l_token, int i_redir);
 char		**parser_get_redir_files(t_list *l_token, int i_redir);
 
-void		parser_printer(t_list *l_command);
+void		parser_printer_s1(t_list *l_command);
 
 
 // LEXER

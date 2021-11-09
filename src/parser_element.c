@@ -1,46 +1,45 @@
 #include "parser.h"
 
-t_c_element	*parser_c_element_get(t_list *l_token)
+t_c_scmd	*parser_c_scmd_get(t_list **l_token)
 {
 	int 		type;
 	int 		status;
-	t_c_element	*c_element;
+	t_c_scmd	*c_scmd;
 
-	c_element = malloc(sizeof(t_c_element));
-	if (c_element == NULL)
+	c_scmd = malloc(sizeof(t_c_scmd));
+	if (c_scmd == NULL)
 		return (NULL);
-	type = parser_get_type(l_token);
-	if (type == PAR_CMD)
+	c_scmd->l_argv = NULL;
+	c_scmd->l_redir = NULL;
+	type = parser_get_scmd_type(*l_token);
+	if (type == PAR_SCMD)
 	{
-		status = parser_cmd_set(c_element, l_token);
+		status = parser_scmd_set(c_scmd, l_token);
 		if (status == ERROR)
 		{
-			parser_c_element_destroy(&c_element);
+			parser_c_scmd_destroy(c_scmd);
 			return (NULL);
 		}
 	}
 	else
 	{
-		c_element->type = type;
-		c_element->cmd = NULL;
-		c_element->redirs = NULL;
-		c_element->files = NULL;
+		c_scmd->type = type;	
+		*l_token = (*l_token)->next;
 	}
-	return (c_element);
+	return (c_scmd);
 }
 
-void	parser_c_element_destroy(void *c_element)
+void	parser_c_scmd_destroy(void *c_scmd)
 {
-	if (c_element)
+	if (c_scmd)
 	{
-		ft_free_split(&(((t_c_element *)c_element)->cmd));
-		ft_free_split(&(((t_c_element *)c_element)->redirs));
-		ft_free_split(&(((t_c_element *)c_element)->files));
-		free(c_element);
+		ft_lstclear(&(((t_c_scmd *)c_scmd)->l_argv), lexer_c_token_destroy);
+		ft_lstclear(&(((t_c_scmd *)c_scmd)->l_argv), lexer_c_token_destroy);
+		free(c_scmd);
 	}
 }
 
-t_c_element *element_content(t_list *element)
+t_c_scmd *scmd_content(t_list *scmd)
 {
-	return ((t_c_element *)element->content);
+	return ((t_c_scmd *)scmd->content);
 }

@@ -36,3 +36,51 @@ echo 1 > tmp-17 | grep 1 0<tmp-17
 echo $"ARG"
 
 export ARG="*" && echo $ARG && echo "$ARG"
+
+
+<in grep 42 | wc -l && (echo "1 2 3" > out 4 || echo 2 >out >>out'out')
+
+
+
+
+
+
+
+
+
+
+<in grep 42 | wc -l && (echo "1 2 3" > out 4 || echo 2 >out >>out'out')
+
+< : in : grep : 42 : | : wc : -l : && : ( : echo : 1 2 3 : > : out : 4 : || : echo : 2 : > : out : >> : out + out : )
+
+grep 42 < in | wc -l && ( echo 1 2 3 4 > out || echo 2 > out >> out out )
+
+	P				&&	(P					||	P						)
+	P				&&	G
+
+
+
+
+
+(echo 1 | cat 2 && (sleep 5 | sleep 3)) | (sleep 4 | echo 42 || cat)
+
+(	P			&&			P		)	| (	P				||	P)
+
+				G						|	G
+
+										P
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

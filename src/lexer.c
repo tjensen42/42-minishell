@@ -92,7 +92,13 @@ static int	lexer_redir_mark_files(t_list *l_token)
 				print_error(ERR_REDIR);
 				return (ERROR);
 			}
-			token_content(l_token->next)->flags |= TOK_REDIR_FILE;
+			l_token = l_token->next;
+			token_content(l_token)->flags |= TOK_REDIR_FILE;
+			while (token_content(l_token)->flags & TOK_CONNECTED)
+			{
+				token_content(l_token->next)->flags |= TOK_REDIR_FILE;
+				l_token = l_token->next;
+			}
 		}
 		l_token = l_token->next;
 	}
