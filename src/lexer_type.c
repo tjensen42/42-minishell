@@ -48,9 +48,15 @@ void	lexer_token_bracket(char *str, int *i, t_list **l_token)
 {
 	t_list	*token;
 
-	if (str[*i] == ')' || str[*i] == '(')
+	if (str[*i] == '(')
 	{
-		token = lexer_get_token(ft_substr(str, *i, 1), TOK_BRACKET);
+		token = lexer_get_token(ft_substr(str, *i, 1), TOK_O_BRACKET);
+		ft_lstadd_back(l_token, token);
+		(*i)++;
+	}
+	else if ( str[*i] == ')')
+	{
+		token = lexer_get_token(ft_substr(str, *i, 1), TOK_C_BRACKET);
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}

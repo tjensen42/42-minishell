@@ -14,28 +14,32 @@
 
 # define ERR_UNO_BRACKET	"minishell: Syntax error: Unopened brackets"
 # define ERR_UNC_BRACKET	"minishell: Syntax error: Unclosed brackets"
+# define ERR_EMPTY_BRACKET	"minishell: Syntax error: Empty brackets"
 # define ERR_REDIR			"minishell: Syntax error: Invalid redirection"
 # define ERR_QUOTE			"minishell: Syntax error: Unclosed quotation mark"
+# define ERR_LIST			"minishell: Syntax error: Incomplete command list"
 
-# define TOK_TEXT			1<<1
-# define TOK_S_QUOTE		1<<10
-# define TOK_D_QUOTE		1<<11
-# define TOK_REDIR_FILE		1<<12
-# define TOK_CONNECTED		1<<13
+# define ERR_PIPE			"minishell: Syntax error: Incomplete pipe"
 
-# define TOK_BIN_OP			1<<2
-# define TOK_PIPE			1<<3
-# define TOK_BRACKET		1<<4
-# define TOK_REDIR			1<<5
+# define TOK_TEXT			(1<<1)
+# define TOK_S_QUOTE		(1<<10)
+# define TOK_D_QUOTE		(1<<11)
+# define TOK_REDIR_FILE		(1<<12)
+# define TOK_CONNECTED		(1<<13)
 
+# define TOK_BIN_OP			(1<<2)
+# define TOK_PIPE			(1<<3)
+# define TOK_O_BRACKET		(1<<4)
+# define TOK_C_BRACKET		(1<<5)
+# define TOK_REDIR			(1<<6)
 
 # define PAR_SCMD			10
-# define PAR_PIPELINE		16
 # define PAR_AND			11
 # define PAR_OR				12
 # define PAR_PIPE			13
 # define PAR_O_BRACKET		14
 # define PAR_C_BRACKET		15
+# define PAR_PIPELINE		16
 
 # define WHITESPACES		" \t"
 # define QUOT_MARKS			"\'\""
@@ -57,11 +61,12 @@ typedef struct s_scmd_content
 	t_list	*l_redir;
 }	t_c_scmd;
 
-typedef struct s_pipeline
+typedef struct s_pg_content
 {
 	int		type;
-	t_list	*l_scmd;
-}	t_pipeline;
+	t_list	*l_element;
+}	t_c_pg;
+
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
@@ -77,12 +82,18 @@ t_c_scmd	*parser_c_scmd_get(t_list **l_token);
 void		parser_c_scmd_destroy(void *c_element);
 t_c_scmd	*scmd_content(t_list *element);
 
+t_list		*parser_list_pipeline(t_list *l_scmd);
+t_c_pg		*pg_content(t_list *pg);
+t_c_pg		*parser_c_pipeline_get(t_list **l_scmd);
+int			parser_pipeline_set(t_c_pg *c_pipeline, t_list **l_scmd);
+
 int			parser_get_scmd_type(t_list *token);
 char		**parser_get_redirs(t_list *l_token, int i_redir);
 char		**parser_get_redir_files(t_list *l_token, int i_redir);
 
-void		parser_printer_s1(t_list *l_command);
-
+void		parser_printer_l_scmd(t_list *l_command);
+void		parser_printer_l_pipeline(t_list *l_pipeline);
+void		parser_printer_l_pipeline_structure(t_list *l_pipeline);
 
 // LEXER
 void		lexer_token_bin_op(char *str, int *i, t_list **l_token);
@@ -96,9 +107,9 @@ int			lexer_text_len(char *str);
 int			lexer_quote_len(char *str);
 int			lexer_special_len(char *chr);
 
-t_list 		*lexer_get_token(char *string, int type);
+t_list		*lexer_get_token(char *string, int type);
 void		lexer_c_token_destroy(void *content);
-t_c_token 	*token_content(t_list *token);
+t_c_token	*token_content(t_list *token);
 
 void		lexer_printer(t_list *l_token);
 

@@ -18,6 +18,7 @@ int	parser_scmd_set(t_c_scmd *c_scmd, t_list **l_token)
 	return (0);
 }
 
+
 // static char **parser_cmd_get(t_list *l_token, int i_text)
 // {
 // 	int 	i;

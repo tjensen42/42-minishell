@@ -5,6 +5,7 @@ t_c_scmd	*parser_c_scmd_get(t_list **l_token)
 	int 		type;
 	int 		status;
 	t_c_scmd	*c_scmd;
+	t_list		*tmp;
 
 	c_scmd = malloc(sizeof(t_c_scmd));
 	if (c_scmd == NULL)
@@ -23,8 +24,10 @@ t_c_scmd	*parser_c_scmd_get(t_list **l_token)
 	}
 	else
 	{
-		c_scmd->type = type;	
+		c_scmd->type = type;
+		tmp = *l_token;
 		*l_token = (*l_token)->next;
+		ft_lstdelone(tmp, lexer_c_token_destroy);
 	}
 	return (c_scmd);
 }

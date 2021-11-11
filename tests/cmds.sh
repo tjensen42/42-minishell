@@ -37,15 +37,9 @@ echo $"ARG"
 
 export ARG="*" && echo $ARG && echo "$ARG"
 
+echo | ca && est && echo | cat 
 
-<in grep 42 | wc -l && (echo "1 2 3" > out 4 || echo 2 >out >>out'out')
-
-
-
-
-
-
-
+> out && echo 1
 
 
 
@@ -70,6 +64,10 @@ grep 42 < in | wc -l && ( echo 1 2 3 4 > out || echo 2 > out >> out out )
 
 										P
 
+while (brackets left)
+	1. Pipelines erstellen
+	2. Groups
+1. Pipelines erstellen
 
 
 

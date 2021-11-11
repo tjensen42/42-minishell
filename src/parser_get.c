@@ -15,13 +15,10 @@ int	parser_get_scmd_type(t_list *token)
 	}
 	else if (token_content(token)->flags & TOK_PIPE)
 		return (PAR_PIPE);
-	else if (token_content(token)->flags & TOK_BRACKET)
-	{
-		if (token_content(token)->string[0] == '(')
-			return (PAR_O_BRACKET);
-		else if (token_content(token)->string[0] == ')')
-			return (PAR_C_BRACKET);
-	}
+	else if (token_content(token)->flags & TOK_O_BRACKET)
+		return (PAR_O_BRACKET);
+	else if (token_content(token)->flags & TOK_C_BRACKET)
+		return (PAR_C_BRACKET);
 	return (ERROR);
 }
 

@@ -1,8 +1,8 @@
 #include "parser.h"
 #include "minishell.h"
 
-static void	parser_printer_s1_scmd(t_c_scmd *scmd);
-static void	parser_printer_s1_other(t_list *l_scmd);
+static void	parser_printer_l_scmd_commands(t_c_scmd *scmd);
+static void	parser_printer_l_scmd_other(int type);
 
 void	lexer_printer(t_list *l_token)
 {
@@ -20,24 +20,70 @@ void	lexer_printer(t_list *l_token)
 	}
 }
 
-void	parser_printer_s1(t_list *l_scmd)
+void	parser_printer_l_scmd(t_list *l_scmd)
 {
 	while (l_scmd)
 	{
 		if (scmd_content(l_scmd)->type == PAR_SCMD)
 		{
-			parser_printer_s1_scmd(scmd_content(l_scmd));
+			parser_printer_l_scmd_commands(scmd_content(l_scmd));
 		}
 		else
 		{
-			parser_printer_s1_other(l_scmd);
+			parser_printer_l_scmd_other(scmd_content(l_scmd)->type);
 		}
 		l_scmd = l_scmd->next;
 	}
 	printf("\n");
 }
 
-static void	parser_printer_s1_scmd(t_c_scmd *scmd)
+void	parser_printer_l_pipeline_structure(t_list *l_pipeline)
+{
+	t_c_pg	*c_pipeline;
+
+	while (l_pipeline)
+	{
+		c_pipeline = pg_content(l_pipeline);
+		if (c_pipeline->type == PAR_PIPELINE)
+		{
+			printf("P ");
+		}
+		else 	
+		{
+			parser_printer_l_scmd_other(c_pipeline->type);
+		}
+		l_pipeline = l_pipeline->next;
+	}
+	printf("\n");
+}
+
+void	parser_printer_l_pipeline(t_list *l_pipeline)
+{
+	t_c_pg	*c_pipeline;
+
+	while (l_pipeline)
+	{
+		c_pipeline = pg_content(l_pipeline);
+		if (c_pipeline->type == PAR_PIPELINE)
+		{
+			while (c_pipeline->l_element)
+			{
+				parser_printer_l_scmd_commands(scmd_content(c_pipeline->l_element));
+				c_pipeline->l_element = c_pipeline->l_element->next;
+				if (c_pipeline->l_element)
+					parser_printer_l_scmd_other(PAR_PIPE);		
+			}
+		}
+		else 	
+		{
+			parser_printer_l_scmd_other(c_pipeline->type);
+		}
+		l_pipeline = l_pipeline->next;
+	}
+	printf("\n");
+}
+
+static void	parser_printer_l_scmd_commands(t_c_scmd *scmd)
 {
 	t_list	*tmp;
 	bool	command;
@@ -66,11 +112,8 @@ static void	parser_printer_s1_scmd(t_c_scmd *scmd)
 	}
 }
 
-static void	parser_printer_s1_other(t_list *l_scmd)
+static void	parser_printer_l_scmd_other(int	type)
 {
-	int	type;
-
-	type = scmd_content(l_scmd)->type;
 	if (type == PAR_AND)
 		printf("\033[0;31m&& \033[m");
 	else if (type == PAR_OR)
@@ -78,9 +121,9 @@ static void	parser_printer_s1_other(t_list *l_scmd)
 	else if (type == PAR_PIPE)
 		printf("\033[0;31m| \033[m");
 	else if (type == PAR_O_BRACKET)
-		printf("\033[0;31m( \033[m");
+		printf("\033[0;36m( \033[m");
 	else if (type == PAR_C_BRACKET)
-		printf("\033[0;31m) \033[m");
+		printf("\033[0;36m) \033[m");
 	else
 		printf("DEAD ");
 }
