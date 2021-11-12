@@ -16,7 +16,6 @@ int	main(void)
 		if (l_token != NULL)
 		{
 			l_parse = parser(l_token);
-			ft_lstclear(&l_token, lexer_c_token_destroy);
 //			if (l_parse != NULL)
 //				expander(l_parse);
 		}

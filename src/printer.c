@@ -37,6 +37,29 @@ void	parser_printer_l_scmd(t_list *l_scmd)
 	printf("\n");
 }
 
+void	parser_printer_l_group_structure(t_list *l_pg)
+{
+	t_c_pg	*c_pg;
+
+	while (l_pg)
+	{
+		c_pg = pg_content(l_pg);
+		if (c_pg->type == PAR_PIPELINE)
+			printf("P ");
+		else if (c_pg->type == PAR_GROUP)
+		{
+			printf("G ");
+			//parser_printer_l_pipeline(pg_content(l_pg)->l_element);
+		}
+		else 	
+		{
+			parser_printer_l_scmd_other(c_pg->type);
+		}
+		l_pg = l_pg->next;
+	}
+	printf("\n");
+}
+
 void	parser_printer_l_pipeline_structure(t_list *l_pipeline)
 {
 	t_c_pg	*c_pipeline;
@@ -60,17 +83,19 @@ void	parser_printer_l_pipeline_structure(t_list *l_pipeline)
 void	parser_printer_l_pipeline(t_list *l_pipeline)
 {
 	t_c_pg	*c_pipeline;
+	t_list	*tmp;
 
 	while (l_pipeline)
 	{
 		c_pipeline = pg_content(l_pipeline);
 		if (c_pipeline->type == PAR_PIPELINE)
 		{
-			while (c_pipeline->l_element)
+			tmp = c_pipeline->l_element;
+			while (tmp)
 			{
-				parser_printer_l_scmd_commands(scmd_content(c_pipeline->l_element));
-				c_pipeline->l_element = c_pipeline->l_element->next;
-				if (c_pipeline->l_element)
+				parser_printer_l_scmd_commands(scmd_content(tmp));
+				tmp = tmp->next;
+				if (tmp)
 					parser_printer_l_scmd_other(PAR_PIPE);		
 			}
 		}

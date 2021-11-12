@@ -40,6 +40,7 @@
 # define PAR_O_BRACKET		14
 # define PAR_C_BRACKET		15
 # define PAR_PIPELINE		16
+# define PAR_GROUP			17
 
 # define WHITESPACES		" \t"
 # define QUOT_MARKS			"\'\""
@@ -82,7 +83,10 @@ t_c_scmd	*parser_c_scmd_get(t_list **l_token);
 void		parser_c_scmd_destroy(void *c_element);
 t_c_scmd	*scmd_content(t_list *element);
 
-t_list		*parser_list_pipeline(t_list *l_scmd);
+int			parser_list_group(t_list **l_pipeline);
+t_list		*parser_list_group_merge(t_list *open);
+
+// t_list		*parser_list_pipeline(t_list *l_scmd);
 t_c_pg		*pg_content(t_list *pg);
 t_c_pg		*parser_c_pipeline_get(t_list **l_scmd);
 int			parser_pipeline_set(t_c_pg *c_pipeline, t_list **l_scmd);
@@ -94,6 +98,9 @@ char		**parser_get_redir_files(t_list *l_token, int i_redir);
 void		parser_printer_l_scmd(t_list *l_command);
 void		parser_printer_l_pipeline(t_list *l_pipeline);
 void		parser_printer_l_pipeline_structure(t_list *l_pipeline);
+void		parser_printer_l_group_structure(t_list *l_pg);
+
+void		parser_c_pg_destroy(void *c_pg);
 
 // LEXER
 void		lexer_token_bin_op(char *str, int *i, t_list **l_token);

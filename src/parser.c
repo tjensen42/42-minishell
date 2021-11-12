@@ -6,17 +6,17 @@ t_list	*parser_list_scmd(t_list *l_token);
 t_list	*parser(t_list *l_token)
 {
 	t_list	*l_scmd;
-	t_list	*l_pipeline;
-	// t_list	*l_group;
+	t_list	*l_pg;
 
 	l_scmd = parser_list_scmd(l_token);
 	parser_printer_l_scmd(l_scmd);
-	l_pipeline = parser_list_pipeline(l_scmd);
-	parser_printer_l_pipeline(l_pipeline);
-	parser_printer_l_pipeline_structure(l_pipeline);
+	l_pg = parser_list_pipeline(l_scmd);
 
-	// l_group = parser_list_group(l_pipeline);
-
+	parser_printer_l_pipeline(l_pg);
+	parser_printer_l_pipeline_structure(l_pg);
+	
+	parser_list_group(&l_pg);
+	parser_printer_l_group_structure(l_pg);
 	return (l_scmd);
 }
 
@@ -47,7 +47,7 @@ t_list	*parser_list_scmd(t_list *l_token)
 
 /* 
  *
- *	PIPELINE
+ *	PIPELINE SCMD
  *
 */
 
@@ -144,42 +144,70 @@ t_c_pg *pg_content(t_list *pg)
  *
 */
 
-// t_list	*parser_list_group(t_list *l_pipeline)
-// {
-// 	t_c_pg	*c_group;
-// 	t_list	*l_group;
+int	parser_list_group(t_list **l_pipeline)
+{
+	t_list	*tmp;
+	t_list	*tmp2;
+	t_list	*l_group;
+	t_list	*open;
 
-// 	l_group = NULL;
-// 	// while (l_pipeline != NULL)
-// 	// {
-// 	// 	if (pg_content(l_pipeline)->type != PAR_O_BRACKET)
+	l_group = NULL;
+	tmp = *l_pipeline;
+	while (tmp)
+	{
+		if (pg_content(tmp)->type == PAR_O_BRACKET)
+			open = tmp;
+		else if (open != NULL && pg_content(tmp)->type == PAR_PIPE)
+			open = NULL;
+		else if (open != NULL && pg_content(tmp)->type == PAR_C_BRACKET)
+		{
+			tmp2 = tmp->next;
+			l_group = parser_list_group_merge(open);
+			if (l_group == NULL)
+				return (ERROR);
+			l_group->next = tmp2;
+			if (*l_pipeline == open)
+				*l_pipeline = l_group;
+			else
+			{
+				tmp = *l_pipeline;
+				while (tmp->next != open)
+					tmp = tmp->next;
+				tmp->next = l_group;
+			}
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
-// 	// 	c_group = parser_c_group_get(&l_pipeline);
-// 	// 	if (c_group == NULL)
-// 	// 	{
-// 	// 		// ft_lstclear(&l_group, parser_c_pg_destroy);
-// 	// 		return (NULL);
-// 	// 	}
-// 	// 	ft_lstadd_back(&l_group, ft_lstnew(c_group));
-// 	// }
-// 	while (l_pipeline)
-// 	{
-// 		if (pg_content(l_pipeline)->type == PAR_O_BRACKET)
-// 			open = l_pipeline;
-// 		else if (open != NULL && pg_content(l_pipeline)->type == PAR_C_BRACKET)
-// 		{
-// 			status = parser_group_set(c_group, open);
-// 			if (status == ERROR)
-// 			{
-// 				parser_c_pg_destroy(c_group);
-// 				/* RESTE DER SCMD-LIST FREEN! */
-// 				return (NULL);
-// 			}
-// 		}
-// 		l_pipeline = l_pipeline->next;
-// 	}
-// 	return (l_group);
-// }
+t_list	*parser_list_group_merge(t_list *open)
+{
+	t_c_pg	*c_pg;
+	t_list	*tmp;
+	t_list	*last;
+
+	c_pg = malloc(sizeof(t_c_pg));
+	if (c_pg == NULL)
+		return (NULL);
+	c_pg->type = PAR_GROUP;
+	c_pg->l_element = NULL;
+	tmp = open->next;
+	ft_lstdelone(open, parser_c_pg_destroy);
+	while (pg_content(tmp)->type != PAR_C_BRACKET)
+	{
+		last = tmp;
+		tmp = tmp->next;
+		ft_lstadd_back(&(c_pg->l_element), last);
+		last->next = NULL;
+	}
+	ft_lstdelone(tmp, parser_c_pg_destroy);
+	return (ft_lstnew(c_pg));
+}
+
+
+
 
 // t_c_pg	*parser_c_group_get(t_list **l_pipeline)
 // {
@@ -194,29 +222,31 @@ t_c_pg *pg_content(t_list *pg)
 // 	c_group->l_element = NULL;
 // 	open = NULL;
 
-// 	while (*l_pipeline)
-// 	{
-// 		if (pg_content(*l_pipeline)->type == PAR_O_BRACKET)
-// 			open = *l_pipeline;
-// 		else if (open != NULL && pg_content(*l_pipeline)->type == PAR_C_BRACKET)
-// 		{
-// 			status = parser_group_set(c_group, open);
-// 			if (status == ERROR)
-// 			{
-// 				parser_c_pg_destroy(c_group);
-// 				/* RESTE DER SCMD-LIST FREEN! */
-// 				return (NULL);
-// 			}
-// 		}
-// 		*l_pipeline = (*l_pipeline)->next;
-// 	}
-// 	else
-// 	{
-// 		c_group->type = scmd_content(*l_pipeline)->type;
-// 		tmp = *l_pipeline;
-// 		*l_pipeline = (*l_pipeline)->next;
-// 		ft_lstdelone(tmp, parser_c_scmd_destroy);
-// 	}
+
+
+// 	// while (*l_pipeline)
+// 	// {
+// 	// 	if (pg_content(*l_pipeline)->type == PAR_O_BRACKET)
+// 	// 		open = *l_pipeline;
+// 	// 	else if (open != NULL && pg_content(*l_pipeline)->type == PAR_C_BRACKET)
+// 	// 	{
+// 	// 		status = parser_group_set(c_group, open);
+// 	// 		if (status == ERROR)
+// 	// 		{
+// 	// 			parser_c_pg_destroy(c_group);
+// 	// 			/* RESTE DER SCMD-LIST FREEN! */
+// 	// 			return (NULL);
+// 	// 		}
+// 	// 	}
+// 	// 	*l_pipeline = (*l_pipeline)->next;
+// 	// }
+// 	// else
+// 	// {
+// 	// 	c_group->type = scmd_content(*l_pipeline)->type;
+// 	// 	tmp = *l_pipeline;
+// 	// 	*l_pipeline = (*l_pipeline)->next;
+// 	// 	ft_lstdelone(tmp, parser_c_scmd_destroy);
+// 	// }
 // 	return (c_group);
 // }
 
