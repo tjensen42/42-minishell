@@ -1,0 +1,40 @@
+make debug --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/hepple/code/my_git/minishell'
+for DIR in libs/libft; do /Applications/Xcode.app/Contents/Developer/usr/bin/make -C $DIR debug --silent; done
+ 
+printf "###############################################\n"
+printf "\033[0;33m####### MINISHELL\033[m\n"
+ 
+mkdir -p obj
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/minishell.c -o obj/minishell.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/minishell.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/utils.c -o obj/utils.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/utils.o" "\033[0;32m[✓]\033[m\n"
+ 
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/lexer.c -o obj/lexer.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/lexer_token.c -o obj/lexer_token.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer_token.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/lexer_type.c -o obj/lexer_type.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer_type.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/lexer_len.c -o obj/lexer_len.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer_len.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/parser.c -o obj/parser.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/parser_cmd.c -o obj/parser_cmd.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser_cmd.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/parser_element.c -o obj/parser_element.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser_element.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/parser_get.c -o obj/parser_get.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser_get.o" "\033[0;32m[✓]\033[m\n"
+ 
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/parser_checks.c -o obj/parser_checks.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser_checks.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/parser_pg.c -o obj/parser_pg.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser_pg.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/printer.c -o obj/printer.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/printer.o" "\033[0;32m[✓]\033[m\n"
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -o minishell obj/minishell.o obj/utils.o obj/lexer.o obj/lexer_token.o obj/lexer_type.o obj/lexer_len.o obj/parser.o obj/parser_cmd.o obj/parser_element.o obj/parser_get.o obj/parser_checks.o obj/parser_pg.o obj/printer.o -L./libs/libft -lft -lreadline
+printf "\033[0;32m======= minishell\033[m\n"
+make: Leaving directory `/Users/hepple/code/my_git/minishell'
+ 

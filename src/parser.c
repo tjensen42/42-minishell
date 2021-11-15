@@ -5,18 +5,31 @@ t_list	*parser_list_scmd(t_list *l_token);
 
 t_list	*parser(t_list *l_token)
 {
+	int		rt_group;
+	int		rt_pipeline;
 	t_list	*l_scmd;
 	t_list	*l_pg;
 
 	l_scmd = parser_list_scmd(l_token);
-	parser_printer_l_scmd(l_scmd);
-	l_pg = parser_list_pipeline(l_scmd);
+	parser_printer_l_scmd_structure(l_scmd);
+	parser_printer_l_scmd(l_scmd, true);
 
-	parser_printer_l_pipeline(l_pg);
-	parser_printer_l_pipeline_structure(l_pg);
-	
-	parser_list_group(&l_pg);
-	parser_printer_l_group_structure(l_pg);
+	l_pg = parser_list_pipeline(l_scmd);
+	parser_printer_l_pg(l_pg);
+	// parser_printer_l_pipeline_structure(l_pg);
+
+	rt_group = 1;
+	rt_pipeline = 1;
+	while (rt_group || rt_pipeline)
+	{
+		rt_group = parser_list_group(&l_pg);
+		if (rt_group)
+			parser_printer_l_group_structure(l_pg);
+		rt_pipeline = parser_list_pipeline_pg(&l_pg);
+		if (rt_pipeline)
+		 	parser_printer_l_group_structure(l_pg);
+	}
+	parser_printer_l_pg(l_pg);
 	return (l_scmd);
 }
 
@@ -113,13 +126,18 @@ int	parser_pipeline_set(t_c_pg *c_pipeline, t_list **l_scmd)
 	{
 		if (scmd_content((*l_scmd)->next)->type == PAR_SCMD)
 		{
-			tmp = *l_scmd;
-			*l_scmd = (*l_scmd)->next;
-			ft_lstdelone(tmp, parser_c_scmd_destroy);
-			ft_lstadd_back(&(c_pipeline->l_element), *l_scmd);
+			// tmp = *l_scmd;
+			// *l_scmd = (*l_scmd)->next;
+			// ft_lstdelone(tmp, parser_c_scmd_destroy);
+			// ft_lstadd_back(&(c_pipeline->l_element), *l_scmd);
+			// tmp = (*l_scmd)->next;
+			// (*l_scmd)->next = NULL;
+			// (*l_scmd) = tmp;
 			tmp = (*l_scmd)->next;
-			(*l_scmd)->next = NULL;
-			(*l_scmd) = tmp;
+			ft_lstdelone(*l_scmd, parser_c_scmd_destroy);
+			ft_lstadd_back(&(c_pipeline->l_element), tmp);
+			*l_scmd = tmp->next;
+			tmp->next = NULL;
 		}
 		else if (scmd_content((*l_scmd)->next)->type == PAR_O_BRACKET)
 			break ;
@@ -206,93 +224,15 @@ t_list	*parser_list_group_merge(t_list *open)
 	return (ft_lstnew(c_pg));
 }
 
-
-
-
-// t_c_pg	*parser_c_group_get(t_list **l_pipeline)
-// {
-// 	int 	status;
-// 	t_c_pg	*c_group;
-// 	t_list	*tmp;
-// 	t_list	*open;
-
-// 	c_group = malloc(sizeof(t_c_pg));
-// 	if (c_group == NULL)
-// 		return (NULL);
-// 	c_group->l_element = NULL;
-// 	open = NULL;
-
-
-
-// 	// while (*l_pipeline)
-// 	// {
-// 	// 	if (pg_content(*l_pipeline)->type == PAR_O_BRACKET)
-// 	// 		open = *l_pipeline;
-// 	// 	else if (open != NULL && pg_content(*l_pipeline)->type == PAR_C_BRACKET)
-// 	// 	{
-// 	// 		status = parser_group_set(c_group, open);
-// 	// 		if (status == ERROR)
-// 	// 		{
-// 	// 			parser_c_pg_destroy(c_group);
-// 	// 			/* RESTE DER SCMD-LIST FREEN! */
-// 	// 			return (NULL);
-// 	// 		}
-// 	// 	}
-// 	// 	*l_pipeline = (*l_pipeline)->next;
-// 	// }
-// 	// else
-// 	// {
-// 	// 	c_group->type = scmd_content(*l_pipeline)->type;
-// 	// 	tmp = *l_pipeline;
-// 	// 	*l_pipeline = (*l_pipeline)->next;
-// 	// 	ft_lstdelone(tmp, parser_c_scmd_destroy);
-// 	// }
-// 	return (c_group);
-// }
-
-
-
-/* 
- *
- *	MERGE
- *
-*/
-
-
-// int	parser_pg_merge(t_list **l_pg, t_list *start, t_list *end)
-// {
-// 	t_list	*tmp;
-// 	t_list	*tmp2;
-// 	t_list	*merged;
-// 	t_c_pg	*c_pg;
-
-// 	while ((*l_pg)->next != start)
-// 		*l_pg = (*l_pg)->next;
-// 	c_pg = malloc(sizeof(t_c_pg));
-// 	if (c_pg == NULL)
-// 		return (ERROR);
-// 	merged = ft_lstnew(c_pg);
-// 	(*l_pg)->next = merged;
-// 	merged->next = end->next;
-// 	c_pg->l_element = start;
-// 	end->next = NULL;
-// 	tmp = c_pg->l_element;
-// 	while (tmp != NULL)
-// 	{
-// 		if (pg_content(tmp)->type == PAR_O_BRACKET 
-// 			|| pg_content(tmp)->type == PAR_C_BRACKET 
-// 			|| pg_content(tmp)->type == PAR_PIPE)
-// 		{
-// 			tmp2 = tmp->next;
-// 			ft_lstdelone(tmp, parser_c_pg_destroy);
-// 			tmp = tmp2;
-
-
-
-			
-// 		}
-// 		else
-// 			tmp = tmp->next;
-// 	}
-// }
-
+int	parser_get_list_type(t_list *lst)
+{
+	while (lst)
+	{
+		if (*(int *)(lst->content) == PAR_SCMD)
+			return (PAR_L_SCMD);
+		else if (*(int *)(lst->content) == PAR_PIPELINE || *(int *)(lst->content) == PAR_GROUP)
+			return (PAR_L_PG);
+		lst = lst->next;
+	}
+	return (ERROR);
+}
