@@ -45,7 +45,7 @@
 # define PAR_L_SCMD			18
 # define PAR_L_PG			19
 
-# define WHITESPACES		" \t"
+# define WHITESPACES		" \t\n"
 # define QUOT_MARKS			"\'\""
 
 /* ************************************************************************** */
@@ -108,7 +108,7 @@ void		parser_printer_l_pipeline(t_list *l_pipeline);
 void		parser_printer_l_pg(t_list *l_pg);
 // void		parser_printer_l_pipeline(t_list *l_pipeline);
 // void		parser_printer_l_pipeline_structure(t_list *l_pipeline);
-void		parser_printer_l_group_structure(t_list *l_pg);
+void		parser_printer_l_pg_structure(t_list *l_pg);
 
 void		parser_c_pg_destroy(void *c_pg);
 

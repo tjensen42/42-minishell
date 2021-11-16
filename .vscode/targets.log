@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Mon Nov 15 16:06:51 2021
+# Make data base, printed on Tue Nov 16 11:38:38 2021
 
 # Variables
 
@@ -32,13 +32,13 @@ B = \033[0;34m
 # makefile (from `Makefile', line 37)
 LDLIBS := -L./libs/libft -lft -lreadline
 # makefile
-CURDIR := /Users/hepple/code/my_git/minishell
+CURDIR := /Users/tjensen/Documents/code/minishell
 # makefile
 SHELL = /bin/sh
 # makefile (from `Makefile', line 47)
 R = \033[0;31m
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # makefile (from `Makefile', line 48)
 X = \033[m
 # makefile (from `Makefile', line 45)
@@ -56,15 +56,21 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from `Makefile', line 34)
 OBJS := obj/minishell.o obj/utils.o obj/lexer.o obj/lexer_token.o obj/lexer_type.o obj/lexer_len.o obj/parser.o obj/parser_cmd.o obj/parser_element.o obj/parser_get.o obj/parser_checks.o obj/parser_pg.o obj/printer.o
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cc2400330j/T/vscode-ipc-07a684ba-f4f5-4014-81ca-f0d401c525c7.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/vscode-ipc-c06b8003-e0fa-4000-b281-6bee9780ac1d.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /Users/hepple/.brew/bin:/Users/hepple/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+CHEAT_CONFIG_PATH = /Users/tjensen/.dotfiles/cheat/conf.yml
+# environment
+PATH = /usr/local/opt/llvm/bin:/Users/tjensen/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+LIBRARY_PATH = /Users/tjensen/.brew/lib:
 # makefile (from `Makefile', line 36)
 LIBDIRS := libs/libft
 # environment
-LaunchInstanceID = 8DEF54EF-563E-4FDB-B244-B536505D1456
+LaunchInstanceID = A24AF8A6-9FDF-452A-A445-BF587751151C
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -74,29 +80,31 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 43)
 LB = \033[0;36m
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.htqHVugsBG/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.BuGHWvwEjB/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /Users/hepple/code/my_git/minishell
+PWD = /Users/tjensen/Documents/code/minishell
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
 # environment
-HOME = /Users/hepple
+HOME = /Users/tjensen
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/hepple/Library/Application Support/Code/CachedData/379476f0e13988d90fab105c5c19e7abc8b1dea8
+VSCODE_CODE_CACHE_PATH = /Users/tjensen/Library/Application Support/Code/CachedData/379476f0e13988d90fab105c5c19e7abc8b1dea8
 # environment
-LOGNAME = hepple
+LOGNAME = tjensen
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from `Makefile', line 62)
 MAKE_LIBS = 	for DIR in $(LIBDIRS); do $(MAKE) -C $$DIR $(1) --silent; done
+# environment
+ZSH = /Users/tjensen/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -118,11 +126,13 @@ ODIR := obj
 # default
 MAKE_VERSION := 3.81
 # environment
-USER = hepple
+USER = tjensen
 # makefile
 .DEFAULT_GOAL := all
 # makefile (from `Makefile', line 17)
 NAME := minishell
+# environment
+LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # makefile (from `Makefile', line 32)
@@ -132,11 +142,11 @@ MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
 # default
 .VARIABLES := 
 # environment
-TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cc2400330j/T/
+TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/hepple/Library/Application Support/Code/1.59.0-main.sock
+VSCODE_IPC_HOOK = /Users/tjensen/Library/Application Support/Code/1.59.0-main.sock
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -144,14 +154,13 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000001.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000003.Electron
 # automatic
- 
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
-__CF_USER_TEXT_ENCODING = 0x18C11:0x0:0x0
+__CF_USER_TEXT_ENCODING = 0x18BCB:0:0
 # environment
 COMMAND_MODE = unix2003
 # default
@@ -161,6 +170,8 @@ VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
 # automatic
 <F = $(notdir $<)
 # environment
+PAGER = less
+# environment
 LC_ALL = C
 # environment
 SECURITYSESSIONID = 186a7
@@ -168,6 +179,8 @@ SECURITYSESSIONID = 186a7
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
+# environment
+C_INCLUDE_PATH = /Users/tjensen/.brew/include:
 # default
 .INCLUDE_DIRS = /usr/local/include
 # environment
@@ -175,9 +188,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1120
+VSCODE_PID = 65650
 # variable set hash-table stats:
-# Load=81/1024=8%, Rehash=0, Collisions=7/138=5%
+# Load=88/1024=9%, Rehash=0, Collisions=8/145=6%
 
 # Pattern-specific Variable Values
 
@@ -185,9 +198,9 @@ VSCODE_PID = 1120
 
 # Directories
 
-# libs (device 16777225, inode 1628105): 3 files, no impossibilities.
-# . (device 16777225, inode 1627765): 14 files, no impossibilities.
-# src (device 16777225, inode 1627831): No files, no impossibilities so far.
+# libs (device 16777225, inode 1499461): 3 files, no impossibilities.
+# . (device 16777225, inode 1499386): 14 files, no impossibilities.
+# src (device 16777225, inode 1499532): No files, no impossibilities so far.
 
 # 17 files, no impossibilities in 3 directories.
 
@@ -264,7 +277,7 @@ prep:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-11-12 12:37:10
+#  Last modified 2021-11-15 16:29:43
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -304,6 +317,7 @@ debug: all
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 # makefile (from `Makefile', line 104)
 # CFLAGS += -O0 -DDEBUG -g
 # variable set hash-table stats:
@@ -453,6 +467,6 @@ obj/minishell.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Nov 15 16:06:51 2021
+# Finished Make data base on Tue Nov 16 11:38:38 2021
 
  

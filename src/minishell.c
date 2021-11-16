@@ -27,8 +27,8 @@ char *minishell_get_line(void)
 {
 	char	*input;
 
-	// input = readline(PROMPT);
-	input = "echo 1 | (echo 2)";
+	input = readline(PROMPT);
+	// input = "echo 1 | (echo  2)";
 	if (input && input[0] != '\0')
 		add_history(input);
 	rl_on_new_line();

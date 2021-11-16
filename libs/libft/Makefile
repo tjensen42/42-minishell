@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
+#    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/17 11:48:30 by hepple            #+#    #+#              #
-#    Updated: 2021/10/29 17:26:50 by hepple           ###   ########.fr        #
+#    Updated: 2021/11/16 11:38:38 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,7 +123,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c
 
 header:
 	@printf "$(B)%b $(Y)%b $(B)%b$(N)\n" "###################" "L I B F T" "###################"
-	
+
 obj_dir:
 	@mkdir -p $(OBJ_DIR)
 
@@ -140,7 +140,6 @@ fclean: header clean
 
 re: fclean all
 
-debug: fclean
 debug: CFLAGS += -O0 -DDEBUG -g
 debug: all
 

@@ -1,12 +1,14 @@
 #include "parser.h"
 #include "minishell.h"
 
-static void	parser_printer_l_pg_recursive(t_list *l_pg);
+static void	parser_printer_l_pg_recursive(t_list *l_pg, bool pipeline);
 static void	parser_printer_l_scmd_commands(t_c_scmd *scmd);
 static void	parser_printer_other(int type);
+void	parser_printer_l_scmd_pipeline(t_list *l_scmd_pipeline, bool newline);
 
 void	lexer_printer(t_list *l_token)
 {
+	printf("\e[0;35mLEXICAL_ANALYSE:\t\e[m");
 	if (l_token != NULL)
 	{
 		while (l_token->next != NULL)
@@ -23,6 +25,7 @@ void	lexer_printer(t_list *l_token)
 
 void	parser_printer_l_scmd_structure(t_list *l_scmd)
 {
+	printf("\e[0;35mPARSER_L_SCMD_STRUC:\t\e[m");
 	while (l_scmd)
 	{
 		if (scmd_content(l_scmd)->type == PAR_SCMD)
@@ -36,6 +39,7 @@ void	parser_printer_l_scmd_structure(t_list *l_scmd)
 
 void	parser_printer_l_scmd(t_list *l_scmd, bool newline)
 {
+	printf("\e[0;35mPARSER_L_SCMD:\t\t\e[m");
 	while (l_scmd)
 	{
 		if (scmd_content(l_scmd)->type == PAR_SCMD)
@@ -48,133 +52,118 @@ void	parser_printer_l_scmd(t_list *l_scmd, bool newline)
 		printf("\n");
 }
 
-// void	parser_printer_l_pipeline(t_list *l_pipeline)
-// {
-// 	printf("PL");
-// 	while (l_pipeline)
-// 	{
-// 		if (parser_get_list_type(l_pipeline) == PAR_L_SCMD)
-// 			parser_printer_l_scmd_commands(scmd_content(l_pipeline));
-// 		else
-// 			parser_printer_l_pg_recursive(l_pipeline);
-// 		if (l_pipeline->next != NULL)
-// 			parser_printer_other(PAR_PIPE);
-// 		l_pipeline = l_pipeline->next;
-// 	}
-// }
+void	parser_printer_l_scmd_pipeline(t_list *l_scmd_pipeline, bool newline)
+{
+	while (l_scmd_pipeline)
+	{
+		parser_printer_l_scmd_commands(scmd_content(l_scmd_pipeline));
+		if (l_scmd_pipeline->next)
+			parser_printer_other(PAR_PIPE);
+		l_scmd_pipeline = l_scmd_pipeline->next;
+	}
+	if (newline)
+		printf("\n");
+}
 
 void	parser_printer_l_pg(t_list *l_pg)
 {
-	parser_printer_l_pg_recursive(l_pg);
+	printf("\e[0;35mPARSER_L_PG:\t\t\e[m");
+
+	parser_printer_l_pg_recursive(l_pg, (pg_content(l_pg)->type == PAR_PIPELINE));
 	printf("\n");
 }
 
-static void	parser_printer_l_pg_recursive(t_list *l_pg)
+static void	parser_printer_l_pg_recursive(t_list *l_pg, bool pipeline)
 {
-	t_list	*tmp;
-	t_c_pg	*c_pg;
-
-	// printf("PG");
-	while (l_pg)
+	// SCMD PIPELIN
+	if (parser_get_list_type(l_pg) == PAR_L_SCMD)
 	{
-		c_pg = pg_content(l_pg);
-		if (c_pg->type == PAR_PIPELINE)
-		{
-			tmp = c_pg->l_element;
-			if (parser_get_list_type(tmp) == PAR_L_SCMD)
-				parser_printer_l_scmd_commands(scmd_content(tmp));
-			else
-			{
-				parser_printer_l_pg_recursive(tmp);
-				// if (tmp->next != NULL)
-					// parser_printer_other(PAR_PIPE);
-			}
-		}
-		else if (c_pg->type == PAR_GROUP)
-		{
-			parser_printer_other(PAR_O_BRACKET);
-			parser_printer_l_pg_recursive(c_pg->l_element);
-			parser_printer_other(PAR_C_BRACKET);
-		}
-		else
-			parser_printer_other(c_pg->type);
-		// if (c_pg->type == PAR_PIPELINE && c_pg->l_element->next)
-		// 	parser_printer_other(PAR_PIPE);
-		l_pg = l_pg->next;
+		parser_printer_l_scmd_pipeline(l_pg, false);
+		return ;
 	}
-	printf("X");
+
+	// PIPELINE
+	if (pg_content(l_pg)->type == PAR_PIPELINE)
+	{
+		parser_printer_l_pg_recursive(pg_content(l_pg)->l_element, true);
+	}
+
+	// GROUP
+	else if (pg_content(l_pg)->type == PAR_GROUP)
+	{
+		parser_printer_other(PAR_O_BRACKET);
+		parser_printer_l_pg_recursive(pg_content(l_pg)->l_element, false);
+		parser_printer_other(PAR_C_BRACKET);
+	}
+
+	// OTHER
+	else
+	{
+		parser_printer_other(pg_content(l_pg)->type);
+	}
+
+	// NEXT ITEMS
+	if (l_pg->next)
+	{
+		if (pipeline && (pg_content(l_pg->next)->type == PAR_O_BRACKET || pg_content(l_pg->next)->type == PAR_GROUP || pg_content(l_pg->next)->type == PAR_PIPELINE)
+		 	&& (pg_content(l_pg)->type == PAR_C_BRACKET || pg_content(l_pg)->type == PAR_GROUP || pg_content(l_pg)->type == PAR_PIPELINE))
+			parser_printer_other(PAR_PIPE);
+		parser_printer_l_pg_recursive(l_pg->next, pipeline);
+	}
 }
 
-void	parser_printer_l_group_structure(t_list *l_pg)
+// static void	parser_printer_l_pg_recursive(t_list *l_pg)
+// {
+// 	t_list	*tmp;
+// 	t_c_pg	*c_pg;
+
+// 	while (l_pg)
+// 	{
+// 		c_pg = pg_content(l_pg);
+// 		if (c_pg->type == PAR_PIPELINE)
+// 		{
+// 			tmp = c_pg->l_element;
+// 			if (parser_get_list_type(tmp) == PAR_L_SCMD)
+// 			{
+// 				parser_printer_l_scmd_commands(scmd_content(tmp));
+// 			}
+// 			else
+// 			{
+// 				parser_printer_l_pg_recursive(tmp);
+// 			}
+// 			if (l_pg->next && (pg_content(l_pg->next)->type == PAR_PIPELINE || pg_content(l_pg->next)->type == PAR_GROUP))
+// 				parser_printer_other(PAR_PIPE);
+// 		}
+// 		else if (c_pg->type == PAR_GROUP)
+// 		{
+// 			parser_printer_other(PAR_O_BRACKET);
+// 			parser_printer_l_pg_recursive(c_pg->l_element);
+// 			parser_printer_other(PAR_C_BRACKET);
+// 		}
+// 		else
+// 			parser_printer_other(c_pg->type);
+// 		l_pg = l_pg->next;
+// 	}
+// }
+
+void	parser_printer_l_pg_structure(t_list *l_pg)
 {
 	t_c_pg	*c_pg;
 
+	printf("\e[0;35mPARSER_L_PG_STRUC:\t\e[m");
 	while (l_pg)
 	{
 		c_pg = pg_content(l_pg);
 		if (c_pg->type == PAR_PIPELINE)
 			printf("P ");
 		else if (c_pg->type == PAR_GROUP)
-		{
 			printf("G ");
-			//parser_printer_l_pipeline(pg_content(l_pg)->l_element);
-		}
-		else 	
-		{
+		else
 			parser_printer_other(c_pg->type);
-		}
 		l_pg = l_pg->next;
 	}
 	printf("\n");
 }
-
-// void	parser_printer_l_pipeline_structure(t_list *l_pipeline)
-// {
-// 	t_c_pg	*c_pipeline;
-
-// 	while (l_pipeline)
-// 	{
-// 		c_pipeline = pg_content(l_pipeline);
-// 		if (c_pipeline->type == PAR_PIPELINE)
-// 		{
-// 			printf("P ");
-// 		}
-// 		else 	
-// 		{
-// 			parser_printer_other(c_pipeline->type);
-// 		}
-// 		l_pipeline = l_pipeline->next;
-// 	}
-// 	printf("\n");
-// }
-
-// void	parser_printer_l_pipeline(t_list *l_pipeline)
-// {
-// 	t_c_pg	*c_pipeline;
-// 	t_list	*tmp;
-
-// 	while (l_pipeline)
-// 	{
-// 		c_pipeline = pg_content(l_pipeline);
-// 		if (c_pipeline->type == PAR_PIPELINE)
-// 		{
-// 			tmp = c_pipeline->l_element;
-// 			while (tmp)
-// 			{
-// 				parser_printer_l_scmd_commands(scmd_content(tmp));
-// 				tmp = tmp->next;
-// 				if (tmp)
-// 					parser_printer_other(PAR_PIPE);		
-// 			}
-// 		}
-// 		else 	
-// 		{
-// 			parser_printer_other(c_pipeline->type);
-// 		}
-// 		l_pipeline = l_pipeline->next;
-// 	}
-// 	printf("\n");
-// }
 
 static void	parser_printer_l_scmd_commands(t_c_scmd *scmd)
 {

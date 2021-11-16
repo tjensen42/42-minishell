@@ -37,10 +37,13 @@ echo $"ARG"
 
 export ARG="*" && echo $ARG && echo "$ARG"
 
-echo | ca && est && echo | cat 
+echo | ca && est && echo | cat
 
 > out && echo 1
 
+
+
+((echo 1 | echo 2) | echo 3 && echo 4 || (echo 5 ) | ((echo 6)))
 
 
 <in grep 42 | wc -l && (echo "1 2 3" > out 4 || echo 2 >out >>out'out')

@@ -11,29 +11,29 @@ t_list	*parser(t_list *l_token)
 	t_list	*l_pg;
 
 	l_scmd = parser_list_scmd(l_token);
-	parser_printer_l_scmd_structure(l_scmd);
 	parser_printer_l_scmd(l_scmd, true);
+	parser_printer_l_scmd_structure(l_scmd);
 
 	l_pg = parser_list_pipeline(l_scmd);
+	parser_printer_l_pg_structure(l_pg);
 	parser_printer_l_pg(l_pg);
-	// parser_printer_l_pipeline_structure(l_pg);
 
 	rt_group = 1;
 	rt_pipeline = 1;
 	while (rt_group || rt_pipeline)
 	{
 		rt_group = parser_list_group(&l_pg);
-		if (rt_group)
-			parser_printer_l_group_structure(l_pg);
+		// if (rt_group)
+		// 	parser_printer_l_pg_structure(l_pg);
 		rt_pipeline = parser_list_pipeline_pg(&l_pg);
-		if (rt_pipeline)
-		 	parser_printer_l_group_structure(l_pg);
+		// if (rt_pipeline)
+		//  	parser_printer_l_pg_structure(l_pg);
 	}
 	parser_printer_l_pg(l_pg);
 	return (l_scmd);
 }
 
-/* 
+/*
  *
  *	SCMD
  *
@@ -58,7 +58,7 @@ t_list	*parser_list_scmd(t_list *l_token)
 	return (l_scmd);
 }
 
-/* 
+/*
  *
  *	PIPELINE SCMD
  *
@@ -118,7 +118,7 @@ int	parser_pipeline_set(t_c_pg *c_pipeline, t_list **l_scmd)
 	t_list	*tmp;
 
 	c_pipeline->type = PAR_PIPELINE;
-	tmp = (*l_scmd)->next;	
+	tmp = (*l_scmd)->next;
 	ft_lstadd_back(&(c_pipeline->l_element), *l_scmd);
 	(*l_scmd)->next = NULL;
 	*l_scmd = tmp;
@@ -156,7 +156,7 @@ t_c_pg *pg_content(t_list *pg)
 }
 
 
-/* 
+/*
  *
  *	Groups
  *

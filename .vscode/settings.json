@@ -5,6 +5,11 @@
 			"cwd": "/Users/hepple/code/my_git/minishell",
 			"binaryPath": "/Users/hepple/code/my_git/minishell/minishell",
 			"binaryArgs": []
+		},
+		{
+			"cwd": "/Users/tjensen/Documents/code/minishell",
+			"binaryPath": "/Users/tjensen/Documents/code/minishell/minishell",
+			"binaryArgs": []
 		}
 	]
 }
