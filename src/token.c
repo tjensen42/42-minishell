@@ -1,6 +1,15 @@
-#include "parser.h"
+#include "token.h"
 
-t_list *lexer_get_token(char *string, int type)
+bool	token_is_cmd(t_list *token)
+{
+	if (token == NULL)
+		return (false);
+	if (token_content(token)->flags & (TOK_TEXT | TOK_REDIR))
+		return (true);
+	return (false);
+}
+
+t_list *token_get(char *string, int type)
 {
 	t_c_token	*c_token;
 
@@ -12,7 +21,7 @@ t_list *lexer_get_token(char *string, int type)
 	return (ft_lstnew(c_token));
 }
 
-void	lexer_c_token_destroy(void *c_token)
+void	c_token_destroy(void *c_token)
 {
 	free(((t_c_token *)c_token)->string);
 	((t_c_token *)c_token)->string = NULL;

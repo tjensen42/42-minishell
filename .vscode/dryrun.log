@@ -4,17 +4,11 @@ for DIR in libs/libft; do /Applications/Xcode.app/Contents/Developer/usr/bin/mak
  
 printf "###############################################\n"
 printf "\033[0;33m####### MINISHELL\033[m\n"
- 
 mkdir -p obj
-gcc -Wall -Wextra -Werror -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/lexer.c -o obj/lexer.o
-printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer.o" "\033[0;32m[✓]\033[m\n"
-gcc -Wall -Wextra -Werror -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/lexer_checks.c -o obj/lexer_checks.o
-printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer_checks.o" "\033[0;32m[✓]\033[m\n"
+ 
 gcc -Wall -Wextra -Werror -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/parser_cmd.c -o obj/parser_cmd.o
 printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser_cmd.o" "\033[0;32m[✓]\033[m\n"
-gcc -Wall -Wextra -Werror -I./include/ -I./libs/libft -I./libs/libft/include -I./libs/libft/inc -c src/parser_get.c -o obj/parser_get.o
-printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser_get.o" "\033[0;32m[✓]\033[m\n"
-gcc -Wall -Wextra -Werror -o minishell obj/minishell.o obj/utils.o obj/lexer.o obj/lexer_token.o obj/lexer_type.o obj/lexer_len.o obj/lexer_checks.o obj/parser.o obj/parser_cmd.o obj/parser_element.o obj/parser_get.o obj/parser_pg.o obj/printer.o -L./libs/libft -lft -lreadline
+gcc -Wall -Wextra -Werror -o minishell obj/minishell.o obj/utils.o obj/token.o obj/cmd.o obj/scmd.o obj/lexer.o obj/lexer_syntax.o obj/lexer_token_other.o obj/lexer_token_text.o obj/parser.o obj/parser_cmd.o obj/printer_token.o obj/printer_scmd.o obj/printer_cmd.o -L./libs/libft -lft -lreadline
 printf "\033[0;32m======= minishell\033[m\n"
 make: Leaving directory `/Users/tjensen/Documents/code/minishell'
  

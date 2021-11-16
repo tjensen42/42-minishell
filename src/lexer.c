@@ -1,13 +1,8 @@
-#include "parser.h"
-#include "minishell.h"
+#include "lexer.h"
+#include "printer.h"
 
-static t_list *lexer_token_list_get(char *input);
-static int	lexer_check_brackets(t_list *l_token);
-static int	lexer_redir_mark_files(t_list *l_token);
-static int	lexer_check_syntax(t_list *l_token);
-static int	lexer_check_bin_op(t_list *l_token);
-static int	lexer_check_pipe(t_list *l_token);
-static int	lexer_check_missing_operator(t_list *l_token);
+static t_list	*lexer_token_list_get(char *input);
+static int		lexer_redir_mark_files(t_list *l_token);
 
 t_list	*lexer(char *input)
 {
@@ -16,17 +11,17 @@ t_list	*lexer(char *input)
 	l_token = lexer_token_list_get(input);
 	if (l_token == NULL)
 		return (NULL);
-	if (lexer_check_syntax(l_token) == ERROR)
+	if (lexer_syntax_check(l_token) == ERROR)
 	{
-		ft_lstclear(&l_token, lexer_c_token_destroy);
+		ft_lstclear(&l_token, c_token_destroy);
 		return (NULL);
 	}
 	if (lexer_redir_mark_files(l_token) == ERROR)
 	{
-		ft_lstclear(&l_token, lexer_c_token_destroy);
+		ft_lstclear(&l_token, c_token_destroy);
 		return (NULL);
 	}
-	lexer_printer(l_token);
+	printer_token(l_token);
 	return (l_token);
 }
 
@@ -48,111 +43,13 @@ static t_list *lexer_token_list_get(char *input)
 		status = lexer_token_quote(input, &i, &l_token);
 		if (status < 0)
 		{
-			ft_lstclear(&l_token, lexer_c_token_destroy);
+			ft_lstclear(&l_token, c_token_destroy);
 			return (NULL);
 		}
 		while (input[i] && ft_strchr(WHITESPACES, input[i]))
 			i++;
 	}
 	return (l_token);
-}
-
-static int	lexer_check_syntax(t_list *l_token)
-{
-	if (lexer_check_brackets(l_token) == ERROR)
-		return (ERROR);
-	if (lexer_check_bin_op(l_token) == ERROR)
-		return (ERROR);
-	if (lexer_check_pipe(l_token) == ERROR)
-		return (ERROR);
-	if (lexer_check_missing_operator(l_token) == ERROR)
-		return (ERROR);
-	return (0);
-}
-
-static int	lexer_check_bin_op(t_list *l_token)
-{
-	while (l_token)
-	{
-		if (token_content(l_token)->flags & TOK_BIN_OP)
-		{
-			if (l_token->next == NULL)
-				return (print_error(ERR_LIST));
-			else if (token_content(l_token->next)->flags & (TOK_BIN_OP | TOK_PIPE))
-				return (print_error(ERR_LIST));
-			else if (token_content(l_token->next)->flags & TOK_C_BRACKET)
-				return (print_error(ERR_LIST));
-		}
-		if (token_content(l_token)->flags & TOK_O_BRACKET)
-		{
-			if (l_token->next && token_content(l_token->next)->flags & TOK_BIN_OP)
-				return (print_error(ERR_LIST));
-		}
-		l_token = l_token->next;
-	}
-	return (0);
-}
-
-static int	lexer_check_pipe(t_list *l_token)
-{
-	while (l_token)
-	{
-		if (token_content(l_token)->flags & TOK_PIPE)
-		{
-			if (l_token->next == NULL)
-				return (print_error(ERR_PIPE));
-			else if (token_content(l_token->next)->flags & (TOK_BIN_OP | TOK_PIPE))
-				return (print_error(ERR_PIPE));
-			else if (token_content(l_token->next)->flags & TOK_C_BRACKET)
-				return (print_error(ERR_PIPE));
-		}
-		if (token_content(l_token)->flags & TOK_O_BRACKET)
-		{
-			if (l_token->next && token_content(l_token->next)->flags & TOK_PIPE)
-				return (print_error(ERR_PIPE));
-		}
-		l_token = l_token->next;
-	}
-	return (0);
-}
-
-static int	lexer_check_brackets(t_list *l_token)
-{
-	int	count;
-
-	count = 0;
-	while (l_token)
-	{
-		if (token_content(l_token)->flags & TOK_O_BRACKET)
-		{
-			count++;
-			if (l_token->next && token_content(l_token->next)->flags & TOK_C_BRACKET)
-				return print_error(ERR_EMPTY_BRACKET);
-		}
-		else if (token_content(l_token)->flags & TOK_C_BRACKET)
-			count--;
-		if (count < 0)
-			return (print_error(ERR_UNO_BRACKET));
-		l_token = l_token->next;
-	}
-	if (count > 0)
-		return (print_error(ERR_UNC_BRACKET));
-	return (0);
-}
-
-static int	lexer_check_missing_operator(t_list *l_token)
-{
-	while (l_token)
-	{
-		if (token_content(l_token)->flags & TOK_C_BRACKET
-			&& lexer_token_is_cmd(l_token->next))
-			return (print_error(ERR_MISS_OP));
-		else if (lexer_token_is_cmd(l_token)
-			&& l_token->next && token_content(l_token->next)->flags & TOK_O_BRACKET)
-			return (print_error(ERR_MISS_OP));
-		l_token = l_token->next;
-	}
-	return (0);
 }
 
 static int	lexer_redir_mark_files(t_list *l_token)

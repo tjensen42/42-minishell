@@ -1,12 +1,17 @@
+#include "lexer.h"
 #include "parser.h"
 #include "minishell.h"
+
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 char *minishell_get_line(void);
 
 int	main(void)
 {
 	t_list	*l_token;
-	t_list	*l_parse;
+	t_list	*l_parser;
 	char	*input;
 
 	while (1)
@@ -14,11 +19,7 @@ int	main(void)
 		input = minishell_get_line();
 		l_token = lexer(input);
 		if (l_token != NULL)
-		{
-			l_parse = parser(l_token);
-//			if (l_parse != NULL)
-//				expander(l_parse);
-		}
+			l_parser = parser(l_token);
 	}
 	return (0);
 }

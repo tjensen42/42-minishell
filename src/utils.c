@@ -1,5 +1,5 @@
-#include "minishell.h"
-#include "parser.h"
+#include "libft.h"
+#include "global.h"
 
 int	print_error(char *str)
 {

@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/16 12:13:58 by tjensen          ###   ########.fr        #
+#    Updated: 2021/11/16 20:50:52 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,10 @@
 NAME		:= minishell
 
 SRCS		:= minishell.c utils.c
-SRCS		+= lexer.c lexer_token.c lexer_type.c lexer_len.c lexer_checks.c
-SRCS		+= parser.c parser_cmd.c parser_element.c parser_get.c parser_pg.c
-SRCS		+= printer.c
+SRCS		+= token.c cmd.c scmd.c
+SRCS		+= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
+SRCS		+= parser.c parser_cmd.c
+SRCS		+= printer_token.c printer_scmd.c printer_cmd.c
 LDLIBS		:= -lft -lreadline
 
 # **************************************************************************** #
