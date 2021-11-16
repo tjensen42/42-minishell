@@ -4,7 +4,7 @@
 static void	parser_printer_l_pg_recursive(t_list *l_pg, bool pipeline);
 static void	parser_printer_l_scmd_commands(t_c_scmd *scmd);
 static void	parser_printer_other(int type);
-void	parser_printer_l_scmd_pipeline(t_list *l_scmd_pipeline, bool newline);
+void		parser_printer_l_scmd_pipeline(t_list *l_scmd_pipeline, bool newline);
 
 void	lexer_printer(t_list *l_token)
 {
@@ -111,40 +111,6 @@ static void	parser_printer_l_pg_recursive(t_list *l_pg, bool pipeline)
 		parser_printer_l_pg_recursive(l_pg->next, pipeline);
 	}
 }
-
-// static void	parser_printer_l_pg_recursive(t_list *l_pg)
-// {
-// 	t_list	*tmp;
-// 	t_c_pg	*c_pg;
-
-// 	while (l_pg)
-// 	{
-// 		c_pg = pg_content(l_pg);
-// 		if (c_pg->type == PAR_PIPELINE)
-// 		{
-// 			tmp = c_pg->l_element;
-// 			if (parser_get_list_type(tmp) == PAR_L_SCMD)
-// 			{
-// 				parser_printer_l_scmd_commands(scmd_content(tmp));
-// 			}
-// 			else
-// 			{
-// 				parser_printer_l_pg_recursive(tmp);
-// 			}
-// 			if (l_pg->next && (pg_content(l_pg->next)->type == PAR_PIPELINE || pg_content(l_pg->next)->type == PAR_GROUP))
-// 				parser_printer_other(PAR_PIPE);
-// 		}
-// 		else if (c_pg->type == PAR_GROUP)
-// 		{
-// 			parser_printer_other(PAR_O_BRACKET);
-// 			parser_printer_l_pg_recursive(c_pg->l_element);
-// 			parser_printer_other(PAR_C_BRACKET);
-// 		}
-// 		else
-// 			parser_printer_other(c_pg->type);
-// 		l_pg = l_pg->next;
-// 	}
-// }
 
 void	parser_printer_l_pg_structure(t_list *l_pg)
 {

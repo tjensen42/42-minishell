@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
+#    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/12 12:37:10 by hepple           ###   ########.fr        #
+#    Updated: 2021/11/16 12:13:58 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@
 NAME		:= minishell
 
 SRCS		:= minishell.c utils.c
-SRCS		+= lexer.c lexer_token.c lexer_type.c lexer_len.c
-SRCS		+= parser.c parser_cmd.c parser_element.c parser_get.c parser_checks.c parser_pg.c
+SRCS		+= lexer.c lexer_token.c lexer_type.c lexer_len.c lexer_checks.c
+SRCS		+= parser.c parser_cmd.c parser_element.c parser_get.c parser_pg.c
 SRCS		+= printer.c
 LDLIBS		:= -lft -lreadline
 

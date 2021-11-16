@@ -1,6 +1,6 @@
 #include "parser.h"
 
-bool	parser_token_is_cmd(t_list *token)
+bool	lexer_token_is_cmd(t_list *token)
 {
 	if (token == NULL)
 		return (false);

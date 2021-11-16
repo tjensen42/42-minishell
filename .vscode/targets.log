@@ -8,11 +8,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Tue Nov 16 11:38:38 2021
+# Make data base, printed on Tue Nov 16 12:14:00 2021
 
 # Variables
 
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -54,7 +53,7 @@ G = \033[0;32m
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from `Makefile', line 34)
-OBJS := obj/minishell.o obj/utils.o obj/lexer.o obj/lexer_token.o obj/lexer_type.o obj/lexer_len.o obj/parser.o obj/parser_cmd.o obj/parser_element.o obj/parser_get.o obj/parser_checks.o obj/parser_pg.o obj/printer.o
+OBJS := obj/minishell.o obj/utils.o obj/lexer.o obj/lexer_token.o obj/lexer_type.o obj/lexer_len.o obj/lexer_checks.o obj/parser.o obj/parser_cmd.o obj/parser_element.o obj/parser_get.o obj/parser_pg.o obj/printer.o
 # environment
 VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/vscode-ipc-c06b8003-e0fa-4000-b281-6bee9780ac1d.sock
 # environment
@@ -116,7 +115,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # makefile (from `Makefile', line 22)
-SRCS := minishell.c utils.c lexer.c lexer_token.c lexer_type.c lexer_len.c parser.c parser_cmd.c parser_element.c parser_get.c parser_checks.c parser_pg.c printer.c
+SRCS := minishell.c utils.c lexer.c lexer_token.c lexer_type.c lexer_len.c lexer_checks.c parser.c parser_cmd.c parser_element.c parser_get.c parser_pg.c printer.c
 # environment
 SHLVL = 1
 # makefile (from `Makefile', line 29)
@@ -277,7 +276,7 @@ prep:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-11-15 16:29:43
+#  Last modified 2021-11-16 12:13:58
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -315,9 +314,9 @@ libs:
 debug: all
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
+ 
 #  File does not exist.
 #  File has not been updated.
- 
 # makefile (from `Makefile', line 104)
 # CFLAGS += -O0 -DDEBUG -g
 # variable set hash-table stats:
@@ -344,7 +343,7 @@ obj/lexer_type.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-minishell: libs header prep obj/minishell.o obj/utils.o obj/lexer.o obj/lexer_token.o obj/lexer_type.o obj/lexer_len.o obj/parser.o obj/parser_cmd.o obj/parser_element.o obj/parser_get.o obj/parser_checks.o obj/parser_pg.o obj/printer.o
+minishell: libs header prep obj/minishell.o obj/utils.o obj/lexer.o obj/lexer_token.o obj/lexer_type.o obj/lexer_len.o obj/lexer_checks.o obj/parser.o obj/parser_cmd.o obj/parser_element.o obj/parser_get.o obj/parser_pg.o obj/printer.o
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -356,12 +355,6 @@ minishell: libs header prep obj/minishell.o obj/utils.o obj/lexer.o obj/lexer_to
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
 	@printf "$(G)======= $(NAME)$(X)\n"
 	
-
-# Not a target:
-obj/parser_checks.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 bonus: all
 #  Phony target (prerequisite of .PHONY).
@@ -411,6 +404,12 @@ re: fclean all
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+obj/lexer_checks.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
 
 clean: libs header
@@ -467,6 +466,6 @@ obj/minishell.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Nov 16 11:38:38 2021
+# Finished Make data base on Tue Nov 16 12:14:00 2021
 
  

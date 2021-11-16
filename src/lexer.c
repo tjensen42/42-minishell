@@ -7,6 +7,7 @@ static int	lexer_redir_mark_files(t_list *l_token);
 static int	lexer_check_syntax(t_list *l_token);
 static int	lexer_check_bin_op(t_list *l_token);
 static int	lexer_check_pipe(t_list *l_token);
+static int	lexer_check_missing_operator(t_list *l_token);
 
 t_list	*lexer(char *input)
 {
@@ -56,10 +57,6 @@ static t_list *lexer_token_list_get(char *input)
 	return (l_token);
 }
 
-// check no double bin-op / pipe
-// no ) after bin-op / pipe
-// no ( before bin-op / pipe
-
 static int	lexer_check_syntax(t_list *l_token)
 {
 	if (lexer_check_brackets(l_token) == ERROR)
@@ -67,6 +64,8 @@ static int	lexer_check_syntax(t_list *l_token)
 	if (lexer_check_bin_op(l_token) == ERROR)
 		return (ERROR);
 	if (lexer_check_pipe(l_token) == ERROR)
+		return (ERROR);
+	if (lexer_check_missing_operator(l_token) == ERROR)
 		return (ERROR);
 	return (0);
 }
@@ -138,6 +137,21 @@ static int	lexer_check_brackets(t_list *l_token)
 	}
 	if (count > 0)
 		return (print_error(ERR_UNC_BRACKET));
+	return (0);
+}
+
+static int	lexer_check_missing_operator(t_list *l_token)
+{
+	while (l_token)
+	{
+		if (token_content(l_token)->flags & TOK_C_BRACKET
+			&& lexer_token_is_cmd(l_token->next))
+			return (print_error(ERR_MISS_OP));
+		else if (lexer_token_is_cmd(l_token)
+			&& l_token->next && token_content(l_token->next)->flags & TOK_O_BRACKET)
+			return (print_error(ERR_MISS_OP));
+		l_token = l_token->next;
+	}
 	return (0);
 }
 

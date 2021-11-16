@@ -18,7 +18,7 @@
 # define ERR_REDIR			"minishell: Syntax error: Invalid redirection"
 # define ERR_QUOTE			"minishell: Syntax error: Unclosed quotation mark"
 # define ERR_LIST			"minishell: Syntax error: Incomplete command list"
-
+# define ERR_MISS_OP		"minishell: Syntax error: Missing operator"
 # define ERR_PIPE			"minishell: Syntax error: Incomplete pipe"
 
 # define TOK_TEXT			(1<<1)
@@ -80,7 +80,7 @@ typedef struct s_pg_content
 t_list		*parser(t_list *l_token);
 
 int			parser_scmd_set(t_c_scmd *c_element, t_list **l_token);
-bool		parser_token_is_cmd(t_list *token);
+bool		lexer_token_is_cmd(t_list *token);
 
 t_c_scmd	*parser_c_scmd_get(t_list **l_token);
 void		parser_c_scmd_destroy(void *c_element);
