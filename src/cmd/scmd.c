@@ -46,10 +46,9 @@ void	c_scmd_set(t_c_scmd *c_scmd, t_list **l_token)
 
 void	c_scmd_destroy(void *c_scmd)
 {
-	if (c_scmd)
-	{
+	if (((t_c_scmd *)c_scmd)->l_argv)
 		ft_lstclear(&(((t_c_scmd *)c_scmd)->l_argv), c_token_destroy);
-		ft_lstclear(&(((t_c_scmd *)c_scmd)->l_argv), c_token_destroy);
-		free(c_scmd);
-	}
+	if (((t_c_scmd *)c_scmd)->l_redir)
+		ft_lstclear(&(((t_c_scmd *)c_scmd)->l_redir), c_token_destroy);
+	free(c_scmd);
 }

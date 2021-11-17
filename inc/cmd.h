@@ -56,6 +56,7 @@ void		c_scmd_destroy(void *c_element);
 
 t_c_cmd		*cmd_content(t_list *pg);
 int			cmd_type(t_list *token);
+int			cmd_list_type(t_list *lst);
 void		c_cmd_destroy(void *c_pg);
 
 #endif

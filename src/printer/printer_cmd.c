@@ -5,7 +5,6 @@
 
 static void	printer_cmd_recursive(t_list *l_cmd, bool pipeline);
 static bool	printer_pipeline_check(t_list *l_cmd);
-static int	printer_cmd_list_type(t_list *lst);
 
 void	printer_cmd(t_list *l_cmd)
 {
@@ -35,7 +34,7 @@ void	printer_cmd_structure(t_list *l_cmd)
 
 static void	printer_cmd_recursive(t_list *l_cmd, bool pipeline)
 {
-	if (printer_cmd_list_type(l_cmd) == CMD_L_SCMD)
+	if (cmd_list_type(l_cmd) == CMD_L_SCMD)
 	{
 		printer_scmd_pipeline(l_cmd, false);
 		return ;
@@ -69,17 +68,4 @@ static bool	printer_pipeline_check(t_list *l_cmd)
 		}
 	}
 	return (false);
-}
-
-static int	printer_cmd_list_type(t_list *lst)
-{
-	while (lst)
-	{
-		if (*(int *)(lst->content) == CMD_SCMD)
-			return (CMD_L_SCMD);
-		else if (*(int *)(lst->content) & (CMD_PIPELINE | CMD_GROUP))
-			return (CMD_L_CMD);
-		lst = lst->next;
-	}
-	return (ERROR);
 }

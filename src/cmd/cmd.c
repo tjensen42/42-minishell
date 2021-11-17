@@ -29,24 +29,44 @@ int	cmd_type(t_list *token)
 
 void	c_cmd_destroy(void *c_cmd)
 {
-	t_list	*tmp;
-	t_c_cmd	*free_cmd;
+	t_c_cmd	*free_c_cmd;
 
-	free_cmd = c_cmd;
-	if (free_cmd)
+	free_c_cmd = c_cmd;
+	if (free_c_cmd->l_element)
 	{
-		tmp = free_cmd->l_element;
-		while (tmp)
-		{
-			if (*(int *)(tmp->content) == CMD_SCMD)
-			{
-				ft_lstclear(&(free_cmd->l_element), c_scmd_destroy);
-				break ;
-			}
-			tmp = tmp->next;
-		}
-		if (free_cmd->l_element)
-			ft_lstclear(&(free_cmd->l_element), c_cmd_destroy);
-		free(free_cmd);
+		if (cmd_list_type(free_c_cmd->l_element) == CMD_L_SCMD)
+			ft_lstclear(&(free_c_cmd->l_element), c_scmd_destroy);
+		else
+			ft_lstclear(&(free_c_cmd->l_element), c_cmd_destroy);
 	}
+	free(free_c_cmd);
 }
+
+int	cmd_list_type(t_list *lst)
+{
+	while (lst)
+	{
+		if (*(int *)(lst->content) == CMD_SCMD)
+			return (CMD_L_SCMD);
+		else if (*(int *)(lst->content) & (CMD_PIPELINE | CMD_GROUP))
+			return (CMD_L_CMD);
+		lst = lst->next;
+	}
+	return (ERROR);
+}
+
+
+
+
+
+// while (tmp)
+// {
+// 	if (*(int *)(tmp->content) == CMD_SCMD)
+// 	{
+// 		ft_lstclear(&(free_cmd->l_element), c_scmd_destroy);
+// 		break ;
+// 	}
+// 	tmp = tmp->next;
+// }
+// if (free_cmd->l_element)
+// 	ft_lstclear(&(free_cmd->l_element), c_cmd_destroy);

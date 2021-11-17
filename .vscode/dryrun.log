@@ -1,0 +1,11 @@
+make debug --dry-run --keep-going --print-directory
+make: Entering directory `/Users/tjensen/Documents/code/minishell'
+for DIR in lib/libft; do /Applications/Xcode.app/Contents/Developer/usr/bin/make -C $DIR debug --silent; done
+ 
+printf "###############################################\n"
+printf "\033[0;33m####### MINISHELL\033[m\n"
+ 
+gcc -Wall -Wextra -Werror -O0 -DDEBUG -g -o minishell obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj/lexer/lexer.o obj/lexer/lexer_syntax.o obj/lexer/lexer_token_other.o obj/lexer/lexer_token_text.o obj/parser/parser.o obj/parser/parser_scmd.o obj/parser/parser_cmd_pipeline.o obj/parser/parser_cmd_group.o obj/printer/printer_token.o obj/printer/printer_scmd.o obj/printer/printer_cmd.o -L./lib/libft -lft -lreadline
+printf "\033[0;32m======= minishell\033[m\n"
+make: Leaving directory `/Users/tjensen/Documents/code/minishell'
+ 

@@ -20,7 +20,7 @@ t_list	*parser(t_list *l_token)
 	printer_cmd(l_cmd);
 	parser_pg(&l_cmd);
 	printer_cmd(l_cmd);
-	return (l_scmd);
+	return (l_cmd);
 }
 
 static void	parser_pg(t_list **l_cmd)
