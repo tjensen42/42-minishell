@@ -10,6 +10,7 @@ int	parser_cmd_group_merge(t_list **l_cmd)
 	t_list	*group;
 	t_list	*open_bracket;
 
+	open_bracket = NULL;
 	group = NULL;
 	iter = *l_cmd;
 	while (iter)
