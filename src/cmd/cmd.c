@@ -1,11 +1,11 @@
 #include "cmd.h"
 
-t_c_cmd *cmd_content(t_list *pg)
+t_c_cmd	*cmd_content(t_list *cmd)
 {
-	return ((t_c_cmd *)pg->content);
+	return ((t_c_cmd *)cmd->content);
 }
 
-int	cmd_type_get(t_list *token)
+int	cmd_type(t_list *token)
 {
 	if (token == NULL)
 		return (ERROR);
@@ -27,26 +27,26 @@ int	cmd_type_get(t_list *token)
 	return (ERROR);
 }
 
-void	c_cmd_destroy(void *c_pg)
+void	c_cmd_destroy(void *c_cmd)
 {
 	t_list	*tmp;
-	t_c_cmd	*free_pg;
+	t_c_cmd	*free_cmd;
 
-	free_pg = c_pg;
-	if (free_pg)
+	free_cmd = c_cmd;
+	if (free_cmd)
 	{
-		tmp = free_pg->l_element;
+		tmp = free_cmd->l_element;
 		while (tmp)
 		{
 			if (*(int *)(tmp->content) == CMD_SCMD)
 			{
-				ft_lstclear(&(free_pg->l_element), c_scmd_destroy);
+				ft_lstclear(&(free_cmd->l_element), c_scmd_destroy);
 				break ;
 			}
 			tmp = tmp->next;
 		}
-		if (free_pg->l_element)
-			ft_lstclear(&(free_pg->l_element), c_cmd_destroy);
-		free(free_pg);
+		if (free_cmd->l_element)
+			ft_lstclear(&(free_cmd->l_element), c_cmd_destroy);
+		free(free_cmd);
 	}
 }

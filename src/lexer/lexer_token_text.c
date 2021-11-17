@@ -17,7 +17,7 @@ int	lexer_token_text(char *str, int *i, t_list **l_token)
 		token = token_get(ft_substr(str, *i, len), TOK_TEXT);
 		ft_lstadd_back(l_token, token);
 		*i += len;
-		if (ft_strchr(WHITESPACES, str[*i]) == NULL && lexer_other_len(&str[*i]) == 0)
+		if (!ft_strchr(WHITESPACES, str[*i]) && lexer_other_len(&str[*i]) == 0)
 			token_content(token)->flags |= TOK_CONNECTED;
 	}
 	return (0);
@@ -34,12 +34,15 @@ int	lexer_token_quote(char *str, int *i, t_list **l_token)
 	if (len > 0)
 	{
 		if (str[*i] == '\'')
-			token = token_get(ft_substr(str, *i + 1, len - 2), TOK_TEXT | TOK_S_QUOTE);
+			token = token_get(ft_substr(str, *i + 1, len - 2),
+					TOK_TEXT | TOK_S_QUOTE);
 		else
-			token = token_get(ft_substr(str, *i + 1, len - 2), TOK_TEXT | TOK_D_QUOTE);
+			token = token_get(ft_substr(str, *i + 1, len - 2),
+					TOK_TEXT | TOK_D_QUOTE);
 		ft_lstadd_back(l_token, token);
 		*i += len;
-		if (ft_strchr(WHITESPACES, str[*i]) == NULL && lexer_other_len(&str[*i]) == 0)
+		if (ft_strchr(WHITESPACES, str[*i]) == NULL
+			&& lexer_other_len(&str[*i]) == 0)
 			token_content(token)->flags |= TOK_CONNECTED;
 	}
 	return (0);
@@ -65,7 +68,7 @@ static int	lexer_text_len(char *str)
 
 static int	lexer_quote_len(char *str)
 {
-	int 	i;
+	int		i;
 	char	mark;
 
 	if (str == NULL || *str == '\0')

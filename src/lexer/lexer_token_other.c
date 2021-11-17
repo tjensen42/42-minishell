@@ -54,12 +54,10 @@ void	lexer_token_bracket(char *str, int *i, t_list **l_token)
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}
-	else if ( str[*i] == ')')
+	else if (str[*i] == ')')
 	{
 		token = token_get(ft_substr(str, *i, 1), TOK_C_BRACKET);
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}
 }
-
-

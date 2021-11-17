@@ -25,7 +25,7 @@ t_list	*lexer(char *input)
 	return (l_token);
 }
 
-static t_list *lexer_token_list_get(char *input)
+static t_list	*lexer_token_list_get(char *input)
 {
 	int		i;
 	int		status;

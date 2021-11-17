@@ -1,6 +1,6 @@
 #include "token.h"
 
-t_c_token *token_content(t_list *token)
+t_c_token	*token_content(t_list *token)
 {
 	return ((t_c_token *)token->content);
 }
@@ -14,7 +14,7 @@ bool	token_is_cmd(t_list *token)
 	return (false);
 }
 
-t_list *token_get(char *string, int type)
+t_list	*token_get(char *string, int type)
 {
 	t_c_token	*c_token;
 

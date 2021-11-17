@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/17 10:24:50 by tjensen          ###   ########.fr        #
+#    Updated: 2021/11/17 11:52:24 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,14 @@ NAME		:= minishell
 
 SRCS		:= minishell.c utils.c
 SRCS		+= token.c cmd/cmd.c cmd/scmd.c
-SRCS		+= lexer/lexer.c lexer/lexer_syntax.c lexer/lexer_token_other.c lexer/lexer_token_text.c
-SRCS		+= parser/parser.c parser/parser_cmd.c
-SRCS		+= printer/printer_token.c printer/printer_scmd.c printer/printer_cmd.c
+
+SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
+SRCS_PARSER	:= parser.c parser_scmd.c parser_cmd_pipeline.c parser_cmd_group.c
+SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c
+
+SRCS		+= $(addprefix lexer/, $(SRCS_LEXER)) $(addprefix parser/, $(SRCS_PARSER)) \
+			   $(addprefix printer/, $(SRCS_PRINTER))
+
 LDLIBS		:= -lft -lreadline
 
 # **************************************************************************** #
