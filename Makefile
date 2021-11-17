@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/16 20:50:52 by tjensen          ###   ########.fr        #
+#    Updated: 2021/11/17 10:24:50 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,10 @@
 NAME		:= minishell
 
 SRCS		:= minishell.c utils.c
-SRCS		+= token.c cmd.c scmd.c
-SRCS		+= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
-SRCS		+= parser.c parser_cmd.c
-SRCS		+= printer_token.c printer_scmd.c printer_cmd.c
+SRCS		+= token.c cmd/cmd.c cmd/scmd.c
+SRCS		+= lexer/lexer.c lexer/lexer_syntax.c lexer/lexer_token_other.c lexer/lexer_token_text.c
+SRCS		+= parser/parser.c parser/parser_cmd.c
+SRCS		+= printer/printer_token.c printer/printer_scmd.c printer/printer_cmd.c
 LDLIBS		:= -lft -lreadline
 
 # **************************************************************************** #
@@ -34,10 +34,9 @@ SDIR		:= src
 ODIR		:= obj
 OBJS		:= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
 
-LIBDIRS		:= $(wildcard libs/*)
+LIBDIRS		:= $(wildcard lib/*)
 LDLIBS		:= $(addprefix -L./, $(LIBDIRS)) $(LDLIBS)
-INCLUDES	:= -I./include/ $(addprefix -I./, $(LIBDIRS)) \
-			   $(addprefix -I./, $(addsuffix /include, $(LIBDIRS))) \
+INCLUDES	:= -I./inc/ $(addprefix -I./, $(LIBDIRS)) \
 			   $(addprefix -I./, $(addsuffix /inc, $(LIBDIRS)))
 
 # COLORS
@@ -70,24 +69,22 @@ endef
 #	RULES																	   #
 # **************************************************************************** #
 
-.PHONY: all $(NAME) header prep clean fclean re bonus debug release libs test
+.PHONY: all $(NAME) header clean fclean re bonus debug release libs test
 
 all: $(NAME)
 
-$(NAME): libs header prep $(OBJS)
+$(NAME): libs header $(OBJDIRS) $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
 	@printf "$(G)======= $(NAME)$(X)\n"
 
-$(ODIR)/%.o: $(SDIR)/%.c |
+$(ODIR)/%.o: $(SDIR)/%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@printf "%-57b %b" "$(B)compile $(LB)$@" "$(G)[✓]$(X)\n"
 
 header:
 	@printf "###############################################\n"
 	@printf "$(Y)####### $(shell echo "$(NAME)" | tr '[:lower:]' '[:upper:]')$(X)\n"
-
-prep:
-	@mkdir -p $(ODIR)
 
 clean: libs header
 	@$(RM) -r $(ODIR)

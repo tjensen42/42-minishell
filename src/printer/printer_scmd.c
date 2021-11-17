@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "parser.h"
 #include "printer.h"
+#include "cmd.h"
 
 static void	printer_scmd_commands(t_c_scmd *scmd);
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "lexer.h"
+#include "printer.h"
+#include "token.h"
 
 void	printer_token(t_list *l_token)
 {

@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "parser.h"
 #include "printer.h"
+#include "parser.h"
+#include "cmd.h"
 
 static void	printer_cmd_recursive(t_list *l_cmd, bool pipeline);
 static bool	printer_pipeline_check(t_list *l_cmd);

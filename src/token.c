@@ -1,5 +1,10 @@
 #include "token.h"
 
+t_c_token *token_content(t_list *token)
+{
+	return ((t_c_token *)token->content);
+}
+
 bool	token_is_cmd(t_list *token)
 {
 	if (token == NULL)
@@ -26,9 +31,4 @@ void	c_token_destroy(void *c_token)
 	free(((t_c_token *)c_token)->string);
 	((t_c_token *)c_token)->string = NULL;
 	free(c_token);
-}
-
-t_c_token *token_content(t_list *token)
-{
-	return ((t_c_token *)token->content);
 }

@@ -214,7 +214,8 @@ int	parser_get_list_type(t_list *lst)
 	{
 		if (*(int *)(lst->content) == CMD_SCMD)
 			return (CMD_L_SCMD);
-		else if (*(int *)(lst->content) == CMD_PIPELINE || *(int *)(lst->content) == CMD_GROUP)
+		else if (*(int *)(lst->content) == CMD_PIPELINE
+			|| *(int *)(lst->content) == CMD_GROUP)
 			return (CMD_L_CMD);
 		lst = lst->next;
 	}
