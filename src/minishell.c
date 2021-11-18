@@ -33,12 +33,17 @@ int	main(void)
 	while (1)
 	{
 		input = minishell_get_line();
+		// input = "( ( echo 4 ) | ( ( echo 6 ) ) )";
 		l_token = lexer(input);
 		if (l_token != NULL)
 			l_parser = parser(l_token);
+		printf("\n\n");
+		if (l_token != NULL && l_parser != NULL)
+			execution_wrapper(l_parser);
+			// execution_recursive(l_parser, (!l_parser->next && cmd_content(l_parser)->type == CMD_PIPELINE));
+		// wait(NULL);
+		// printf("WAITING END...\n");
 		ft_lstclear(&l_parser, c_cmd_destroy);
-		// if (l_token != NULL && l_parser != NULL)
-		// 	execute(l_parser);
 	}
 	return (0);
 }

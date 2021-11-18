@@ -25,6 +25,8 @@ t_list	*parser(t_list *l_token)
 
 static void	parser_pg(t_list **l_cmd)
 {
+	// int	i;
+	// int	j;
 	int	group;
 	int	pipeline;
 
@@ -39,4 +41,32 @@ static void	parser_pg(t_list **l_cmd)
 		if (pipeline)
 			printer_cmd_structure(*l_cmd);
 	}
+
+	// i = 1;
+	// j = 1;
+	// while (i || j)
+	// {
+	// 	i = 0;
+	// 	group = 1;
+	// 	while (group)
+	// 	{
+	// 		group = parser_cmd_group_merge(l_cmd);
+	// 		if (group)
+	// 		{
+	// 			printer_cmd_structure(*l_cmd);
+	// 			i++;
+	// 		}
+	// 	}
+	// 	j = 0;
+	// 	pipeline = 1;
+	// 	while (pipeline)
+	// 	{
+	// 		pipeline = parser_cmd_pipeline_merge(l_cmd);
+	// 		if (pipeline)
+	// 		{
+	// 			printer_cmd_structure(*l_cmd);
+	// 			j++;
+	// 		}
+	// 	}
+	// }
 }

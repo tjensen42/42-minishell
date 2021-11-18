@@ -6,7 +6,7 @@
 /*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 21:27:45 by tjensen           #+#    #+#             */
-/*   Updated: 2021/11/16 19:16:52 by tjensen          ###   ########.fr       */
+/*   Updated: 2021/11/18 11:58:08 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@
 /* ************************************************************************** */
 
 t_list	*lexer(char *input);
+
+int execution_wrapper(t_list *l_cmd);
+int	execution_recursive(t_list *l_cmd, bool pipeline);
 
 #endif

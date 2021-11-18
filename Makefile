@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/17 11:52:24 by tjensen          ###   ########.fr        #
+#    Updated: 2021/11/18 11:13:27 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 
 NAME		:= minishell
 
-SRCS		:= minishell.c utils.c
+SRCS		:= minishell.c utils.c execution.c
 SRCS		+= token.c cmd/cmd.c cmd/scmd.c
 
 SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c

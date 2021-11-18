@@ -9,7 +9,7 @@ static bool	printer_pipeline_check(t_list *l_cmd);
 void	printer_cmd(t_list *l_cmd)
 {
 	printf("\e[37;7mCMD:\t\t\e[m");
-	printer_cmd_recursive(l_cmd, (cmd_content(l_cmd)->type == CMD_PIPELINE));
+	printer_cmd_recursive(l_cmd, (!l_cmd->next && cmd_content(l_cmd)->type == CMD_PIPELINE));
 	printf("\n");
 }
 
