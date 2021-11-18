@@ -32,13 +32,13 @@ static void	parser_pg(t_list **l_cmd)
 
 	group = 1;
 	pipeline = 1;
-	while (group || pipeline)
+	while (group > 0 || pipeline > 0)
 	{
 		group = parser_cmd_group_merge(l_cmd);
-		if (group)
+		if (group > 0)
 			printer_cmd_structure(*l_cmd);
 		pipeline = parser_cmd_pipeline_merge(l_cmd);
-		if (pipeline)
+		if (pipeline > 0)
 			printer_cmd_structure(*l_cmd);
 	}
 

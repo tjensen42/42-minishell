@@ -55,8 +55,26 @@ int	cmd_list_type(t_list *lst)
 	return (ERROR);
 }
 
+int	cmd_node_remove(t_list **lst, t_list *node)
+{
+	t_list	*tmp;
 
-
+	if (!lst || !(*lst) || !node)
+		return (ERROR);
+	if (node == *lst)
+		*lst = node->next;
+	else
+	{
+		tmp = *lst;
+		while (tmp->next && tmp->next != node)
+			tmp = tmp->next;
+		if (tmp->next != node)
+			return (ERROR);
+		tmp->next = node->next;
+	}
+	ft_lstdelone(node, c_cmd_destroy);
+	return (0);
+}
 
 
 // while (tmp)

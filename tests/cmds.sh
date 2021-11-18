@@ -58,8 +58,6 @@ echo 1 && echo 2 && cat
 
 
 
-((echo 1 | echo 2) | echo 3 && echo 4 || (echo 5 ) | ((echo 6)))
-
 
 <in grep 42 | wc -l && (echo "1 2 3" > out 4 || echo 2 >out >>out'out')
 

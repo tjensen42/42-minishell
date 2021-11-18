@@ -3,6 +3,8 @@
 #include "printer.h"
 #include "cmd.h"
 
+#include <sys/wait.h>
+
 static int execute_scmd_pipeline(t_list *l_scmd);
 
 // typedef struct s_execute
@@ -45,6 +47,7 @@ int	execution_recursive(t_list *l_cmd, bool pipeline)
 	{
 		// execute SCMD Pipeline
 		execute_scmd_pipeline(l_cmd);
+		// usleep(100000);
 		// wait for all childs
 		return (0);
 	}
@@ -57,8 +60,9 @@ int	execution_recursive(t_list *l_cmd, bool pipeline)
 		execution_recursive(cmd_content(l_cmd)->l_element, true);
 	else if (cmd_content(l_cmd)->type == CMD_GROUP)
 	{
-		printf("CREATING SUBSHELL...\n");
 		pid = fork();
+		if (pid != 0)
+			printf("CREATING SUBSHELL... %d\n", pid);
 		if (pid == 0)
 		{
 			printf("<<< %d\n", getpid());
@@ -70,16 +74,15 @@ int	execution_recursive(t_list *l_cmd, bool pipeline)
 		// fork
 		// if PID=0: execution_recursive(cmd_content(l_cmd)->l_element, false);
 	}
-	else
-	{
-		// && || wait for all childs
-		// wait(NULL);
-		waitpid(pid, NULL, 0);
-		printf("WAITING (&& ||) pid: %d...\n", pid);
-		pid = 0;
-	}
 	if (l_cmd->next) // && exit_status
 	{
+		if (cmd_content(l_cmd->next)->type & (CMD_AND | CMD_OR))
+		{
+			waitpid(pid, NULL, 0);
+			printer_other(cmd_content(l_cmd->next)->type);
+			printf("(waited for: %d)\n", pid);
+			pid = 0;
+		}
 		// if (pipeline)
 			// create pipe_r
 		execution_recursive(l_cmd->next, pipeline);

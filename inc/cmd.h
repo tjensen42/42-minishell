@@ -59,4 +59,6 @@ int			cmd_type(t_list *token);
 int			cmd_list_type(t_list *lst);
 void		c_cmd_destroy(void *c_cmd);
 
+int			cmd_node_remove(t_list **lst, t_list *node);
+
 #endif
