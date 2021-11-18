@@ -4,6 +4,7 @@ static t_list	*parser_cmd_pipeline_create(t_list *start);
 static void		parser_cmd_pipeline_link(t_list **l_cmd,
 					t_list *iter, t_list *pipeline);
 static t_list	*parser_cmd_pipeline_(t_list *start, t_c_cmd *c_cmd);
+static void		parser_cmd_pipeline_add(t_list **lst, t_list *cmd);
 
 int	parser_cmd_pipeline_merge(t_list **l_cmd)
 {
@@ -55,9 +56,11 @@ static t_list	*parser_cmd_pipeline_(t_list *start, t_c_cmd *c_cmd)
 	t_list	*iter;
 	t_list	*tmp;
 
-	ft_lstadd_back(&(c_cmd->l_element), start);
+	// iter = start->next;
+	// ft_lstadd_back(&(c_cmd->l_element), start);
+	// start->next = NULL;
 	iter = start->next;
-	start->next = NULL;
+	parser_cmd_pipeline_add(&(c_cmd->l_element), start);
 	while (iter && cmd_content(iter)->type == CMD_PIPE)
 	{
 		if (iter->next
@@ -65,14 +68,31 @@ static t_list	*parser_cmd_pipeline_(t_list *start, t_c_cmd *c_cmd)
 		{
 			tmp = iter->next;
 			ft_lstdelone(iter, c_cmd_destroy);
-			ft_lstadd_back(&(c_cmd->l_element), tmp);
 			iter = tmp->next;
-			tmp->next = NULL;
+			// ft_lstadd_back(&(c_cmd->l_element), tmp);
+			// tmp->next = NULL;
+			parser_cmd_pipeline_add(&(c_cmd->l_element), tmp);
 		}
 		else
 			break ;
 	}
 	return (iter);
+}
+
+static void	parser_cmd_pipeline_add(t_list **lst, t_list *cmd)
+{
+	if (cmd_content(cmd)->type == CMD_PIPELINE
+		&& cmd_list_type(cmd_content(cmd)->l_element) != CMD_L_SCMD)
+	{
+		ft_lstadd_back(lst, cmd_content(cmd)->l_element);
+		cmd_content(cmd)->l_element = NULL;
+		ft_lstdelone(cmd, c_cmd_destroy);
+	}
+	else
+	{
+		ft_lstadd_back(lst, cmd);
+		cmd->next = NULL;
+	}
 }
 
 static void	parser_cmd_pipeline_link(t_list **l_cmd,
