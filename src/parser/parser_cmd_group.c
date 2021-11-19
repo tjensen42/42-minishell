@@ -1,6 +1,6 @@
 #include "parser.h"
 
-static t_list	*pipeline_create(void);
+static t_list	*group_create(void);
 static t_list	*group_open(t_list *l_cmd);
 static t_list	*group_close(t_list *bracket_o);
 static void		group_linking(t_list **l_cmd, t_list *group, t_list *open, t_list *close);
@@ -23,7 +23,7 @@ int	parser_cmd_group_merge(t_list **l_cmd)
 	}
 	else
 	{
-		group = pipeline_create();
+		group = group_create();
 		if (group == NULL)
 			return (ERROR);
 		group_linking(l_cmd, group, bracket_o, bracket_c);
@@ -65,7 +65,7 @@ static t_list	*group_close(t_list *bracket_o)
 	return (bracket_c);
 }
 
-static t_list	*pipeline_create(void)
+static t_list	*group_create(void)
 {
 	t_c_cmd	*c_cmd;
 
