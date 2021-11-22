@@ -14,16 +14,21 @@ bool	token_is_cmd(t_list *token)
 	return (false);
 }
 
-t_list	*token_get(char *string, int type)
+t_list	*token_create(char *string, int type)
 {
 	t_c_token	*c_token;
+	t_list		*token;
 
 	c_token = malloc(sizeof(t_c_token));
 	if (c_token == NULL)
 		return (NULL);
-	c_token->string = string;
 	c_token->flags = type;
-	return (ft_lstnew(c_token));
+	c_token->string = string;
+	token = ft_lstnew(c_token);
+	if (token == NULL)
+		return (NULL);
+	token->next = NULL;
+	return (token);
 }
 
 void	c_token_destroy(void *c_token)
