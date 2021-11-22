@@ -34,7 +34,7 @@ int	lexer_token_quote(char *str, int *i, t_list **l_token)
 	t_list	*token;
 
 	len = lexer_quote_len(&str[*i]);
-	if (len < 0)
+	if (len == ERROR)
 		return (ERROR);
 	if (len > 0)
 	{
