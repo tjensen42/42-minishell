@@ -74,10 +74,9 @@ grep 42 < in | wc -l && ( echo 1 2 3 4 > out || echo 2 > out >> out out )
 
 (echo 1 | cat 2 && (sleep 5 | sleep 3)) | (sleep 4 | echo 42 || cat)
 
-(	P			&&			P		)	| (	P				||	P)
-
+(	P			&&		(	P	)	)	| (	P				||	P)
+(	P			&&			G			| (	P				||	P)
 				G						|	G
-
 										P
 
 while (brackets left)

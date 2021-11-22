@@ -1,0 +1,10 @@
+{
+	"makefile.extensionOutputFolder": "./.vscode",
+	"makefile.launchConfigurations": [
+		{
+			"cwd": "/Users/timjensen/Nextcloud/42_codingSchool/coding/minishell-42",
+			"binaryPath": "/Users/timjensen/Nextcloud/42_codingSchool/coding/minishell-42/minishell",
+			"binaryArgs": ["echo 1 | (test)"]
+		}
+	]
+}

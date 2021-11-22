@@ -17,7 +17,9 @@
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-int	print_error(char *str);
-int	lst_node_remove(t_list **lst, t_list *node, void (*del)(void *));
+int		print_error(char *str);
+int		lst_node_remove(t_list **lst, t_list *node, void (*del)(void *));
+t_list	*lst_node_prev(t_list *lst, t_list *node);
+int		lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 
 #endif
