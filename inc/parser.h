@@ -22,13 +22,13 @@
 t_list		*parser(t_list *l_token);
 
 // PARSER_SCMD
-t_list		*parser_scmd(t_list *l_token);
-t_list		*parser_scmd_pipeline(t_list *l_scmd);
+t_list		*parser_scmd_tokens(t_list *l_token);
+t_list		*parser_scmd_pipelines(t_list *l_scmd);
 
 // PARSER_CMD_PIPELINE
 int			parser_cmd_pipeline_merge(t_list **l_cmd);
 
 // PARSER_CMD_GROUP
-int			parser_cmd_group_merge(t_list **l_pipeline);
+int			parser_cmd_group_merge(t_list **l_cmd);
 
 #endif

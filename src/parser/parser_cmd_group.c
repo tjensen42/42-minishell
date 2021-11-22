@@ -1,6 +1,5 @@
 #include "parser.h"
 
-static t_list	*group_create(void);
 static t_list	*group_open(t_list *l_cmd);
 static t_list	*group_close(t_list *bracket_o);
 static void		group_linking(t_list **l_cmd, t_list *group, t_list *open, t_list *close);
@@ -18,12 +17,12 @@ int	parser_cmd_group_merge(t_list **l_cmd)
 	if (cmd_content(bracket_o->next)->type == CMD_GROUP
 		&& bracket_o->next->next == bracket_c)
 	{
-		cmd_node_remove(l_cmd, bracket_o);
-		cmd_node_remove(l_cmd, bracket_c);
+		lst_node_remove(l_cmd, bracket_o, c_cmd_destroy);
+		lst_node_remove(l_cmd, bracket_c, c_cmd_destroy);
 	}
 	else
 	{
-		group = group_create();
+		group = cmd_create(CMD_GROUP);
 		if (group == NULL)
 			return (ERROR);
 		group_linking(l_cmd, group, bracket_o, bracket_c);
@@ -65,18 +64,6 @@ static t_list	*group_close(t_list *bracket_o)
 	return (bracket_c);
 }
 
-static t_list	*group_create(void)
-{
-	t_c_cmd	*c_cmd;
-
-	c_cmd = malloc(sizeof(t_c_cmd));
-	if (c_cmd == NULL)
-		return (NULL);
-	c_cmd->type = CMD_GROUP;
-	c_cmd->l_element = NULL;
-	return (ft_lstnew(c_cmd));
-}
-
 static void	group_linking(t_list **l_cmd, t_list *group, t_list *open, t_list *close)
 {
 	t_list	*tmp;
@@ -98,7 +85,6 @@ static void	group_linking(t_list **l_cmd, t_list *group, t_list *open, t_list *c
 	}
 	group->next = close->next;
 }
-
 
 // int	parser_cmd_group_merge(t_list **l_cmd)
 // {

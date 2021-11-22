@@ -1,8 +1,23 @@
 #include "cmd.h"
 
-t_c_cmd	*cmd_content(t_list *cmd)
+t_list	*cmd_create(int type)
 {
-	return ((t_c_cmd *)cmd->content);
+	t_c_cmd	*c_cmd;
+	t_list	*cmd;
+
+	c_cmd = malloc(sizeof(t_c_cmd));
+	if (c_cmd == NULL)
+		return (NULL);
+	c_cmd->type = type;
+	c_cmd->l_element = NULL;
+	cmd = ft_lstnew(c_cmd);
+	if (cmd == NULL)
+	{
+		c_cmd_destroy(c_cmd);
+		return (NULL);
+	}
+	cmd->next = NULL;
+	return (cmd);
 }
 
 int	cmd_type(t_list *token)
@@ -25,6 +40,11 @@ int	cmd_type(t_list *token)
 	else if (token_content(token)->flags & TOK_C_BRACKET)
 		return (CMD_C_BRACKET);
 	return (ERROR);
+}
+
+t_c_cmd	*cmd_content(t_list *cmd)
+{
+	return ((t_c_cmd *)cmd->content);
 }
 
 void	c_cmd_destroy(void *c_cmd)
@@ -54,37 +74,3 @@ int	cmd_list_type(t_list *lst)
 	}
 	return (ERROR);
 }
-
-int	cmd_node_remove(t_list **lst, t_list *node)
-{
-	t_list	*tmp;
-
-	if (!lst || !(*lst) || !node)
-		return (ERROR);
-	if (node == *lst)
-		*lst = node->next;
-	else
-	{
-		tmp = *lst;
-		while (tmp->next && tmp->next != node)
-			tmp = tmp->next;
-		if (tmp->next != node)
-			return (ERROR);
-		tmp->next = node->next;
-	}
-	ft_lstdelone(node, c_cmd_destroy);
-	return (0);
-}
-
-
-// while (tmp)
-// {
-// 	if (*(int *)(tmp->content) == CMD_SCMD)
-// 	{
-// 		ft_lstclear(&(free_cmd->l_element), c_scmd_destroy);
-// 		break ;
-// 	}
-// 	tmp = tmp->next;
-// }
-// if (free_cmd->l_element)
-// 	ft_lstclear(&(free_cmd->l_element), c_cmd_destroy);

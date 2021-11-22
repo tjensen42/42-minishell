@@ -49,16 +49,14 @@ typedef struct s_cmd_content
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-t_c_scmd	*scmd_content(t_list *element);
-t_c_scmd	*c_scmd_get(void);
-void		c_scmd_set(t_c_scmd *c_scmd, t_list **l_token);
-void		c_scmd_destroy(void *c_element);
+t_c_scmd		*scmd_content(t_list *element);
+t_list			*scmd_create(int type);
+void			c_scmd_destroy(void *c_element);
 
-t_c_cmd		*cmd_content(t_list *cmd);
-int			cmd_type(t_list *token);
-int			cmd_list_type(t_list *lst);
-void		c_cmd_destroy(void *c_cmd);
-
-int			cmd_node_remove(t_list **lst, t_list *node);
+t_list			*cmd_create(int type);
+t_c_cmd			*cmd_content(t_list *cmd);
+int				cmd_type(t_list *token);
+int				cmd_list_type(t_list *lst);
+void			c_cmd_destroy(void *c_cmd);
 
 #endif

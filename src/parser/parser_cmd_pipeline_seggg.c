@@ -1,7 +1,6 @@
 #include "parser.h"
 
 static t_list	*pipeline_start(t_list *l_cmd);
-static t_list	*pipeline_create(void);
 static int		pipeline_linking(t_list **l_cmd, t_list *pipeline, t_list *start);
 static void		parser_cmd_pipeline_add(t_list **pipeline_lst, t_list *cmd);
 
@@ -13,7 +12,7 @@ int	parser_cmd_pipeline_merge(t_list **l_cmd)
 	start = pipeline_start(*l_cmd);
 	if (start == NULL)
 		return (0);
-	pipeline = group_create();
+	pipeline = cmd_create(CMD_PIPELINE);
 	if (pipeline == NULL)
 		return (ERROR);
 	pipeline_linking(l_cmd, pipeline, start);
@@ -38,18 +37,6 @@ static t_list	*pipeline_start(t_list *l_cmd)
 		iter = iter->next;
 	}
 	return (NULL);
-}
-
-static t_list	*pipeline_create(void)
-{
-	t_c_cmd	*c_cmd;
-
-	c_cmd = malloc(sizeof(t_c_cmd));
-	if (c_cmd == NULL)
-		return (NULL);
-	c_cmd->type = CMD_PIPELINE;
-	c_cmd->l_element = NULL;
-	return (ft_lstnew(c_cmd));
 }
 
 static int pipeline_linking(t_list **l_cmd, t_list *pipeline, t_list *start)
