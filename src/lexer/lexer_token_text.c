@@ -7,14 +7,18 @@ static int	lexer_other_len(char *chr);
 int	lexer_token_text(char *str, int *i, t_list **l_token)
 {
 	int		len;
+	char	*token_str;
 	t_list	*token;
 
 	len = lexer_text_len(&str[*i]);
-	if (len < 0)
-		return (ERROR);
 	if (len > 0)
 	{
-		token = token_get(ft_substr(str, *i, len), TOK_TEXT);
+		token_str = ft_substr(str, *i, len);
+		if (token_str == NULL)
+			return (ERROR);
+		token = token_create(token_str, TOK_TEXT);
+		if (token == NULL)
+			return (ERROR);
 		ft_lstadd_back(l_token, token);
 		*i += len;
 		if (!ft_strchr(WHITESPACES, str[*i]) && lexer_other_len(&str[*i]) == 0)
@@ -26,6 +30,7 @@ int	lexer_token_text(char *str, int *i, t_list **l_token)
 int	lexer_token_quote(char *str, int *i, t_list **l_token)
 {
 	int		len;
+	char	*token_str;
 	t_list	*token;
 
 	len = lexer_quote_len(&str[*i]);
@@ -33,16 +38,18 @@ int	lexer_token_quote(char *str, int *i, t_list **l_token)
 		return (ERROR);
 	if (len > 0)
 	{
+		token_str = ft_substr(str, *i + 1, len - 2);
+		if (token_str == NULL)
+			return (ERROR);
 		if (str[*i] == '\'')
-			token = token_get(ft_substr(str, *i + 1, len - 2),
-					TOK_TEXT | TOK_S_QUOTE);
+			token = token_create(token_str, TOK_TEXT | TOK_S_QUOTE);
 		else
-			token = token_get(ft_substr(str, *i + 1, len - 2),
-					TOK_TEXT | TOK_D_QUOTE);
+			token = token_create(token_str, TOK_TEXT | TOK_D_QUOTE);
+		if (token == NULL)
+			return (ERROR);
 		ft_lstadd_back(l_token, token);
 		*i += len;
-		if (ft_strchr(WHITESPACES, str[*i]) == NULL
-			&& lexer_other_len(&str[*i]) == 0)
+		if (!ft_strchr(WHITESPACES, str[*i]) && lexer_other_len(&str[*i]) == 0)
 			token_content(token)->flags |= TOK_CONNECTED;
 	}
 	return (0);

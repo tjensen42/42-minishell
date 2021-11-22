@@ -28,27 +28,29 @@ t_list	*lexer(char *input)
 static t_list	*lexer_token_list_get(char *input)
 {
 	int		i;
-	int		status;
 	t_list	*l_token;
 
 	l_token = NULL;
 	i = 0;
 	while (input && input[i])
 	{
-		lexer_token_bin_op(input, &i, &l_token);
-		lexer_token_pipe(input, &i, &l_token);
-		lexer_token_bracket(input, &i, &l_token);
-		lexer_token_redir(input, &i, &l_token);
-		lexer_token_text(input, &i, &l_token);
-		status = lexer_token_quote(input, &i, &l_token);
-		if (status < 0)
-		{
-			ft_lstclear(&l_token, c_token_destroy);
-			return (NULL);
-		}
+		if (lexer_token_bin_op(input, &i, &l_token) == ERROR)
+			break ;
+		if (lexer_token_pipe(input, &i, &l_token) == ERROR)
+			break ;
+		if (lexer_token_bracket(input, &i, &l_token) == ERROR)
+			break ;
+		if (lexer_token_redir(input, &i, &l_token) == ERROR)
+			break ;
+		if (lexer_token_text(input, &i, &l_token) == ERROR)
+			break ;
+		if (lexer_token_quote(input, &i, &l_token) == ERROR)
+			break ;
 		while (input[i] && ft_strchr(WHITESPACES, input[i]))
 			i++;
 	}
+	if (input[i] != '\0')
+		ft_lstclear(&l_token, c_token_destroy);
 	return (l_token);
 }
 
