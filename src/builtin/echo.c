@@ -6,7 +6,7 @@ int builtin_echo(char **argv)
 	bool	newline;
 
 	if (!argv || !argv[0])
-		return (print_error("minishell: echo: Input error"));
+		return (print_error("minishell: echo: input error"));
 	newline = false;
 	i = 1;
 	while (argv[i] && !ft_strncmp(argv[i], "-n", 3))
