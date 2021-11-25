@@ -8,6 +8,16 @@ int	print_error(char *str)
 	return (ERROR);
 }
 
+int	count_str_array(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv && argv[i])
+		i++;
+	return (i);
+}
+
 int	lst_node_remove(t_list **lst, t_list *node, void (*del)(void *))
 {
 	t_list	*tmp;
@@ -55,5 +65,35 @@ int	lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end)
 		node->next = NULL;
 	else
 		node->next = end->next;
+	return (0);
+}
+
+int	split_append_str(char ***split, char *str)
+{
+	int		i;
+	char	**new_split;
+
+	new_split = malloc((count_str_array(*split) + 2) * sizeof(char *));
+	if (new_split == NULL)
+		return (ERROR);
+	i = 0;
+	while ((*split)[i])
+	{
+		new_split[i] = (*split)[i];
+		i++;
+	}
+	new_split[i] = str;
+	new_split[i + 1] = NULL;
+	free(*split);
+	*split = new_split;
+	return (0);
+}
+
+int	split_replace_str_i(char ***split, int i, char *new)
+{
+	if (*split == NULL)
+		return (ERROR);
+	free((*split)[i]);
+	(*split)[i] = new;
 	return (0);
 }

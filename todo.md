@@ -24,4 +24,8 @@ heikelste Sache:
 	- Wildcards erfordern split manipulation
 
 
+# Resources
+
+https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defined-environment-variables-in-a-linux-ba
+
 

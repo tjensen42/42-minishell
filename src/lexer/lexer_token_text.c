@@ -15,10 +15,10 @@ int	lexer_token_text(char *str, int *i, t_list **l_token)
 	{
 		token_str = ft_substr(str, *i, len);
 		if (token_str == NULL)
-			return (ERROR);
+			return (print_error(ERR_NO_MEM));
 		token = token_create(token_str, TOK_TEXT);
 		if (token == NULL)
-			return (ERROR);
+			return (print_error(ERR_NO_MEM));
 		ft_lstadd_back(l_token, token);
 		*i += len;
 		if (!ft_strchr(WHITESPACES, str[*i]) && lexer_other_len(&str[*i]) == 0)
@@ -40,13 +40,13 @@ int	lexer_token_quote(char *str, int *i, t_list **l_token)
 	{
 		token_str = ft_substr(str, *i + 1, len - 2);
 		if (token_str == NULL)
-			return (ERROR);
+			return (print_error(ERR_NO_MEM));
 		if (str[*i] == '\'')
 			token = token_create(token_str, TOK_TEXT | TOK_S_QUOTE);
 		else
 			token = token_create(token_str, TOK_TEXT | TOK_D_QUOTE);
 		if (token == NULL)
-			return (ERROR);
+			return (print_error(ERR_NO_MEM));
 		ft_lstadd_back(l_token, token);
 		*i += len;
 		if (!ft_strchr(WHITESPACES, str[*i]) && lexer_other_len(&str[*i]) == 0)

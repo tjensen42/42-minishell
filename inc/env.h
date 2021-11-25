@@ -1,5 +1,5 @@
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#ifndef ENV_H
+# define ENV_H
 
 /* ************************************************************************** */
 /* INCLUDES																	  */
@@ -14,11 +14,8 @@
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-int builtin_echo(char **argv);
-int	builtin_env(void);
-int	builtin_exit(char **argv);
-int	builtin_pwd(void);
-
-int	count_str_array(char **argv);
+int		env_init(void);
+char	*env_get_value(char *var_name);
+int		env_unset_var(char *name);
 
 #endif

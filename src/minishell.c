@@ -2,6 +2,8 @@
 #include "parser.h"
 #include "minishell.h"
 #include "printer.h"
+#include "env.h"
+#include "global.h"
 
 #include <stdio.h>
 #include <readline/readline.h>
@@ -10,10 +12,14 @@
 char	*minishell_get_line(void);
 int		minishell_process_input(char *input);
 
+char	**g_env = NULL;
+
 int	main(int argc, char *argv[])
 {
 	char	*input;
 
+	if (env_init() == ERROR)
+		return (ERROR);
 	if (argc == 2 && argv[1])
 		minishell_process_input(argv[1]);
 	else

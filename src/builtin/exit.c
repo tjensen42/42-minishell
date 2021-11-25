@@ -9,7 +9,7 @@ int	builtin_exit(char **argv)
 
 	ft_putstr_fd("exit\n", 2);
 	exit_num = 0; // set to last exit code
-	argc = builtin_count_argv(argv);
+	argc = count_str_array(argv);
 	if (argc >= 2 && num_is_numeric(argv[1]) == false)
 		return (ERROR);
 	else if (argc == 2)
