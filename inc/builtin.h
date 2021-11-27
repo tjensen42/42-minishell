@@ -19,6 +19,4 @@ int	builtin_env(void);
 int	builtin_exit(char **argv);
 int	builtin_pwd(void);
 
-int	count_str_array(char **argv);
-
 #endif
