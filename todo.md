@@ -29,3 +29,6 @@ heikelste Sache:
 https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defined-environment-variables-in-a-linux-ba
 
 
+-> path_get unset PATH execution with or without "./"
+
+-> connected token in printer

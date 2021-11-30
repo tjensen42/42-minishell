@@ -2,10 +2,16 @@
 #include "minishell.h"
 #include "printer.h"
 #include "cmd.h"
+#include "builtin.h"
 
+#include <sys/types.h>
 #include <sys/wait.h>
 
+static int scmd_preperation(t_c_scmd *c_scmd, int pipes[2][2], int i, bool last);
+static void	child_set_pipes(int fd[2], int pipes[2][2], int i, bool last);
+static int	close_pipes(int	pipes[2][2], int i, bool last);
 static int execute_scmd_pipeline(t_list *l_scmd);
+static char	**list_to_split(t_list *l_token);
 
 // typedef struct s_execute
 // {
@@ -100,6 +106,156 @@ int	execution_recursive(t_list *l_cmd, bool pipeline)
 
 static int execute_scmd_pipeline(t_list *l_scmd)
 {
+	int		i;
+	int		pid;
+	int		status;
+	int		fildes[2][2];
+	t_list	*iter;
+
 	printer_scmd_pipeline(l_scmd, true);
+	iter = l_scmd;
+	i = 0;
+	while (iter)
+	{
+		if (iter->next)
+			pipe(fildes[i % 2]);
+		pid = fork();
+		if (pid == 0)
+			scmd_preperation(scmd_content(l_scmd), fildes, i, (iter->next == NULL));
+		close_pipes(fildes, i, (iter->next == NULL));
+		iter = iter->next;
+		i++;
+	}
+	waitpid(pid, &status, 0);
+	waitpid(-1, NULL, 0);
 	return (0);
+}
+
+static int	close_pipes(int	pipes[2][2], int i, bool last)
+{
+	if (i == 0)
+		close(pipes[0][1]);
+	else if (last)
+		close(pipes[(i + 1) % 2][0]);
+	else if (i % 2 == 1)
+	{
+		close(pipes[0][0]);
+		close(pipes[1][1]);
+	}
+	else if (i % 2 == 0)
+	{
+		close(pipes[1][0]);
+		close(pipes[0][1]);
+	}
+	else if (i == -1)
+	{
+		close(pipes[0][0]);
+		close(pipes[0][1]);
+		close(pipes[1][0]);
+		close(pipes[1][1]);
+	}
+	return (0);
+}
+
+static void	child_set_pipes(int fd[2], int pipes[2][2], int i, bool last)
+{
+	if (i == 0)
+	{
+		fd[0] = 0;
+		fd[1] = pipes[0][1];
+	}
+	else if (last)
+	{
+		fd[0] = pipes[(i + 1) % 2][0];
+		fd[1] = 1;
+	}
+	else if (i % 2 == 1)
+	{
+		fd[0] = pipes[0][0];
+		fd[1] = pipes[1][1];
+	}
+	else if (i % 2 == 0)
+	{
+		fd[0] = pipes[1][0];
+		fd[1] = pipes[0][1];
+	}
+}
+
+static int scmd_preperation(t_c_scmd *c_scmd, int pipes[2][2], int i, bool last)
+{
+	int		fd[2];
+	char	**argv;
+
+	child_set_pipes(fd, pipes, i, last);
+	close_pipes(pipes, -1, false);
+	// Variable expansion
+	// Wildcard expansion
+	// Redir processing
+	// create ARGV split
+	argv = list_to_split(c_scmd->l_argv);
+	printf("|%s| |%s|\n", argv[0], argv[1]);
+	execve(argv[0], argv, g_env);
+	print_error("Error execve");
+	ft_free_split(&argv);
+	return (ERROR);
+}
+
+// int	child_execute(int pipe_r, int pipe_w, char *cmd_str)
+// {
+// 	int			status;
+// 	int			fd[2];
+// 	char		**cmd;
+// 	extern char	**environ;
+
+// 	cmd = pipex_cmd_get(cmd_str, &status);
+// 	if (cmd == NULL)
+// 		return (status);
+// 	dup2(pipe_r, STDIN_FILENO);
+// 	close(pipe_r);
+// 	dup2(pipe_w, STDOUT_FILENO);
+// 	close(pipe_w);
+// 	execve(cmd[0], cmd, environ);
+// 	print_error("child error");
+// 	ft_free_split(cmd);
+// 	return (EXIT_FAILURE);
+// }
+
+static char	**list_to_split(t_list *l_token)
+{
+	int		i;
+	char	*tmp;
+	char	**split;
+	t_list	*iter;
+
+	i = 0;
+	iter = l_token;
+	while (iter)
+	{
+		if (!(token_content(iter)->flags & TOK_CONNECTED))
+			i++;
+		iter = iter->next;
+	}
+	split = malloc((i + 1) * sizeof(char *));
+	i = 0;
+	iter = l_token;
+	while (iter)
+	{
+		if (token_content(iter)->flags & TOK_CONNECTED)
+		{
+			split[i] = ft_strdup(token_content(iter)->string);
+			while (token_content(iter)->flags & TOK_CONNECTED)
+			{
+				tmp = split[i];
+				split[i] = ft_strjoin(split[i], token_content(iter->next)->string);
+				free(tmp);
+				iter = iter->next;
+			}
+		}
+		else
+			split[i] = ft_strdup(token_content(iter)->string);
+		iter = iter->next;
+		i++;
+	}
+	split[i] = NULL;
+	return (split);
 }
