@@ -6,9 +6,10 @@ extern char **environ;
 
 int	main(void)
 {
-	// printf("%s\n", *environ);
-	if (environ)
-		for (char **ep = environ; *ep; ep++)
-			(void)printf("%s\n", *ep);
-	// printf("%s\n", getenv("testprogramm"));
+	int i;
+	char buf[256];
+
+	i = read(0, &buf, 21);
+	buf[i] = '\0';
+	printf("%s", buf);
 }

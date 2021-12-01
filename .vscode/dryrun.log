@@ -1,0 +1,78 @@
+make debug --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/tjensen/Documents/code/minishell'
+for DIR in lib/libft; do /Applications/Xcode.app/Contents/Developer/usr/bin/make -C $DIR debug --silent; done
+ 
+printf "###############################################\n"
+printf "\033[0;33m####### MINISHELL\033[m\n"
+ 
+mkdir -p obj/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/minishell.c -o obj/minishell.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/minishell.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/utils.c -o obj/utils.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/utils.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/token.c -o obj/token.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/token.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/cmd/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/cmd/cmd.c -o obj/cmd/cmd.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/cmd/cmd.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/cmd/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/cmd/scmd.c -o obj/cmd/scmd.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/cmd/scmd.o" "\033[0;32m[✓]\033[m\n"
+ 
+mkdir -p obj/env/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/env/env.c -o obj/env/env.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/env/env.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/lexer/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/lexer/lexer.c -o obj/lexer/lexer.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer/lexer.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/lexer/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/lexer/lexer_syntax.c -o obj/lexer/lexer_syntax.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer/lexer_syntax.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/lexer/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/lexer/lexer_token_other.c -o obj/lexer/lexer_token_other.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer/lexer_token_other.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/lexer/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/lexer/lexer_token_text.c -o obj/lexer/lexer_token_text.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/lexer/lexer_token_text.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/parser/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/parser/parser.c -o obj/parser/parser.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser/parser.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/parser/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/parser/parser_scmd.c -o obj/parser/parser_scmd.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser/parser_scmd.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/parser/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/parser/parser_scmd_pipeline.c -o obj/parser/parser_scmd_pipeline.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser/parser_scmd_pipeline.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/parser/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/parser/parser_cmd_pipeline.c -o obj/parser/parser_cmd_pipeline.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser/parser_cmd_pipeline.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/parser/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/parser/parser_cmd_group.c -o obj/parser/parser_cmd_group.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/parser/parser_cmd_group.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/execution/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/execution/execution.c -o obj/execution/execution.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/execution/execution.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/printer/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/printer/printer_token.c -o obj/printer/printer_token.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/printer/printer_token.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/printer/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/printer/printer_scmd.c -o obj/printer/printer_scmd.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/printer/printer_scmd.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/printer/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/printer/printer_cmd.c -o obj/printer/printer_cmd.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/printer/printer_cmd.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/builtin/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/builtin/echo.c -o obj/builtin/echo.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/builtin/echo.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/builtin/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/builtin/exit.c -o obj/builtin/exit.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/builtin/exit.o" "\033[0;32m[✓]\033[m\n"
+mkdir -p obj/builtin/
+gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/builtin/utils.c -o obj/builtin/utils.o
+printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/builtin/utils.o" "\033[0;32m[✓]\033[m\n"
+gcc -O0 -DDEBUG -g -o minishell obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj/env/env.o obj/lexer/lexer.o obj/lexer/lexer_syntax.o obj/lexer/lexer_token_other.o obj/lexer/lexer_token_text.o obj/parser/parser.o obj/parser/parser_scmd.o obj/parser/parser_scmd_pipeline.o obj/parser/parser_cmd_pipeline.o obj/parser/parser_cmd_group.o obj/execution/execution.o obj/printer/printer_token.o obj/printer/printer_scmd.o obj/printer/printer_cmd.o obj/builtin/echo.o obj/builtin/exit.o obj/builtin/utils.o -L./lib/libft -lft -lreadline
+printf "\033[0;32m======= minishell\033[m\n"
+make: Leaving directory `/Users/tjensen/Documents/code/minishell'
+ 

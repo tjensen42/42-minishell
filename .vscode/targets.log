@@ -1,0 +1,511 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+
+# Make data base, printed on Wed Dec  1 16:41:24 2021
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# makefile (from `Makefile', line 47)
+INCLUDES := -I./inc/ -I./lib/libft -I./lib/libft/inc
+# makefile (from `Makefile', line 24)
+SRCS_EXEC := execution.c
+# makefile (from `Makefile', line 52)
+B = \033[0;34m
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile (from `Makefile', line 46)
+LDLIBS := -L./lib/libft -lft -lreadline
+# makefile
+CURDIR := /Users/tjensen/Documents/code/minishell
+# makefile
+SHELL = /bin/sh
+# makefile (from `Makefile', line 55)
+R = \033[0;31m
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# makefile (from `Makefile', line 56)
+X = \033[m
+# makefile (from `Makefile', line 26)
+SRCS_PRINTER := printer_token.c printer_scmd.c printer_cmd.c
+# environment
+_ = /usr/bin/make
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# makefile (from `Makefile', line 54)
+G = \033[0;32m
+# makefile (from `Makefile', line 53)
+Y = \033[0;33m
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# makefile (from `Makefile', line 43)
+OBJS := obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj/env/env.o obj/lexer/lexer.o obj/lexer/lexer_syntax.o obj/lexer/lexer_token_other.o obj/lexer/lexer_token_text.o obj/parser/parser.o obj/parser/parser_scmd.o obj/parser/parser_scmd_pipeline.o obj/parser/parser_cmd_pipeline.o obj/parser/parser_cmd_group.o obj/execution/execution.o obj/printer/printer_token.o obj/printer/printer_scmd.o obj/printer/printer_cmd.o obj/builtin/echo.o obj/builtin/exit.o obj/builtin/utils.o
+# makefile (from `Makefile', line 22)
+SRCS_LEXER := lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/vscode-ipc-029e6a9d-940a-41f9-ad8c-350ddc6574ce.sock
+# environment
+VSCODE_CWD = /
+# environment
+PATH = /usr/bin:/bin:/usr/sbin:/sbin
+# makefile (from `Makefile', line 45)
+LIBDIRS := lib/libft
+# environment
+LaunchInstanceID = 81AAF48A-7ED3-4F65-8809-0393F3C57C95
+# environment
+VSCODE_LOG_STACK = false
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# makefile (from `Makefile', line 51)
+LB = \033[0;36m
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.4RgKFOrLfW/Listeners
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+PWD = /Users/tjensen/Documents/code/minishell
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
+# environment
+HOME = /Users/tjensen
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/tjensen/Library/Application Support/Code/CachedData/379476f0e13988d90fab105c5c19e7abc8b1dea8
+# environment
+LOGNAME = tjensen
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# makefile (from `Makefile', line 70)
+MAKE_LIBS = 	for DIR in $(LIBDIRS); do $(MAKE) -C $$DIR $(1) --silent; done
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# makefile (from `Makefile', line 28)
+SRCS := minishell.c utils.c token.c cmd/cmd.c cmd/scmd.c env/env.c lexer/lexer.c lexer/lexer_syntax.c lexer/lexer_token_other.c lexer/lexer_token_text.c parser/parser.c parser/parser_scmd.c parser/parser_scmd_pipeline.c parser/parser_cmd_pipeline.c parser/parser_cmd_group.c execution/execution.c printer/printer_token.c printer/printer_scmd.c printer/printer_cmd.c builtin/echo.c builtin/exit.c builtin/utils.c
+# environment
+SHLVL = 1
+# makefile (from `Makefile', line 23)
+SRCS_PARSER := parser.c parser_scmd.c parser_scmd_pipeline.c parser_cmd_pipeline.c parser_cmd_group.c
+# makefile (from `Makefile', line 38)
+CC := gcc
+# makefile (from `Makefile', line 42)
+ODIR := obj
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = tjensen
+# makefile
+.DEFAULT_GOAL := all
+# makefile (from `Makefile', line 17)
+NAME := minishell
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# makefile (from `Makefile', line 41)
+SDIR := src
+# default
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+# makefile (from `Makefile', line 25)
+SRCS_BUILTIN := echo.c exit.c utils.c
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/tjensen/Library/Application Support/Code/1.59.0-main.sock
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000003.Electron
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+__CF_USER_TEXT_ENCODING = 0x18BCB:0:0
+# environment
+COMMAND_MODE = unix2003
+# default
+MAKEFILES := 
+# environment
+VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# environment
+SECURITYSESSIONID = 186a7
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
+# environment
+MAKELEVEL := 0
+# environment
+LANG = C
+# environment
+VSCODE_PID = 8948
+# variable set hash-table stats:
+# Load=85/1024=8%, Rehash=0, Collisions=9/145=6%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# lib (device 16777225, inode 1499461): 3 files, no impossibilities.
+# . (device 16777225, inode 1499386): 19 files, no impossibilities.
+# src (device 16777225, inode 1499532): No files, no impossibilities so far.
+
+# 22 files, no impossibilities in 3 directories.
+
+# Implicit Rules
+
+obj/%.o: src/%.c
+#  commands to execute (from `Makefile', line 89):
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@printf "%-57b %b" "$(B)compile $(LB)$@" "$(G)[✓]$(X)\n"
+	
+
+# 1 implicit rules, 0 (0.0%) terminal.
+
+# Files
+
+# Not a target:
+obj/parser/parser_scmd_pipeline.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/lexer/lexer.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: minishell
+#  Phony target (prerequisite of .PHONY).
+#  Command-line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/7=0%
+
+# Not a target:
+obj/builtin/utils.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+.PHONY: all minishell header clean fclean re bonus debug release libs test
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/lexer/lexer_token_text.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/parser/parser_cmd_pipeline.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/lexer/lexer_token_other.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+header:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 94):
+	@printf "###############################################\n"
+	@printf "$(Y)####### $(shell echo "$(NAME)" | tr '[:lower:]' '[:upper:]')$(X)\n"
+	
+
+# Not a target:
+obj/env/env.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+ 
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2021-12-01 12:05:37
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+libs:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := libs
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=3/15=20%
+#  commands to execute (from `Makefile', line 121):
+	@$(call MAKE_LIBS,all)
+	
+
+debug: all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+# makefile (from `Makefile', line 110)
+# CFLAGS += -O0 -DDEBUG -g
+# variable set hash-table stats:
+# Load=1/32=3%, Rehash=0, Collisions=0/2=0%
+
+test:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 125):
+	@cd tests && bash tester.sh
+	
+
+# Not a target:
+obj/printer/printer_scmd.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/builtin/exit.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+minishell: libs header obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj/env/env.o obj/lexer/lexer.o obj/lexer/lexer_syntax.o obj/lexer/lexer_token_other.o obj/lexer/lexer_token_text.o obj/parser/parser.o obj/parser/parser_scmd.o obj/parser/parser_scmd_pipeline.o obj/parser/parser_cmd_pipeline.o obj/parser/parser_cmd_group.o obj/execution/execution.o obj/printer/printer_token.o obj/printer/printer_scmd.o obj/printer/printer_cmd.o obj/builtin/echo.o obj/builtin/exit.o obj/builtin/utils.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/7=0%
+#  commands to execute (from `Makefile', line 85):
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
+	@printf "$(G)======= $(NAME)$(X)\n"
+	
+
+# Not a target:
+obj/printer/printer_cmd.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bonus: all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+fclean: libs header clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 103):
+	@$(RM) $(NAME)
+	@printf "%-50b %b" "$(R)fclean" "$(G)[✓]$(X)\n"
+	
+
+# Not a target:
+obj/lexer/lexer_syntax.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/cmd/scmd.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+release: fclean all clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+# makefile (from `Makefile', line 114)
+# CFLAGS += -O2 -DNDEBUG
+# variable set hash-table stats:
+# Load=1/32=3%, Rehash=0, Collisions=0/2=0%
+
+# Not a target:
+obj/parser/parser.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/token.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+re: fclean all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+clean: libs header
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 98):
+	@$(RM) -r $(ODIR)
+	@$(RM) -r *.dSYM $(SDIR)/*.dSYM $(SDIR)/$(NAME)
+	@printf "%-50b %b" "$(R)clean" "$(G)[✓]$(X)\n"
+	
+
+# Not a target:
+obj/utils.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/cmd/cmd.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/printer/printer_token.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/minishell.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/parser/parser_cmd_group.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/execution/execution.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/parser/parser_scmd.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+obj/builtin/echo.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=37/1024=4%, Rehash=0, Collisions=10/103=10%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Wed Dec  1 16:41:24 2021
+
+ 

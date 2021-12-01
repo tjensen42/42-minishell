@@ -1,0 +1,10 @@
+{
+	"makefile.extensionOutputFolder": "./.vscode",
+	"makefile.launchConfigurations": [
+		{
+			"cwd": "/Users/tjensen/Documents/code/minishell",
+			"binaryPath": "/Users/tjensen/Documents/code/minishell/minishell",
+			"binaryArgs": ["echo 1"]
+		}
+	]
+}

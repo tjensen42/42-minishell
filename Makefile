@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/11/25 10:53:07 by tjensen          ###   ########.fr        #
+#    Updated: 2021/12/01 12:05:37 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ LDLIBS		:= -lft -lreadline
 # **************************************************************************** #
 
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror
+# CFLAGS		:= -Wall -Wextra -Werror
 
 SDIR		:= src
 ODIR		:= obj

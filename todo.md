@@ -32,3 +32,5 @@ https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defi
 -> path_get unset PATH execution with or without "./"
 
 -> connected token in printer
+
+-> PATH test: wenn / vorhanden nur direkt ohne an PATH-Folder anzuhaengen, wenn keins vorhanden nur an alle PATHs anhaengen, auch an einen leeren
