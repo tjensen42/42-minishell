@@ -11,7 +11,7 @@ t_list	*parser_scmd_tokens(t_list *l_token)
 	l_scmd = NULL;
 	while (l_token != NULL)
 	{
-		scmd = scmd_create(cmd_type(l_token));
+		scmd = scmd_create(cmd_type_from_token(l_token));
 		if (scmd == NULL)
 		{
 			ft_lstclear(&l_scmd, c_scmd_destroy);
@@ -34,7 +34,7 @@ static void	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
 {
 	t_list	*next;
 
-	while (cmd_type(*l_token) == CMD_SCMD)
+	while (cmd_type_from_token(*l_token) == CMD_SCMD)
 	{
 		next = (*l_token)->next;
 		if (token_content(*l_token)->flags & (TOK_REDIR | TOK_REDIR_FILE))

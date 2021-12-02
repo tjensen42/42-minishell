@@ -74,8 +74,7 @@ static void	pipeline_content(t_c_cmd *c_pl, t_list *start, t_list *end)
 		next = iter->next;
 		if (cmd_content(iter)->type == CMD_PIPE)
 			ft_lstdelone(iter, c_cmd_destroy);
-		else if (cmd_content(iter)->type == CMD_PIPELINE
-				&& cmd_list_type(cmd_content(iter)->l_element) != CMD_L_SCMD)
+		else if (cmd_content(iter)->type == CMD_PIPELINE) //&& cmd_list_type(cmd_content(iter)->l_element) != CMD_L_SCMD
 		{
 			ft_lstadd_back(&(c_pl->l_element), cmd_content(iter)->l_element);
 			cmd_content(iter)->l_element = NULL;

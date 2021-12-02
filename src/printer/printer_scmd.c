@@ -2,37 +2,7 @@
 #include "printer.h"
 #include "cmd.h"
 
-static void	printer_scmd_commands(t_c_scmd *scmd);
-
-void	printer_scmd(t_list *l_scmd)
-{
-	printf("\e[37;7mSCMD:\t\t\e[m");
-	while (l_scmd)
-	{
-		if (scmd_content(l_scmd)->type == CMD_SCMD)
-			printer_scmd_commands(scmd_content(l_scmd));
-		else
-			printer_other(scmd_content(l_scmd)->type);
-		l_scmd = l_scmd->next;
-	}
-	printf("\n");
-}
-
-void	printer_scmd_structure(t_list *l_scmd)
-{
-	printf("\e[37;7mSCMD_STRUCT:\t\e[m");
-	while (l_scmd)
-	{
-		if (scmd_content(l_scmd)->type == CMD_SCMD)
-			printf("SCMD ");
-		else
-			printer_other(scmd_content(l_scmd)->type);
-		l_scmd = l_scmd->next;
-	}
-	printf("\n");
-}
-
-static void	printer_scmd_commands(t_c_scmd *scmd)
+void	printer_scmd(t_c_scmd *scmd)
 {
 	t_list	*tmp;
 	bool	command;
@@ -81,7 +51,7 @@ void	printer_scmd_pipeline(t_list *l_scmd_pipeline, bool newline)
 {
 	while (l_scmd_pipeline)
 	{
-		printer_scmd_commands(scmd_content(l_scmd_pipeline));
+		printer_scmd(scmd_content(l_scmd_pipeline));
 		if (l_scmd_pipeline->next)
 			printer_other(CMD_PIPE);
 		l_scmd_pipeline = l_scmd_pipeline->next;

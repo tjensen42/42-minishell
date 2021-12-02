@@ -7,14 +7,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-static int	execution_pipeline(t_list *pipeline);
-static int	execution_pipeline_element(t_list *element, int pipes[2][2], int i, bool last);
-static int	execution_scmd(t_list *scmd, bool pipeline);
-static void	pipes_init(int pipes[2][2]);
-static int	close_pipe_end(int pipe_end);
+static int scmd_preperation(t_c_scmd *c_scmd, int pipes[2][2], int i, bool last);
 static void	child_set_pipes(int fd[2], int pipes[2][2], int i, bool last);
 static int	close_pipes(int	pipes[2][2], int i, bool last);
+static int execute_scmd_pipeline(t_list *l_scmd);
 static char	**list_to_split(t_list *l_token);
+
 
 static void	environ_path_append_slash(char **paths)
 {
@@ -89,50 +87,112 @@ static int	pipex_cmd_set_path(char **cmd)
 	return (127);
 }
 
+// typedef struct s_execute
+// {
+// 	int		pipe_r;
+// 	int		pipe_w;
+// 	char	*here_doc;
+// 	int		exit_status;
+// };
 
+// redirs hoehere prio als pipes
+//
+// NEXT STEPS:
+// 0.	here_doc
+// 1.	Recursive Execution *
+// 	1.2	Expansion (Variable replacement && Wildcard expansion)
+// 	1.3	Builtin check
+// 	1.4	Path finding
+// 2.	ENV-Variable
+// 3.	Builtins
+// 4.	Signal Handling
+//
 
+// ( ( echo 4 ) | ( ( echo 6 ) ) )
 
-
-
-int	execution_recursive(t_list *l_cmd)
+static void	pipes_init(int pipes[2][2])
 {
-	int	pid;
-	int	status;
+	pipes[0][0] = -1;
+	pipes[0][1] = -1;
+	pipes[1][0] = -1;
+	pipes[1][1] = -1;
+}
+
+static int	close_pipe_end(int pipe_end)
+{
+	if (pipe_end == -1)
+		return (0);
+	return (close(pipe_end));
+}
+
+// int execution_wrapper(t_list *l_cmd)
+// {
+// 	execution_recursive(l_cmd, (!l_cmd->next && cmd_content(l_cmd)->type == CMD_PIPELINE));
+// 	return (0);
+// }
+
+// Pipes müssen immer direkt erkannt werden und pipe info muss über Funktionsaufrauf hinaus erhalten bleiben
+int	execution_recursive(t_list *l_cmd, bool pipeline)
+{
+	int pid;
+	int status;
 
 	pid = 0;
 	status = 0;
-	if (cmd_type(l_cmd) == CMD_PIPELINE && ft_lstsize(cmd_content(l_cmd)->l_element) == 1)
-		status = execution_scmd(cmd_content(l_cmd)->l_element, false);
-	else if (cmd_type(l_cmd) == CMD_PIPELINE)
-		status = execution_pipeline(l_cmd);
-	else if (cmd_type(l_cmd) == CMD_GROUP)
+	if (cmd_list_type(l_cmd) == CMD_L_SCMD)
+		return (execute_scmd_pipeline(l_cmd));
+	// if (l_cmd->next && pipeline)
+	// {
+	// 	printf("CREATING PIPE...\n");
+	// }
+	if (cmd_content(l_cmd)->type == CMD_PIPELINE)
+		status = execution_recursive(cmd_content(l_cmd)->l_element, true);
+	else if (cmd_content(l_cmd)->type == CMD_GROUP)
 	{
 		pid = fork();
+		// if (pid != 0)
+		// 	printf("CREATING SUBSHELL... %d\n", pid);
 		if (pid == 0)
 		{
-			status = execution_recursive(cmd_content(l_cmd)->l_element);
+			// printf("<<< %d\n", getpid());
+			status = execution_recursive(cmd_content(l_cmd)->l_element, false);
+			// execution_wrapper(cmd_content(l_cmd)->l_element);
+			// printf(">>> %d\n", getpid());
 			exit(status);
 		}
-		waitpid(pid, &status, 0);
-		status = WEXITSTATUS(status);
 	}
-	if (l_cmd->next)
+	if (l_cmd->next) // && exit_status
 	{
-		l_cmd = l_cmd->next;
-		while (((cmd_content(l_cmd)->type & CMD_AND) && status != 0)
-				|| ((cmd_content(l_cmd)->type & CMD_OR) && status == 0))
+		// write(1, "112", 3);
+		if (pid && cmd_content(l_cmd->next)->type & (CMD_AND | CMD_OR))
 		{
-			l_cmd = l_cmd->next->next;
+			waitpid(pid, &status, 0);
+			status = WEXITSTATUS(status);
+			pid = 0;
+		}
+		if (((cmd_content(l_cmd->next)->type & CMD_AND && status != 0) || (cmd_content(l_cmd->next)->type & CMD_OR && status == 0)))
+		{
+			l_cmd = l_cmd->next->next->next;
 			if (l_cmd == NULL)
 				return (status);
 		}
-		// printf("|%d|", cmd_content(l_cmd)->type);
-		status = execution_recursive(l_cmd->next);
+		// if (pipeline)
+			// create pipe_r
+		status = execution_recursive(l_cmd->next, pipeline);
 	}
+	if (pid != 0)
+	{
+		// printf("waiting for: %d\n", pid);
+		waitpid(pid, &status, 0);
+		status = WEXITSTATUS(status);
+		while (wait(NULL) >= 0);
+		// printf("waited for: %d\n", pid);
+	}
+	// //return (exit_status);
 	return (status);
 }
 
-static int	execution_pipeline(t_list *pipeline)
+static int execute_scmd_pipeline(t_list *l_scmd)
 {
 	int		i;
 	int		pid;
@@ -141,76 +201,23 @@ static int	execution_pipeline(t_list *pipeline)
 	t_list	*iter;
 
 	pipes_init(pipes);
+	printer_scmd_pipeline(l_scmd, true);
+	iter = l_scmd;
 	i = 0;
-	iter = cmd_content(pipeline)->l_element;
 	while (iter)
 	{
 		if (iter->next)
 			if (pipe(pipes[i % 2]) < 0)
-				return (print_error("Too many open files."));
+				perror("");
 		pid = fork();
 		if (pid == 0)
-			execution_pipeline_element(iter, pipes, i, (iter->next == NULL));
+			scmd_preperation(scmd_content(iter), pipes, i, (iter->next == NULL));
 		close_pipes(pipes, i, (iter->next == NULL));
 		iter = iter->next;
 		i++;
 	}
 	waitpid(pid, &status, 0);
 	while (wait(NULL) >= 0);
-	status = WEXITSTATUS(status);
-	return (status);
-}
-
-static int	execution_pipeline_element(t_list *element, int pipes[2][2], int i, bool last)
-{
-	int		fd[2];
-	int		status;
-
-	child_set_pipes(fd, pipes, i, last);
-	dup2(fd[0], STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
-	close_pipes(pipes, -1, false);
-	if (cmd_type(element) == CMD_SCMD)
-		status = execution_scmd(element, true);
-	else if (cmd_type(element) == CMD_GROUP)
-	{
-		status = execution_recursive(cmd_content(element)->l_element);
-		exit(status);
-	}
-	return (status);
-}
-
-static int	execution_scmd(t_list *scmd, bool pipeline)
-{
-	int			pid;
-	int			status;
-	char		**argv;
-	t_c_scmd	*c_scmd;
-
-	c_scmd = scmd_content(scmd);
-	// Variable expansion
-	// Wildcard expansion
-	// Redir processing
-	argv = list_to_split(c_scmd->l_argv);
-	//builtin check
-	pid = 0;
-	if (!pipeline)
-		pid = fork();
-	if (pid == 0 || pipeline)
-	{
-		if (pipex_cmd_set_path(argv) != 0)
-		{
-			write(2, argv[0], ft_strlen(argv[0]));
-			print_error(": command not found");
-			ft_free_split(&argv);
-			exit(127);
-		}
-		execve(argv[0], argv, g_env);
-		print_error("Error execve");
-		ft_free_split(&argv);
-		exit(ERROR);
-	}
-	waitpid(pid, &status, 0);
 	status = WEXITSTATUS(status);
 	return (status);
 }
@@ -265,19 +272,33 @@ static void	child_set_pipes(int fd[2], int pipes[2][2], int i, bool last)
 	}
 }
 
-static void	pipes_init(int pipes[2][2])
+static int scmd_preperation(t_c_scmd *c_scmd, int pipes[2][2], int i, bool last)
 {
-	pipes[0][0] = -1;
-	pipes[0][1] = -1;
-	pipes[1][0] = -1;
-	pipes[1][1] = -1;
-}
+	int		fd[2];
+	char	**argv;
 
-static int	close_pipe_end(int pipe_end)
-{
-	if (pipe_end == -1)
-		return (0);
-	return (close(pipe_end));
+	child_set_pipes(fd, pipes, i, last);
+	// Variable expansion
+	// Wildcard expansion
+	// Redir processing
+	dup2(fd[0], STDIN_FILENO);
+	dup2(fd[1], STDOUT_FILENO);
+	close_pipes(pipes, -1, false);
+	// create ARGV split
+	argv = list_to_split(c_scmd->l_argv);
+	if (pipex_cmd_set_path(argv) != 0)
+	{
+		write(2, argv[0], ft_strlen(argv[0]));
+		print_error(": command not found");
+		ft_free_split(&argv);
+		exit (127);
+	}
+	// printf("|%s| |%s|\n", argv[0], argv[1]);
+	// printf("|%d| |%d|\n", fd[0], fd[1]);
+	execve(argv[0], argv, g_env);
+	print_error("Error execve");
+	ft_free_split(&argv);
+	exit(ERROR);
 }
 
 static char	**list_to_split(t_list *l_token)
@@ -319,3 +340,7 @@ static char	**list_to_split(t_list *l_token)
 	split[i] = NULL;
 	return (split);
 }
+
+
+
+
