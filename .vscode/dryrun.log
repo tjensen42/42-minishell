@@ -20,7 +20,6 @@ printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/cmd/cmd.o" "\033[0;32m[✓]\0
 mkdir -p obj/cmd/
 gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/cmd/scmd.c -o obj/cmd/scmd.o
 printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/cmd/scmd.o" "\033[0;32m[✓]\033[m\n"
- 
 mkdir -p obj/env/
 gcc -O0 -DDEBUG -g -I./inc/ -I./lib/libft -I./lib/libft/inc -c src/env/env.c -o obj/env/env.o
 printf "%-57b %b" "\033[0;34mcompile \033[0;36mobj/env/env.o" "\033[0;32m[✓]\033[m\n"

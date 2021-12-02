@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Wed Dec  1 16:41:24 2021
+# Make data base, printed on Thu Dec  2 09:45:05 2021
 
 # Variables
 
@@ -59,15 +59,21 @@ OBJS := obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj
 # makefile (from `Makefile', line 22)
 SRCS_LEXER := lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/vscode-ipc-029e6a9d-940a-41f9-ad8c-350ddc6574ce.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/vscode-ipc-2794cf6b-dd3c-4139-98fe-c189401c22de.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /usr/bin:/bin:/usr/sbin:/sbin
+CHEAT_CONFIG_PATH = /Users/tjensen/.dotfiles/cheat/conf.yml
+# environment
+PATH = /usr/local/opt/llvm/bin:/Users/tjensen/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+LIBRARY_PATH = /Users/tjensen/.brew/lib:
 # makefile (from `Makefile', line 45)
 LIBDIRS := lib/libft
 # environment
-LaunchInstanceID = 81AAF48A-7ED3-4F65-8809-0393F3C57C95
+LaunchInstanceID = 867170E1-9707-4355-AE8B-40B6316496A8
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -77,7 +83,7 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 51)
 LB = \033[0;36m
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.4RgKFOrLfW/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.g6JIkC08KM/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -100,6 +106,8 @@ LOGNAME = tjensen
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from `Makefile', line 70)
 MAKE_LIBS = 	for DIR in $(LIBDIRS); do $(MAKE) -C $$DIR $(1) --silent; done
+# environment
+ZSH = /Users/tjensen/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -128,6 +136,8 @@ USER = tjensen
 .DEFAULT_GOAL := all
 # makefile (from `Makefile', line 17)
 NAME := minishell
+# environment
+LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # makefile (from `Makefile', line 41)
@@ -151,7 +161,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000003.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x1000000e.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -167,13 +177,17 @@ VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
 # automatic
 <F = $(notdir $<)
 # environment
+PAGER = less
+# environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 186a7
+SECURITYSESSIONID = 186d1
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
+# environment
+C_INCLUDE_PATH = /Users/tjensen/.brew/include:
 # default
 .INCLUDE_DIRS = /usr/local/include
 # environment
@@ -181,9 +195,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 8948
+VSCODE_PID = 88094
 # variable set hash-table stats:
-# Load=85/1024=8%, Rehash=0, Collisions=9/145=6%
+# Load=92/1024=9%, Rehash=0, Collisions=10/152=7%
 
 # Pattern-specific Variable Values
 
@@ -265,6 +279,7 @@ header:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 94):
 	@printf "###############################################\n"
@@ -280,7 +295,6 @@ obj/env/env.o:
 # Not a target:
 .SUFFIXES:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -506,6 +520,6 @@ obj/builtin/echo.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Wed Dec  1 16:41:24 2021
+# Finished Make data base on Thu Dec  2 09:45:06 2021
 
  

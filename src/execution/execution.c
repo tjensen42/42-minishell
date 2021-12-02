@@ -99,7 +99,7 @@ static int	pipex_cmd_set_path(char **cmd)
 //
 // NEXT STEPS:
 // 0.	here_doc
-// 1.	Recursive Execution
+// 1.	Recursive Execution *
 // 	1.2	Expansion (Variable replacement && Wildcard expansion)
 // 	1.3	Builtin check
 // 	1.4	Path finding
@@ -125,11 +125,11 @@ static int	close_pipe_end(int pipe_end)
 	return (close(pipe_end));
 }
 
-int execution_wrapper(t_list *l_cmd)
-{
-	execution_recursive(l_cmd, (!l_cmd->next && cmd_content(l_cmd)->type == CMD_PIPELINE));
-	return (0);
-}
+// int execution_wrapper(t_list *l_cmd)
+// {
+// 	execution_recursive(l_cmd, (!l_cmd->next && cmd_content(l_cmd)->type == CMD_PIPELINE));
+// 	return (0);
+// }
 
 // Pipes müssen immer direkt erkannt werden und pipe info muss über Funktionsaufrauf hinaus erhalten bleiben
 int	execution_recursive(t_list *l_cmd, bool pipeline)
@@ -167,17 +167,24 @@ int	execution_recursive(t_list *l_cmd, bool pipeline)
 		if (pid && cmd_content(l_cmd->next)->type & (CMD_AND | CMD_OR))
 		{
 			waitpid(pid, &status, 0);
-			// while (wait(NULL) >= 0);
+			status = WEXITSTATUS(status);
 			pid = 0;
+		}
+		if (((cmd_content(l_cmd->next)->type & CMD_AND && status != 0) || (cmd_content(l_cmd->next)->type & CMD_OR && status == 0)))
+		{
+			l_cmd = l_cmd->next->next->next;
+			if (l_cmd == NULL)
+				return (status);
 		}
 		// if (pipeline)
 			// create pipe_r
-		execution_recursive(l_cmd->next, pipeline);
+		status = execution_recursive(l_cmd->next, pipeline);
 	}
 	if (pid != 0)
 	{
 		// printf("waiting for: %d\n", pid);
 		waitpid(pid, &status, 0);
+		status = WEXITSTATUS(status);
 		while (wait(NULL) >= 0);
 		// printf("waited for: %d\n", pid);
 	}
@@ -211,6 +218,7 @@ static int execute_scmd_pipeline(t_list *l_scmd)
 	}
 	waitpid(pid, &status, 0);
 	while (wait(NULL) >= 0);
+	status = WEXITSTATUS(status);
 	return (status);
 }
 
