@@ -16,7 +16,7 @@ int	builtin_exit(char **argv)
 		exit_num = ft_atoi(argv[1]);
 	else if (argc > 2)
 	{
-		print_error("minishell: exit: too many arguments");
+		print_error(SHELL_NAME, "exit", "too many arguments", NULL);
 		exit_num = 255;
 	}
 	// clear everything

@@ -12,7 +12,7 @@ int	builtin_pwd(void)
 	}
 	else
 	{
-		perror("minishell: pwd: ");
+		print_error(SHELL_NAME, "pwd", NULL, strerror(errno));
 		return (ERROR);
 	}
 }

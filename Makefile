@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/12/03 11:16:32 by tjensen          ###   ########.fr        #
+#    Updated: 2021/12/03 11:33:54 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,12 @@ SRCS		+= token.c cmd/cmd.c cmd/scmd.c env/env.c
 
 SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
 SRCS_PARSER	:= parser.c parser_scmd.c parser_pipeline.c parser_group.c
-SRCS_EXEC	:= execution.c
+SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipes.c exec_scmd.c exec_scmd_utils.c
 SRCS_BUILTIN:= echo.c exit.c utils.c
 SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c
 
 SRCS		+= $(addprefix lexer/, $(SRCS_LEXER)) $(addprefix parser/, $(SRCS_PARSER)) \
-			   $(addprefix execution/, $(SRCS_EXEC)) $(addprefix printer/, $(SRCS_PRINTER)) \
+			   $(addprefix exec/, $(SRCS_EXEC)) $(addprefix printer/, $(SRCS_PRINTER)) \
 			   $(addprefix builtin/, $(SRCS_BUILTIN))
 
 LDLIBS		:= -lft -lreadline

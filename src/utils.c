@@ -1,10 +1,29 @@
 #include "libft.h"
 #include "global.h"
 
-int	print_error(char *str)
+int	print_error(char *s1, char *s2, char *s3, char *message)
 {
-	write(STDERR_FILENO, str, ft_strlen(str));
-	write(STDERR_FILENO, "\n", 1);
+	if (s1)
+		ft_putstr_fd(s1, 2);
+	if (s2)
+	{
+		if (s1)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(s2, 2);
+	}
+	if (s3)
+	{
+		if (s2)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(s3, 2);
+	}
+	if (message)
+	{
+		if (s3)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(message, 2);
+	}
+	ft_putchar_fd('\n', 2);
 	return (ERROR);
 }
 

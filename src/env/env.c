@@ -15,7 +15,7 @@ int	env_init(void)
 		return (0);
 	g_env = malloc((i + 1) * sizeof(char *));
 	if (g_env == NULL)
-		return (print_error(ERR_NO_MEM));
+		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
 	i = 0;
 	while (environ && environ[i])
 	{
@@ -23,7 +23,7 @@ int	env_init(void)
 		if (g_env[i] == NULL)
 		{
 			ft_free_split(&g_env);
-			return (print_error(ERR_NO_MEM));
+			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
 		}
 		i++;
 	}
@@ -59,7 +59,7 @@ int	env_init(void)
 // 	{
 // 		new_env = malloc(count_str_array(g_env) * sizeof(char *));
 // 		if (new_env == NULL)
-// 			return (print_error(ERR_NO_MEM));
+// 			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
 // 		i = 0;
 // 		j = 0;
 // 		while (g_env[j])
@@ -88,7 +88,7 @@ int	env_init(void)
 // 		return (0);
 // 	tmp = ft_strdup(str);
 // 	if (tmp == NULL)
-// 		return (print_error(ERR_NO_MEM));
+// 		return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
 // 	if () // env is inside
 // 	{
 // 		i = ;

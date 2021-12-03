@@ -6,6 +6,7 @@
 /* ************************************************************************** */
 
 # include <unistd.h>
+# include <errno.h>
 
 # include "libft.h"
 
@@ -15,7 +16,8 @@
 
 # define ERROR				-1
 
-# define ERR_NO_MEM			"minishell: out of virtual memory"
+# define SHELL_NAME			"minishell"
+# define ERR_NO_MEM			"out of virtual memory"
 
 /* ************************************************************************** */
 /* GLOBAL VARIABLES															  */
@@ -27,7 +29,7 @@ extern char	**g_env;
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-int		print_error(char *str);
+int		print_error(char *s1, char *s2, char *s3, char *message);
 int		count_str_array(char **argv);
 
 int		lst_node_remove(t_list **lst, t_list *node, void (*del)(void *));

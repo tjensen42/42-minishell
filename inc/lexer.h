@@ -18,14 +18,16 @@
 # define WHITESPACES		" \t\n"
 # define QUOT_MARKS			"\'\""
 
-# define ERR_UNO_BRACKET	"minishell: syntax error: unopened brackets"
-# define ERR_UNC_BRACKET	"minishell: syntax error: unclosed brackets"
-# define ERR_EMPTY_BRACKET	"minishell: syntax error: empty brackets"
-# define ERR_REDIR			"minishell: syntax error: invalid redirection"
-# define ERR_QUOTE			"minishell: syntax error: unclosed quotation mark"
-# define ERR_LIST			"minishell: syntax error: incomplete command list"
-# define ERR_MISS_OP		"minishell: syntax error: missing operator"
-# define ERR_PIPE			"minishell: syntax error: incomplete pipe"
+# define ERR_SYNTAX			"syntax error"
+
+# define ERR_UNO_BRACKET	"unopened brackets"
+# define ERR_UNC_BRACKET	"unclosed brackets"
+# define ERR_EMPTY_BRACKET	"empty brackets"
+# define ERR_REDIR			"invalid redirection"
+# define ERR_QUOTE			"unclosed quotation mark"
+# define ERR_LIST			"incomplete command list"
+# define ERR_MISS_OP		"missing operator"
+# define ERR_PIPE			"incomplete pipe"
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */

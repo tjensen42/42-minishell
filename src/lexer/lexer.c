@@ -63,7 +63,7 @@ static int	lexer_redir_mark_files(t_list *l_token)
 			if (l_token->next == NULL
 				|| !(token_content(l_token->next)->flags & TOK_TEXT))
 			{
-				print_error(ERR_REDIR);
+				print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_REDIR);
 				return (ERROR);
 			}
 			l_token = l_token->next;

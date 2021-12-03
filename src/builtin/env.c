@@ -5,7 +5,7 @@ int	builtin_env(void)
 	int	i;
 
 	if (g_env == NULL)
-		return (print_error("minishell: env: env not set"));
+		return (print_error(SHELL_NAME, "env", NULL, "env not set"));
 	i = 0;
 	while (g_env[i])
 	{
