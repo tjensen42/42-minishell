@@ -3,12 +3,13 @@
 #include "printer.h"
 #include "cmd.h"
 #include "builtin.h"
+#include "execution.h"
 
 #include <sys/types.h>
 #include <sys/wait.h>
 
 static int	execution_pipeline(t_list *pipeline);
-static int	execution_pipeline_element(t_list *element, int pipes[2][2], int i, bool last);
+static void	execution_pipeline_element(t_list *element, int pipes[2][2], int i, bool last);
 static int	execution_scmd(t_list *scmd, bool pipeline);
 static void	pipes_init(int pipes[2][2]);
 static int	close_pipe_end(int pipe_end);
@@ -109,10 +110,7 @@ int	execution_recursive(t_list *l_cmd)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			status = execution_recursive(cmd_content(l_cmd)->l_element);
-			exit(status);
-		}
+			exit(execution_recursive(cmd_content(l_cmd)->l_element));
 		waitpid(pid, &status, 0);
 		status = WEXITSTATUS(status);
 	}
@@ -126,7 +124,6 @@ int	execution_recursive(t_list *l_cmd)
 			if (l_cmd == NULL)
 				return (status);
 		}
-		// printf("|%d|", cmd_content(l_cmd)->type);
 		status = execution_recursive(l_cmd->next);
 	}
 	return (status);
@@ -145,10 +142,11 @@ static int	execution_pipeline(t_list *pipeline)
 	iter = cmd_content(pipeline)->l_element;
 	while (iter)
 	{
-		if (iter->next)
-			if (pipe(pipes[i % 2]) < 0)
-				return (print_error("Too many open files."));
+		if (iter->next && pipe(pipes[i % 2]) < 0)
+			return (print_error("Too many open files.")); // close all pipes, free and exit
 		pid = fork();
+		if (pid < 0)
+			return (print_error("FORK fail"));
 		if (pid == 0)
 			execution_pipeline_element(iter, pipes, i, (iter->next == NULL));
 		close_pipes(pipes, i, (iter->next == NULL));
@@ -157,27 +155,21 @@ static int	execution_pipeline(t_list *pipeline)
 	}
 	waitpid(pid, &status, 0);
 	while (wait(NULL) >= 0);
-	status = WEXITSTATUS(status);
-	return (status);
+	return (WEXITSTATUS(status));
 }
 
-static int	execution_pipeline_element(t_list *element, int pipes[2][2], int i, bool last)
+static void	execution_pipeline_element(t_list *element, int pipes[2][2], int i, bool last)
 {
 	int		fd[2];
-	int		status;
 
 	child_set_pipes(fd, pipes, i, last);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close_pipes(pipes, -1, false);
 	if (cmd_type(element) == CMD_SCMD)
-		status = execution_scmd(element, true);
+		execution_scmd(element, true);
 	else if (cmd_type(element) == CMD_GROUP)
-	{
-		status = execution_recursive(cmd_content(element)->l_element);
-		exit(status);
-	}
-	return (status);
+		exit(execution_recursive(cmd_content(element)->l_element));
 }
 
 static int	execution_scmd(t_list *scmd, bool pipeline)

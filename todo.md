@@ -34,3 +34,18 @@ https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defi
 -> connected token in printer
 
 -> PATH test: wenn / vorhanden nur direkt ohne an PATH-Folder anzuhaengen, wenn keins vorhanden nur an alle PATHs anhaengen, auch an einen leeren
+
+
+
+
+
+
+
+// EXECUTION OPTIMIERUNG
+
+-> einfache SCMD's nicht in Pipelines packen
+-> print_error function mit perror / before/after/...
+-> exitten by pipe error...
+-> error management / fork() fail
+
+

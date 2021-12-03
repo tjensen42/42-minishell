@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Thu Dec  2 09:45:05 2021
+# Make data base, printed on Fri Dec  3 10:03:04 2021
 
 # Variables
 
@@ -33,7 +33,7 @@ B = \033[0;34m
 # makefile (from `Makefile', line 46)
 LDLIBS := -L./lib/libft -lft -lreadline
 # makefile
-CURDIR := /Users/tjensen/Documents/code/minishell
+CURDIR := /Users/tjensen/Desktop/minishell
 # makefile
 SHELL = /bin/sh
 # makefile (from `Makefile', line 55)
@@ -59,21 +59,15 @@ OBJS := obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj
 # makefile (from `Makefile', line 22)
 SRCS_LEXER := lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/vscode-ipc-2794cf6b-dd3c-4139-98fe-c189401c22de.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/vscode-ipc-97676f6b-25f1-44ea-a8dc-eb28d855b424.sock
 # environment
 VSCODE_CWD = /
 # environment
-CHEAT_CONFIG_PATH = /Users/tjensen/.dotfiles/cheat/conf.yml
-# environment
-PATH = /usr/local/opt/llvm/bin:/Users/tjensen/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
-# environment
-LSCOLORS = Gxfxcxdxbxegedabagacad
-# environment
-LIBRARY_PATH = /Users/tjensen/.brew/lib:
+PATH = /usr/bin:/bin:/usr/sbin:/sbin
 # makefile (from `Makefile', line 45)
 LIBDIRS := lib/libft
 # environment
-LaunchInstanceID = 867170E1-9707-4355-AE8B-40B6316496A8
+LaunchInstanceID = DB52C598-F355-4C90-915C-B695B8FE84C5
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -83,13 +77,13 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 51)
 LB = \033[0;36m
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.g6JIkC08KM/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.hgROlMevoJ/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /Users/tjensen/Documents/code/minishell
+PWD = /Users/tjensen/Desktop/minishell
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
@@ -106,8 +100,6 @@ LOGNAME = tjensen
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from `Makefile', line 70)
 MAKE_LIBS = 	for DIR in $(LIBDIRS); do $(MAKE) -C $$DIR $(1) --silent; done
-# environment
-ZSH = /Users/tjensen/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -136,8 +128,6 @@ USER = tjensen
 .DEFAULT_GOAL := all
 # makefile (from `Makefile', line 17)
 NAME := minishell
-# environment
-LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # makefile (from `Makefile', line 41)
@@ -161,7 +151,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x1000000e.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000001.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -177,17 +167,13 @@ VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
 # automatic
 <F = $(notdir $<)
 # environment
-PAGER = less
-# environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 186d1
+SECURITYSESSIONID = 186a6
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
-# environment
-C_INCLUDE_PATH = /Users/tjensen/.brew/include:
 # default
 .INCLUDE_DIRS = /usr/local/include
 # environment
@@ -195,9 +181,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 88094
+VSCODE_PID = 62490
 # variable set hash-table stats:
-# Load=92/1024=9%, Rehash=0, Collisions=10/152=7%
+# Load=85/1024=8%, Rehash=0, Collisions=9/145=6%
 
 # Pattern-specific Variable Values
 
@@ -205,11 +191,11 @@ VSCODE_PID = 88094
 
 # Directories
 
-# lib (device 16777225, inode 1499461): 3 files, no impossibilities.
-# . (device 16777225, inode 1499386): 19 files, no impossibilities.
-# src (device 16777225, inode 1499532): No files, no impossibilities so far.
+# lib (device 16777225, inode 1601029): 3 files, no impossibilities.
+# . (device 16777225, inode 1600945): 20 files, no impossibilities.
+# src (device 16777225, inode 1601100): No files, no impossibilities so far.
 
-# 22 files, no impossibilities in 3 directories.
+# 23 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
@@ -279,7 +265,6 @@ header:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 94):
 	@printf "###############################################\n"
@@ -295,13 +280,14 @@ obj/env/env.o:
 # Not a target:
 .SUFFIXES:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-12-01 12:05:37
+#  Last modified 2021-12-02 12:30:06
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -520,6 +506,6 @@ obj/builtin/echo.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Dec  2 09:45:06 2021
+# Finished Make data base on Fri Dec  3 10:03:04 2021
 
  
