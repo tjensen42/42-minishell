@@ -1,5 +1,6 @@
 #include "exec.h"
 #include "cmd.h"
+#include "builtin.h"
 
 int	execution_scmd(t_list *scmd, bool pipeline)
 {
@@ -13,6 +14,8 @@ int	execution_scmd(t_list *scmd, bool pipeline)
 	// Wildcard expansion
 	// Redir processing
 	argv = list_to_split(c_scmd->l_argv);
+	if (builtin_check(argv))
+		return (builtin_exec(argv));
 	//builtin check
 	pid = 0;
 	if (!pipeline)
@@ -21,13 +24,12 @@ int	execution_scmd(t_list *scmd, bool pipeline)
 	{
 		if (pipex_cmd_set_path(argv) != 0)
 		{
-			write(2, argv[0], ft_strlen(argv[0]));
-			// print_error(": command not found"); //// new
+			print_error(SHELL_NAME, argv[0], NULL, "command not found");
 			ft_free_split(&argv);
 			exit(127);
 		}
 		execve(argv[0], argv, g_env);
-		// print_error("Error execve");
+		print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
 		ft_free_split(&argv);
 		exit(ERROR);
 	}

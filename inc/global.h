@@ -6,6 +6,8 @@
 /* ************************************************************************** */
 
 # include <unistd.h>
+# include <stdio.h>
+# include <string.h>
 # include <errno.h>
 
 # include "libft.h"
@@ -18,6 +20,8 @@
 
 # define SHELL_NAME			"minishell"
 # define ERR_NO_MEM			"out of virtual memory"
+
+# define UNUSED				__attribute__((unused))
 
 /* ************************************************************************** */
 /* GLOBAL VARIABLES															  */

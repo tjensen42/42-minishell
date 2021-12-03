@@ -1,6 +1,6 @@
 #include "builtin.h"
 
-int	builtin_cd(char **argv)
+int	builtin_cd(int argc UNUSED, char **argv)
 {
 	char	*dir_name;
 

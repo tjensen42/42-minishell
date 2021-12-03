@@ -5,18 +5,27 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdbool.h>
 
 #include "libft.h"
 #include "global.h"
 
+typedef int (*t_builtins)(int argc, char **argv);
+
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-int builtin_echo(char **argv);
-int	builtin_env(void);
-int	builtin_exit(char **argv);
-int	builtin_pwd(void);
+int	builtin_check(char **argv);
+int	builtin_exec(char **argv);
+
+int builtin_echo(int argc, char **argv);
+int	builtin_env(int argc, char **argv);
+int	builtin_exit(int argc, char **argv);
+int	builtin_pwd(int argc, char **argv);
+int	builtin_cd(int argc, char **argv);
+int	builtin_export(int argc, char **argv);
+int	builtin_unset(int argc, char **argv);
 
 #endif

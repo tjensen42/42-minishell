@@ -2,14 +2,12 @@
 
 static bool	num_is_numeric(char *str);
 
-int	builtin_exit(char **argv)
+int	builtin_exit(int argc, char **argv)
 {
-	int	argc;
 	int	exit_num;
 
 	ft_putstr_fd("exit\n", 2);
 	exit_num = 0; // set to last exit code
-	argc = count_str_array(argv);
 	if (argc >= 2 && num_is_numeric(argv[1]) == false)
 		return (ERROR);
 	else if (argc == 2)

@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:54:31 by hepple            #+#    #+#             */
-/*   Updated: 2021/10/29 11:18:21 by hepple           ###   ########.fr       */
+/*   Updated: 2021/12/03 23:50:32 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 # include "get_next_line_bonus.h"
 # include "ft_printf.h"
@@ -27,9 +28,6 @@
 /* ******************* */
 /*    D E F I N E S    */
 /* ******************* */
-
-# define INT_MIN -2147483648
-# define INT_MAX 2147483647
 
 # define BASE_BIN "01"
 # define BASE_DEC "0123456789"

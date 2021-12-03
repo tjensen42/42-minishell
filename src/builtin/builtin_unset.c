@@ -1,6 +1,6 @@
 #include "builtin.h"
 
-int	builtin_unset(char **argv)
+int	builtin_unset(int argc UNUSED, char **argv)
 {
 	if (argv[1] == NULL)
 		return (ERROR);

@@ -1,6 +1,6 @@
 #include "builtin.h"
 
-int	builtin_env(void)
+int	builtin_env(int argc UNUSED, char **argv UNUSED)
 {
 	int	i;
 

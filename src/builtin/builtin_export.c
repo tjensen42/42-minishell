@@ -2,12 +2,10 @@
 
 static void	export_print_vars(void);
 
-int	builtin_export(char **argv)
+int	builtin_export(int argc, char **argv)
 {
 	int	i;
-	int	argc;
 
-	argc = count_str_array(argv);
 	if (argc == 1)
 		export_print_vars();
 	else if (argc > 1)

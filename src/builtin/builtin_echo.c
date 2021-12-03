@@ -1,6 +1,6 @@
 #include "builtin.h"
 
-int builtin_echo(char **argv)
+int builtin_echo(int argc UNUSED, char **argv)
 {
 	int		i;
 	bool	newline;
