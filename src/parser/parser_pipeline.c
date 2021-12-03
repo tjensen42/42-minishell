@@ -29,11 +29,11 @@ static t_list	*pipeline_start(t_list *l_cmd)
 	iter = l_cmd;
 	while (iter)
 	{
-		if ((cmd_content(iter)->type & (CMD_GROUP | CMD_PIPELINE))
+		if ((cmd_content(iter)->type & (CMD_SCMD | CMD_PIPELINE | CMD_GROUP))
 			&& iter->next && cmd_content(iter->next)->type == CMD_PIPE
 			&& iter->next->next
 			&& (cmd_content(iter->next->next)->type
-				& (CMD_GROUP | CMD_PIPELINE)))
+				& (CMD_SCMD | CMD_GROUP | CMD_PIPELINE)))
 		{
 			return (iter);
 		}
@@ -49,11 +49,11 @@ static t_list	*pipeline_end(t_list *pipeline)
 	iter = pipeline;
 	while (iter)
 	{
-		if ((cmd_content(iter)->type & (CMD_GROUP | CMD_PIPELINE))
+		if ((cmd_content(iter)->type & (CMD_SCMD | CMD_PIPELINE | CMD_GROUP))
 			&& iter->next && cmd_content(iter->next)->type == CMD_PIPE
 			&& iter->next->next
 			&& (cmd_content(iter->next->next)->type
-				& (CMD_GROUP | CMD_PIPELINE)))
+				& (CMD_SCMD | CMD_PIPELINE | CMD_GROUP)))
 		{
 			iter = iter->next->next;
 		}
@@ -74,7 +74,7 @@ static void	pipeline_content(t_c_cmd *c_pl, t_list *start, t_list *end)
 		next = iter->next;
 		if (cmd_content(iter)->type == CMD_PIPE)
 			ft_lstdelone(iter, c_cmd_destroy);
-		else if (cmd_content(iter)->type == CMD_PIPELINE) //&& cmd_list_type(cmd_content(iter)->l_element) != CMD_L_SCMD
+		else if (cmd_content(iter)->type == CMD_PIPELINE)
 		{
 			ft_lstadd_back(&(c_pl->l_element), cmd_content(iter)->l_element);
 			cmd_content(iter)->l_element = NULL;

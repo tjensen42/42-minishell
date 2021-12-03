@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/12/01 12:05:37 by tjensen          ###   ########.fr        #
+#    Updated: 2021/12/03 11:16:32 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS		:= minishell.c utils.c
 SRCS		+= token.c cmd/cmd.c cmd/scmd.c env/env.c
 
 SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
-SRCS_PARSER	:= parser.c parser_scmd.c parser_scmd_pipeline.c parser_cmd_pipeline.c parser_cmd_group.c
+SRCS_PARSER	:= parser.c parser_scmd.c parser_pipeline.c parser_group.c
 SRCS_EXEC	:= execution.c
 SRCS_BUILTIN:= echo.c exit.c utils.c
 SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c

@@ -102,8 +102,8 @@ int	execution_recursive(t_list *l_cmd)
 
 	pid = 0;
 	status = 0;
-	if (cmd_type(l_cmd) == CMD_PIPELINE && ft_lstsize(cmd_content(l_cmd)->l_element) == 1)
-		status = execution_scmd(cmd_content(l_cmd)->l_element, false);
+	if (cmd_type(l_cmd) == CMD_SCMD)
+		status = execution_scmd(l_cmd, false);
 	else if (cmd_type(l_cmd) == CMD_PIPELINE)
 		status = execution_pipeline(l_cmd);
 	else if (cmd_type(l_cmd) == CMD_GROUP)

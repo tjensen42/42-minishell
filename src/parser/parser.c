@@ -5,17 +5,12 @@ static void	parser_recursive_merge(t_list **l_cmd);
 
 t_list	*parser(t_list *l_token)
 {
-	t_list	*l_scmd;
 	t_list	*l_cmd;
 
-	l_scmd = parser_scmd_tokens(l_token);
-	if (l_scmd == NULL)
-		return (NULL);
-	printer_cmd(l_scmd);
-	printer_structure(l_scmd);
-	l_cmd = parser_scmd_pipelines(l_scmd);
+	l_cmd = parser_scmd_tokens(l_token);
 	if (l_cmd == NULL)
 		return (NULL);
+	printer_cmd(l_cmd);
 	printer_structure(l_cmd);
 	parser_recursive_merge(&l_cmd);
 	printer_cmd(l_cmd);
