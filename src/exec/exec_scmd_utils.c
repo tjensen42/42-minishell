@@ -18,22 +18,22 @@ int	scmd_set_path(char **argv)
 	}
 	else if (env_get_value("PATH"))
 	{
-		if ();
+		// if ();
 
 	}
 	return (0);
 }
 
-static int	scmd_set_path(char **argv)
-{
-	int		i;
-	char	**path_split;
+// static int	scmd_set_path(char **argv)
+// {
+// 	int		i;
+// 	char	**path_split;
 
-	path_split = path_split_get();
-	if (path_split == NULL)
-		return (ENOMEM);
-	i = scmd_find_path(path_split, argv[0]);
-}
+// 	path_split = path_split_get();
+// 	if (path_split == NULL)
+// 		return (ENOMEM);
+// 	i = scmd_find_path(path_split, argv[0]);
+// }
 
 static int	scmd_find_path(char **path_split, char *scmd)
 {

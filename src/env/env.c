@@ -95,3 +95,13 @@ int	env_put_var(char *str)
 	return (0);
 }
 
+bool	env_var_is_value(char *var_name, char *value)
+{
+	char	*env_value;
+
+	env_value = env_get_value(var_name);
+	if (env_value)
+		if (ft_strncmp(env_value, value, ft_strlen(value) + 1) == 0)
+			return (true);
+	return (false);
+}

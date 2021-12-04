@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "printer.h"
+#include "env.h"
 
 static t_list	*lexer_token_list_get(char *input);
 static int		lexer_redir_mark_files(t_list *l_token);
@@ -21,7 +22,8 @@ t_list	*lexer(char *input)
 		ft_lstclear(&l_token, c_token_destroy);
 		return (NULL);
 	}
-	printer_token(l_token);
+	if (env_var_is_value(DEBUG_ENV, "printer"))
+		printer_token(l_token);
 	return (l_token);
 }
 

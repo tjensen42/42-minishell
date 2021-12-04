@@ -21,4 +21,6 @@ char	*env_find_var(char *name);
 int		env_unset_var(char *name);
 int		env_put_var(char *str);
 
+bool	env_var_is_value(char *var_name, char *value);
+
 #endif
