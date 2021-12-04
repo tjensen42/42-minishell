@@ -31,9 +31,7 @@ int		close_pipe_end(int pipe_end);
 int		close_pipes(int	pipes[2][2], int i, bool last);
 
 // EXEC_SCMD_UTILS
-void	environ_path_append_slash(char **paths);
-char	**environ_path_get(void);
-int		pipex_cmd_set_path(char **cmd);
-char	**list_to_split(t_list *l_token);
+int		scmd_set_path(char **argv);
+char	**l_token_to_split(t_list *l_token);
 
 #endif

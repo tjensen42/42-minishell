@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/12/04 13:18:47 by tjensen          ###   ########.fr        #
+#    Updated: 2021/12/04 14:11:14 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 
 NAME		:= minishell
 
-SRCS		:= minishell.c utils.c
+SRCS		:= minishell.c
 SRCS		+= token.c cmd/cmd.c cmd/scmd.c env/env.c
 
 SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
@@ -24,10 +24,11 @@ SRCS_PARSER	:= parser.c parser_scmd.c parser_pipeline.c parser_group.c
 SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_utils.c exec_scmd.c exec_scmd_utils.c
 SRCS_BUILTIN:= builtin_echo.c builtin_utils.c builtin_cd.c builtin_exit.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c builtin.c
 SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c
+SRCS_UTILS	:= utils.c utils_lst.c utils_split.c
 
 SRCS		+= $(addprefix lexer/, $(SRCS_LEXER)) $(addprefix parser/, $(SRCS_PARSER)) \
 			   $(addprefix exec/, $(SRCS_EXEC)) $(addprefix printer/, $(SRCS_PRINTER)) \
-			   $(addprefix builtin/, $(SRCS_BUILTIN))
+			   $(addprefix builtin/, $(SRCS_BUILTIN)) $(addprefix utils/, $(SRCS_UTILS))
 
 LDLIBS		:= -lft -lreadline
 

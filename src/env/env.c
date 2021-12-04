@@ -3,14 +3,12 @@
 #include "global.h"
 #include "lexer.h"
 
-static char	*env_find_var(char *name);
-
 int	env_init(void)
 {
 	int			i;
 	extern char	**environ;
 
-	i = count_str_array(environ);
+	i = split_count(environ);
 	if (i == 0)
 		return (0);
 	g_env = malloc((i + 1) * sizeof(char *));
@@ -44,7 +42,7 @@ char	*env_get_value(char *name)
 }
 
 /* Searchs for a env variable "name" and returns a pointer to the whole variable including the name */
-static char	*env_find_var(char *name)
+char	*env_find_var(char *name)
 {
 	int	i;
 	int	l_name;

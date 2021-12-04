@@ -57,7 +57,6 @@ t_list			*cmd_create(int type);
 t_c_cmd			*cmd_content(t_list *cmd);
 int				cmd_type(t_list *cmd);
 int				cmd_type_from_token(t_list *token);
-int				cmd_list_type(t_list *lst);
 void			c_cmd_destroy(void *c_cmd);
 
 #endif

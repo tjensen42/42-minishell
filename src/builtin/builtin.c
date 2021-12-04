@@ -41,5 +41,5 @@ int	builtin_exec(char **argv)
 	i_builtin = builtin_check(argv) - 1;
 	if (i_builtin == -1)
 		return (ERROR);
-	return (builtins_func[i_builtin](count_str_array(argv), argv));
+	return (builtins_func[i_builtin](split_count(argv), argv));
 }

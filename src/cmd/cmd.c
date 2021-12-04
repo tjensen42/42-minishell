@@ -59,23 +59,10 @@ void	c_cmd_destroy(void *c_cmd)
 	free_c_cmd = c_cmd;
 	if (free_c_cmd->l_element)
 	{
-		if (cmd_list_type(free_c_cmd->l_element) == CMD_L_SCMD)
-			ft_lstclear(&(free_c_cmd->l_element), c_scmd_destroy);
-		else
+		// if (cmd_list_type(free_c_cmd->l_element) == CMD_L_SCMD)
+		// 	ft_lstclear(&(free_c_cmd->l_element), c_scmd_destroy);
+		// else
 			ft_lstclear(&(free_c_cmd->l_element), c_cmd_destroy);
 	}
 	free(free_c_cmd);
-}
-
-int	cmd_list_type(t_list *lst)
-{
-	while (lst)
-	{
-		if (*(int *)(lst->content) == CMD_SCMD)
-			return (CMD_L_SCMD);
-		else if (*(int *)(lst->content) & (CMD_PIPELINE | CMD_GROUP))
-			return (CMD_L_CMD);
-		lst = lst->next;
-	}
-	return (ERROR);
 }

@@ -13,7 +13,7 @@ int	execution_scmd(t_list *scmd, bool pipeline)
 	// Variable expansion
 	// Wildcard expansion
 	// Redir processing
-	argv = list_to_split(c_scmd->l_argv);
+	argv = l_token_to_split(c_scmd->l_argv);
 	if (builtin_check(argv))
 	{
 		if (pipeline)
@@ -27,9 +27,8 @@ int	execution_scmd(t_list *scmd, bool pipeline)
 		pid = fork();
 	if (pid == 0 || pipeline)
 	{
-		if (pipex_cmd_set_path(argv) != 0)
+		if (scmd_set_path(argv) != 0)
 		{
-			print_error(SHELL_NAME, argv[0], NULL, "command not found");
 			ft_free_split(&argv);
 			exit(127);
 		}

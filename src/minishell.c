@@ -48,8 +48,7 @@ int	minishell_process_input(char *input)
 	printf("\n\n");
 
 	if (l_token != NULL && l_parser != NULL)
-		printf("return: %d\n", execution_recursive(l_parser)); //(!l_parser->next && cmd_content(l_parser)->type == CMD_PIPELINE)
-		// execution_wrapper(l_parser);
+		printf("return: %d\n", execution_recursive(l_parser));
 	// ft_lstclear(&l_parser, c_cmd_destroy);
 	return (0);
 }
