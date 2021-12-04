@@ -72,7 +72,7 @@ int	env_unset_var(char *name)
 	env_var = env_find_var(name);
 	if (env_var == NULL)
 		return (ERROR);
-	printf("%d\n", split_remove_str(&g_env, env_var));
+	split_remove_str(&g_env, env_var);
 	return (0);
 }
 
