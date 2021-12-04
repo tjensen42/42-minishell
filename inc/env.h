@@ -15,7 +15,9 @@
 /* ************************************************************************** */
 
 int		env_init(void);
-char	*env_get_value(char *var_name);
+char	*env_get_value(char *name);
+
 int		env_unset_var(char *name);
+int		env_put_var(char *str);
 
 #endif

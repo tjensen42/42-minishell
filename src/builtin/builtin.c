@@ -9,10 +9,10 @@ int	builtin_check(char **argv)
 		"pwd",
 		"exit",
 		"env",
+		"export",
+		"unset",
 		NULL
 	};
-	// "export",
-	// "unset",
 
 	i = 0;
 	while (builtins[i] != NULL)
@@ -33,10 +33,10 @@ int	builtin_exec(char **argv)
 		builtin_pwd,
 		builtin_exit,
 		builtin_env,
+		builtin_export,
+		builtin_unset,
 		NULL
 	};
-	// builtin_export,
-	// builtin_unset,
 
 	i_builtin = builtin_check(argv) - 1;
 	if (i_builtin == -1)

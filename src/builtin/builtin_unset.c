@@ -1,9 +1,23 @@
 #include "builtin.h"
+#include "env.h"
 
 int	builtin_unset(int argc UNUSED, char **argv)
 {
-	if (argv[1] == NULL)
-		return (ERROR);
-	if (ft_strchr(argv[1], '=') )
-	return (env_unset_var(argv[1]));
+	int	i;
+	int	status;
+
+	status = EXIT_SUCCESS;
+	i = 1;
+	while (argv[i])
+	{
+		if (ft_strchr(argv[i], '='))
+		{
+			print_error(SHELL_NAME, "unset", argv[i], "not a valid identifier");
+			status = EXIT_FAILURE;
+		}
+		else
+			env_unset_var(argv[i]);
+		i++;
+	}
+	return (status);
 }

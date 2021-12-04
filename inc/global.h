@@ -7,6 +7,7 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include <string.h>
 # include <errno.h>
 
@@ -41,6 +42,9 @@ t_list	*lst_node_prev(t_list *lst, t_list *node);
 int		lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 
 int		split_append_str(char ***split, char *str);
-int		split_replace_str_i(char ***split, int i, char *new);
+
+int		split_remove_str(char ***split, char *remove_str);
+int		split_replace_str(char ***split, char *old_str, char *new_str);
+int		split_contains_str(char **split, char *str);
 
 #endif

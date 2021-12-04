@@ -8,10 +8,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Fri Dec  3 23:47:18 2021
+# Make data base, printed on Sat Dec  4 13:19:01 2021
 
 # Variables
 
+ 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -33,13 +34,13 @@ B = \033[0;34m
 # makefile (from `Makefile', line 46)
 LDLIBS := -L./lib/libft -lft -lreadline
 # makefile
-CURDIR := /Users/hepple/code/my_git/minishell
+CURDIR := /Users/tjensen/Desktop/minishell
 # makefile
 SHELL = /bin/sh
 # makefile (from `Makefile', line 55)
 R = \033[0;31m
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # makefile (from `Makefile', line 56)
 X = \033[m
 # makefile (from `Makefile', line 26)
@@ -55,19 +56,19 @@ Y = \033[0;33m
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from `Makefile', line 43)
-OBJS := obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj/env/env.o obj/lexer/lexer.o obj/lexer/lexer_syntax.o obj/lexer/lexer_token_other.o obj/lexer/lexer_token_text.o obj/parser/parser.o obj/parser/parser_scmd.o obj/parser/parser_pipeline.o obj/parser/parser_group.o obj/exec/exec.o obj/exec/exec_pipeline.o obj/exec/exec_pipeline_utils.o obj/exec/exec_scmd.o obj/exec/exec_scmd_utils.o obj/printer/printer_token.o obj/printer/printer_scmd.o obj/printer/printer_cmd.o obj/builtin/builtin_echo.o obj/builtin/builtin_utils.o obj/builtin/builtin_cd.o obj/builtin/builtin_exit.o obj/builtin/builtin_pwd.o obj/builtin/builtin_env.o obj/builtin/builtin.o
+OBJS := obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj/env/env.o obj/lexer/lexer.o obj/lexer/lexer_syntax.o obj/lexer/lexer_token_other.o obj/lexer/lexer_token_text.o obj/parser/parser.o obj/parser/parser_scmd.o obj/parser/parser_pipeline.o obj/parser/parser_group.o obj/exec/exec.o obj/exec/exec_pipeline.o obj/exec/exec_pipeline_utils.o obj/exec/exec_scmd.o obj/exec/exec_scmd_utils.o obj/printer/printer_token.o obj/printer/printer_scmd.o obj/printer/printer_cmd.o obj/builtin/builtin_echo.o obj/builtin/builtin_utils.o obj/builtin/builtin_cd.o obj/builtin/builtin_exit.o obj/builtin/builtin_pwd.o obj/builtin/builtin_env.o obj/builtin/builtin_export.o obj/builtin/builtin_unset.o obj/builtin/builtin.o
 # makefile (from `Makefile', line 22)
 SRCS_LEXER := lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cc2400330j/T/vscode-ipc-a6960bdf-2931-41a7-881a-7fa6f10cb3c8.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/vscode-ipc-bc410660-cf99-4f22-9a95-2e59e2621d2d.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /Users/hepple/.brew/bin:/Users/hepple/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+PATH = /usr/bin:/bin:/usr/sbin:/sbin
 # makefile (from `Makefile', line 45)
 LIBDIRS := lib/libft
 # environment
-LaunchInstanceID = 7CCB1900-5422-4B50-B8B9-753E3CA00FF2
+LaunchInstanceID = 7A47957A-6F21-414B-99F2-5969CE43231A
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -77,25 +78,25 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 51)
 LB = \033[0;36m
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.4NFpqrJz2U/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.YaFvwBMhsq/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /Users/hepple/code/my_git/minishell
+PWD = /Users/tjensen/Desktop/minishell
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
 # environment
-HOME = /Users/hepple
+HOME = /Users/tjensen
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/hepple/Library/Application Support/Code/CachedData/379476f0e13988d90fab105c5c19e7abc8b1dea8
+VSCODE_CODE_CACHE_PATH = /Users/tjensen/Library/Application Support/Code/CachedData/379476f0e13988d90fab105c5c19e7abc8b1dea8
 # environment
-LOGNAME = hepple
+LOGNAME = tjensen
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from `Makefile', line 70)
@@ -111,7 +112,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # makefile (from `Makefile', line 28)
-SRCS := minishell.c utils.c token.c cmd/cmd.c cmd/scmd.c env/env.c lexer/lexer.c lexer/lexer_syntax.c lexer/lexer_token_other.c lexer/lexer_token_text.c parser/parser.c parser/parser_scmd.c parser/parser_pipeline.c parser/parser_group.c exec/exec.c exec/exec_pipeline.c exec/exec_pipeline_utils.c exec/exec_scmd.c exec/exec_scmd_utils.c printer/printer_token.c printer/printer_scmd.c printer/printer_cmd.c builtin/builtin_echo.c builtin/builtin_utils.c builtin/builtin_cd.c builtin/builtin_exit.c builtin/builtin_pwd.c builtin/builtin_env.c builtin/builtin.c
+SRCS := minishell.c utils.c token.c cmd/cmd.c cmd/scmd.c env/env.c lexer/lexer.c lexer/lexer_syntax.c lexer/lexer_token_other.c lexer/lexer_token_text.c parser/parser.c parser/parser_scmd.c parser/parser_pipeline.c parser/parser_group.c exec/exec.c exec/exec_pipeline.c exec/exec_pipeline_utils.c exec/exec_scmd.c exec/exec_scmd_utils.c printer/printer_token.c printer/printer_scmd.c printer/printer_cmd.c builtin/builtin_echo.c builtin/builtin_utils.c builtin/builtin_cd.c builtin/builtin_exit.c builtin/builtin_pwd.c builtin/builtin_env.c builtin/builtin_export.c builtin/builtin_unset.c builtin/builtin.c
 # environment
 SHLVL = 1
 # makefile (from `Makefile', line 23)
@@ -123,7 +124,7 @@ ODIR := obj
 # default
 MAKE_VERSION := 3.81
 # environment
-USER = hepple
+USER = tjensen
 # makefile
 .DEFAULT_GOAL := all
 # makefile (from `Makefile', line 17)
@@ -135,15 +136,15 @@ SDIR := src
 # default
 MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
 # makefile (from `Makefile', line 25)
-SRCS_BUILTIN := builtin_echo.c builtin_utils.c builtin_cd.c builtin_exit.c builtin_pwd.c builtin_env.c builtin.c
+SRCS_BUILTIN := builtin_echo.c builtin_utils.c builtin_cd.c builtin_exit.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c builtin.c
 # default
 .VARIABLES := 
 # environment
-TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cc2400330j/T/
+TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cbsc0032yb/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/hepple/Library/Application Support/Code/1.59.0-main.sock
+VSCODE_IPC_HOOK = /Users/tjensen/Library/Application Support/Code/1.59.0-main.sock
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -151,13 +152,13 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000004.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000009.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
-__CF_USER_TEXT_ENCODING = 0x18C11:0x0:0x0
+__CF_USER_TEXT_ENCODING = 0x18BCB:0:0
 # environment
 COMMAND_MODE = unix2003
 # default
@@ -169,7 +170,7 @@ VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
 # environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 186a7
+SECURITYSESSIONID = 186c2
 # automatic
 ^F = $(notdir $^)
 # default
@@ -181,7 +182,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 30050
+VSCODE_PID = 1217
 # variable set hash-table stats:
 # Load=85/1024=8%, Rehash=0, Collisions=9/145=6%
 
@@ -191,11 +192,11 @@ VSCODE_PID = 30050
 
 # Directories
 
-# lib (device 16777225, inode 1780860): 3 files, no impossibilities.
-# . (device 16777225, inode 1627765): 16 files, no impossibilities.
-# src (device 16777225, inode 1627831): No files, no impossibilities so far.
+# lib (device 16777225, inode 1601029): 3 files, no impossibilities.
+# . (device 16777225, inode 1600945): 17 files, no impossibilities.
+# src (device 16777225, inode 1601100): No files, no impossibilities so far.
 
-# 19 files, no impossibilities in 3 directories.
+# 20 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
@@ -250,6 +251,12 @@ all: minishell
 #  File has not been updated.
 
 # Not a target:
+obj/builtin/builtin.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 obj/lexer/lexer_token_text.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -258,12 +265,12 @@ obj/lexer/lexer_token_text.o:
 # Not a target:
 obj/lexer/lexer_token_other.o:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
 header:
 #  Phony target (prerequisite of .PHONY).
- 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -305,7 +312,7 @@ obj/builtin/builtin_exit.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-12-03 23:47:17
+#  Last modified 2021-12-04 13:18:47
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -378,12 +385,12 @@ obj/exec/exec_scmd.o:
 #  File has not been updated.
 
 # Not a target:
-obj/builtin/builtin.o:
+obj/builtin/builtin_unset.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-minishell: libs header obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj/env/env.o obj/lexer/lexer.o obj/lexer/lexer_syntax.o obj/lexer/lexer_token_other.o obj/lexer/lexer_token_text.o obj/parser/parser.o obj/parser/parser_scmd.o obj/parser/parser_pipeline.o obj/parser/parser_group.o obj/exec/exec.o obj/exec/exec_pipeline.o obj/exec/exec_pipeline_utils.o obj/exec/exec_scmd.o obj/exec/exec_scmd_utils.o obj/printer/printer_token.o obj/printer/printer_scmd.o obj/printer/printer_cmd.o obj/builtin/builtin_echo.o obj/builtin/builtin_utils.o obj/builtin/builtin_cd.o obj/builtin/builtin_exit.o obj/builtin/builtin_pwd.o obj/builtin/builtin_env.o obj/builtin/builtin.o
+minishell: libs header obj/minishell.o obj/utils.o obj/token.o obj/cmd/cmd.o obj/cmd/scmd.o obj/env/env.o obj/lexer/lexer.o obj/lexer/lexer_syntax.o obj/lexer/lexer_token_other.o obj/lexer/lexer_token_text.o obj/parser/parser.o obj/parser/parser_scmd.o obj/parser/parser_pipeline.o obj/parser/parser_group.o obj/exec/exec.o obj/exec/exec_pipeline.o obj/exec/exec_pipeline_utils.o obj/exec/exec_scmd.o obj/exec/exec_scmd_utils.o obj/printer/printer_token.o obj/printer/printer_scmd.o obj/printer/printer_cmd.o obj/builtin/builtin_echo.o obj/builtin/builtin_utils.o obj/builtin/builtin_cd.o obj/builtin/builtin_exit.o obj/builtin/builtin_pwd.o obj/builtin/builtin_env.o obj/builtin/builtin_export.o obj/builtin/builtin_unset.o obj/builtin/builtin.o
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -535,8 +542,14 @@ obj/parser/parser_scmd.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+obj/builtin/builtin_export.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # files hash-table stats:
-# Load=44/1024=4%, Rehash=0, Collisions=9/117=8%
+# Load=46/1024=4%, Rehash=0, Collisions=11/121=9%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -545,9 +558,10 @@ obj/parser/parser_scmd.o:
 
 # # of strings in strcache: 1
 # # of strcache buffers: 1
+ 
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Fri Dec  3 23:47:18 2021
+# Finished Make data base on Sat Dec  4 13:19:01 2021
 
  

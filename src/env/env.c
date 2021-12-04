@@ -3,7 +3,7 @@
 #include "global.h"
 #include "lexer.h"
 
-// static bool env_i_is_name(char *env_i, char *name);
+static char	*env_find_var(char *name);
 
 int	env_init(void)
 {
@@ -17,7 +17,7 @@ int	env_init(void)
 	if (g_env == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
 	i = 0;
-	while (environ && environ[i])
+	while (environ[i])
 	{
 		g_env[i] = ft_strdup(environ[i]);
 		if (g_env[i] == NULL)
@@ -31,97 +31,69 @@ int	env_init(void)
 	return (0);
 }
 
-// char	*env_get_value(char *name)
-// {
-// 	int	i;
-// 	int	l_name;
+/* Searchs for a env variable "name" and returns a pointer to it's value */
+char	*env_get_value(char *name)
+{
+	char	*env_var;
 
-// 	if (name == NULL)
-// 		return (NULL);
-// 	l_name = ft_strlen(name);
-// 	i = 0;
-// 	while (g_env && g_env[i])
-// 	{
-// 		if (env_i_is_name(g_env[i], name))
-// 			return (g_env[i] + l_name + 1);
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+	env_var = env_find_var(name);
+	if (env_var)
+		return (ft_strchr(env_var, '=') + 1);
+	else
+		return (NULL);
+}
 
-// int	env_unset_var(char *name)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	**new_env;
+/* Searchs for a env variable "name" and returns a pointer to the whole variable including the name */
+static char	*env_find_var(char *name)
+{
+	int	i;
+	int	l_name;
 
-// 	if (env_get_value(name))
-// 	{
-// 		new_env = malloc(count_str_array(g_env) * sizeof(char *));
-// 		if (new_env == NULL)
-// 			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
-// 		i = 0;
-// 		j = 0;
-// 		while (g_env[j])
-// 		{
-// 			if (env_i_is_name(g_env[j], name))
-// 				free(g_env[j]);
-// 			else
-// 				new_env[i++] = g_env[j];
-// 			j++;
-// 		}
-// 		new_env[i] = NULL;
-// 		free(g_env);
-// 		g_env = new_env;
-// 	}
-// 	return (0);
-// }
+	if (name == NULL || g_env == NULL)
+		return (NULL);
+	if (ft_strchr(name, '='))
+		l_name = ft_strchr(name, '=') - name;
+	else
+		l_name = ft_strlen(name);
+	i = 0;
+	while (g_env[i])
+	{
+		if (!ft_strncmp(name, g_env[i], l_name) && g_env[i][l_name] == '=')
+			return (g_env[i]);
+		i++;
+	}
+	return (NULL);
+}
 
-// int	env_put_var(char *str)
-// {
-// 	int		i;
-// 	char	*tmp;
+int	env_unset_var(char *name)
+{
+	char	*env_var;
 
-// 	if (str == NULL)
-// 		return (ERROR);
-// 	else if (ft_strchr(str, '=') == NULL)
-// 		return (0);
-// 	tmp = ft_strdup(str);
-// 	if (tmp == NULL)
-// 		return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
-// 	if () // env is inside
-// 	{
-// 		i = ;
-// 		split_replace_str_i(&g_env, i, tmp);
-// 	}
-// 	else
-// 		split_append_str(&g_env, tmp);
-// 	return (0);
-// }
+	env_var = env_find_var(name);
+	if (env_var == NULL)
+		return (ERROR);
+	printf("%d\n", split_remove_str(&g_env, env_var));
+	return (0);
+}
 
-// static bool env_i_is_name(char *env_i, char *name)
-// {
-// 	int	l_name;
+int	env_put_var(char *str)
+{
+	int		status;
+	char	*new_var;
+	char	*old_var;
 
-// 	l_name = ft_strlen(name);
-// 	if (!ft_strncmp(name, env_i, l_name) && env_i[l_name] == '=')
-// 		return (true);
-// 	return (false);
-// }
+	if (str == NULL || ft_strchr(str, '=') == NULL)
+		return (ERROR);
+	new_var = ft_strdup(str);
+	if (new_var == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	status = split_replace_str(&g_env, old_var, new_var);
+	if (status == ERROR)
+	{
+		status = split_append_str(&g_env, new_var);
+		if (status == ERROR)
+			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	}
+	return (0);
+}
 
-// bool	env_is_valid_name(char *name)
-// {
-// 	int	i;
-
-// 	if (name[0] == '\0')
-// 		return (false);
-// 	i = 0;
-// 	while (name[i])
-// 	{
-// 		if (ft_strchr(WHITESPACES, name[i]))
-// 			return (false);
-// 		else if (ft_strchr(QUOT_MARKS, name[i]))
-// 			return (false);
-// 	}
-// 	return (true);
-// }

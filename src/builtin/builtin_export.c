@@ -1,4 +1,5 @@
 #include "builtin.h"
+#include "env.h"
 
 static void	export_print_vars(void);
 
@@ -13,11 +14,12 @@ int	builtin_export(int argc, char **argv)
 		i = 1;
 		while (argv[i])
 		{
-			env_put_var(argv[i]);
+			if (ft_strchr(argv[i], '='))
+				env_put_var(argv[i]);
 			i++;
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static void	export_print_vars(void)
@@ -25,18 +27,14 @@ static void	export_print_vars(void)
 	int	i;
 	int	l_var_name;
 
+	if (g_env == NULL)
+		return ;
 	i = 0;
 	while (g_env[i])
 	{
-		printf("declare -x ");
-		if (ft_strchr(g_env[i], '='))
-		{
-			l_var_name = ft_strchr(g_env[i], '=') - g_env[i];
-			printf("%.*s\n", l_var_name, g_env[i]);
-			printf("\"%s\"\n", env_get_value(g_env[i]));
-		}
-		else
-			printf("%s\n", g_env[i]);
+		l_var_name = ft_strchr(g_env[i], '=') - g_env[i];
+		printf("%.*s", l_var_name + 1, g_env[i]);
+		printf("\"%s\"\n", env_get_value(g_env[i]));
 		i++;
 	}
 }

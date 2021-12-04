@@ -15,7 +15,12 @@ int	execution_scmd(t_list *scmd, bool pipeline)
 	// Redir processing
 	argv = list_to_split(c_scmd->l_argv);
 	if (builtin_check(argv))
-		return (builtin_exec(argv));
+	{
+		if (pipeline)
+			exit(builtin_exec(argv));
+		else
+			return (builtin_exec(argv));
+	}
 	//builtin check
 	pid = 0;
 	if (!pipeline)
