@@ -13,6 +13,14 @@
 #include "global.h"
 
 /* ************************************************************************** */
+/* DEFINES																	  */
+/* ************************************************************************** */
+
+// POSIX BASED EXIT STATUS
+#define EX_NOEXEC	126
+#define EX_NOTFOUND	127
+
+/* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
@@ -32,7 +40,7 @@ int		pipes_close_end(int pipe_end);
 int		pipes_close(int	pipes[2][2], int i, bool last);
 
 // EXEC_SCMD_UTILS
-int		scmd_set_path(char **argv);
+int		scmd_search_path(char **argv);
 char	**l_token_to_split(t_list *l_token);
 
 #endif

@@ -61,7 +61,7 @@ static int	exec_pipeline_scmd(t_list *scmd)
 	argv = l_token_to_split(c_scmd->l_argv);
 	if (builtin_check(argv))
 		exit(builtin_exec(argv));
-	if (scmd_set_path(argv) != 0)
+	if (scmd_search_path(argv) != 0)
 	{
 		ft_free_split(&argv);
 		exit(127);

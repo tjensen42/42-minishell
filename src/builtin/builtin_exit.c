@@ -9,17 +9,16 @@ int	builtin_exit(int argc, char **argv)
 	ft_putstr_fd("exit\n", 2);
 	exit_num = 0; // set to last exit code
 	if (argc >= 2 && num_is_numeric(argv[1]) == false)
-		return (ERROR);
+		exit_num = 255;
 	else if (argc == 2)
 		exit_num = ft_atoi(argv[1]);
 	else if (argc > 2)
 	{
 		print_error(SHELL_NAME, "exit", "too many arguments", NULL);
-		exit_num = 255;
+		return (EXIT_FAILURE);
 	}
 	// clear everything
 	exit(exit_num);
-	return (0);
 }
 
 static bool	num_is_numeric(char *str)

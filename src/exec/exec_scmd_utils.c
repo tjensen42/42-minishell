@@ -2,40 +2,39 @@
 #include "token.h"
 #include "env.h"
 
-static int	scmd_find_path(char **path_split, char *scmd);
+static int	path_find_i(char **path_split, char *scmd);
 static char	**path_split_get(void);
 static int	path_split_append_slash(char **path_split);
 
-int	scmd_set_path(char **argv)
+int	scmd_search_path(char **argv)
 {
 	int		i;
+	char	*tmp;
 	char	**path_split;
 
-	if (ft_strchr(argv[0], '/') || env_get_value("PATH") == NULL)
+	if (env_get_value("PATH"))
 	{
-		if (access(argv[0], F_OK) == -1)
-			return (print_error(SHELL_NAME, argv[0], NULL, strerror(errno)));
+		path_split = path_split_get();
+		if (path_split == NULL)
+			return (ERROR);
+		i = path_find_i(path_split, argv[0]);
+		if (i != ERROR)
+		{
+			tmp = argv[0];
+			argv[0] = ft_strjoin(path_split[i], argv[0]);
+			free(tmp);
+			if (argv[0] != NULL)
+			{
+				ft_free_split(&path_split);
+				return (0);
+			}
+		}
 	}
-	else if (env_get_value("PATH"))
-	{
-		// if ();
-
-	}
-	return (0);
+	ft_free_split(&path_split);
+	return (ERROR);
 }
 
-// static int	scmd_set_path(char **argv)
-// {
-// 	int		i;
-// 	char	**path_split;
-
-// 	path_split = path_split_get();
-// 	if (path_split == NULL)
-// 		return (ENOMEM);
-// 	i = scmd_find_path(path_split, argv[0]);
-// }
-
-static int	scmd_find_path(char **path_split, char *scmd)
+static int	path_find_i(char **path_split, char *scmd)
 {
 	int		i;
 	char	*tmp;
@@ -47,7 +46,7 @@ static int	scmd_find_path(char **path_split, char *scmd)
 		if (tmp == NULL)
 		{
 			print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM);
-			return (ENOMEM);
+			return (ERROR);
 		}
 		if (access(tmp, F_OK) == 0)
 		{

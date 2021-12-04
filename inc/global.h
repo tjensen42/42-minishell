@@ -21,7 +21,7 @@
 
 # define SHELL_NAME			"minishell"
 # define DEBUG_ENV			"DEBUG"
-# define ERR_NO_MEM			"out of virtual memory"
+# define ERR_NO_MEM			strerror(ENOMEM)
 
 # define UNUSED				__attribute__((unused))
 
