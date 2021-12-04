@@ -1,7 +1,7 @@
 #include "exec.h"
 #include "cmd.h"
 
-int	execution_recursive(t_list *l_cmd)
+int	exec_recursive(t_list *l_cmd)
 {
 	int	pid;
 	int	status;
@@ -9,14 +9,14 @@ int	execution_recursive(t_list *l_cmd)
 	pid = 0;
 	status = 0;
 	if (cmd_type(l_cmd) == CMD_SCMD)
-		status = execution_scmd(l_cmd, false);
+		status = exec_scmd(l_cmd);
 	else if (cmd_type(l_cmd) == CMD_PIPELINE)
 		status = exec_pipeline(l_cmd);
 	else if (cmd_type(l_cmd) == CMD_GROUP)
 	{
 		pid = fork();
 		if (pid == 0)
-			exit(execution_recursive(cmd_content(l_cmd)->l_element));
+			exit(exec_recursive(cmd_content(l_cmd)->l_element));
 		waitpid(pid, &status, 0);
 		status = WEXITSTATUS(status);
 	}
@@ -30,7 +30,7 @@ int	execution_recursive(t_list *l_cmd)
 			if (l_cmd == NULL)
 				return (status);
 		}
-		status = execution_recursive(l_cmd->next);
+		status = exec_recursive(l_cmd->next);
 	}
 	return (status);
 }

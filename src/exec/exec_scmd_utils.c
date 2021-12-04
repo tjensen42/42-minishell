@@ -2,82 +2,108 @@
 #include "token.h"
 #include "env.h"
 
-static char	*path_try_path_split(char **path_split, char *cmd);
+static int	scmd_find_path(char **path_split, char *scmd);
 static char	**path_split_get(void);
+static int	path_split_append_slash(char **path_split);
 
 int	scmd_set_path(char **argv)
 {
-	char	*tmp;
-	char	*path;
+	int		i;
 	char	**path_split;
 
-	path_split = NULL;
-	if ((ft_strchr(argv[0], '/') || env_find_var("PATH") == NULL)
-		&& access(argv[0], F_OK) == -1)
-		return (print_error(SHELL_NAME, argv[0], NULL, strerror(errno)));
-	else if (!ft_strchr(argv[0], '/') && env_find_var("PATH"))
+	if (ft_strchr(argv[0], '/') || env_get_value("PATH") == NULL)
 	{
-		path_split = ft_split(env_get_value("PATH"), ':');
-		if (path_split == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		path = path_try_path_split(path_split, argv[0]);
-		if (path == NULL)
-			ft_free_split(&path_split);
-		if (path == NULL)
-			return (print_error(SHELL_NAME, argv[0], NULL, "command not found"));
-		tmp = argv[0];
-		argv[0] = ft_strjoin(path, argv[0]);
-		if (argv[0] == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		free(tmp);
+		if (access(argv[0], F_OK) == -1)
+			return (print_error(SHELL_NAME, argv[0], NULL, strerror(errno)));
 	}
-	ft_free_split(&path_split);
+	else if (env_get_value("PATH"))
+	{
+		if ();
+
+	}
 	return (0);
 }
 
-// static char	*path_set_path_split(char **argv)
-// {
+static int	scmd_set_path(char **argv)
+{
+	int		i;
+	char	**path_split;
 
-// }
+	path_split = path_split_get();
+	if (path_split == NULL)
+		return (ENOMEM);
+	i = scmd_find_path(path_split, argv[0]);
+}
 
-static char	*path_try_path_split(char **path_split, char *cmd)
+static int	scmd_find_path(char **path_split, char *scmd)
 {
 	int		i;
 	char	*tmp;
 
 	i = 0;
-	while (path_split[i])
+	while (path_split && path_split[i])
 	{
-		tmp = ft_strjoin(path_split[i], cmd);
+		tmp = ft_strjoin(path_split[i], scmd);
+		if (tmp == NULL)
+		{
+			print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM);
+			return (ENOMEM);
+		}
 		if (access(tmp, F_OK) == 0)
-			return (tmp);
+		{
+			free(tmp);
+			return (i);
+		}
 		free(tmp);
 		i++;
 	}
-	return (NULL);
+	return (ERROR);
 }
 
 static char	**path_split_get(void)
 {
-	int		i;
-	char	*tmp;
 	char	**path_split;
 
-	path_split = ft_split(env_get_value("PATH"), ':');
-	if (path_split == NULL)
+	path_split = NULL;
+	if (env_get_value("PATH"))
+	{
+		path_split = ft_split(env_get_value("PATH"), ':');
+		if (path_split == NULL)
+		{
+			print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM);
+			return (NULL);
+		}
+	}
+	if (path_split_append_slash(path_split) == ERROR)
+	{
+		ft_free_split(&path_split);
 		return (NULL);
+	}
+	return (path_split);
+}
+
+static int	path_split_append_slash(char **path_split)
+{
+	int		i;
+	char	*tmp;
+
 	i = 0;
-	while (path_split[i])
+	while (path_split && path_split[i])
 	{
 		if (path_split[i][ft_strlen(path_split[i]) - 1] != '/')
 		{
 			tmp = path_split[i];
 			path_split[i] = ft_strjoin(path_split[i], "/");
+			if (path_split[i] == NULL)
+			{
+				path_split[i] = tmp;
+				return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+			}
 			free(tmp);
 		}
 		i++;
 	}
-	return (path_split);
+	return (0);
 }
 
 char	**l_token_to_split(t_list *l_token)
@@ -119,4 +145,3 @@ char	**l_token_to_split(t_list *l_token)
 	split[i] = NULL;
 	return (split);
 }
-

@@ -2,7 +2,8 @@
 #include "cmd.h"
 #include "builtin.h"
 
-static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i, bool last);
+static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i);
+static int	exec_pipeline_scmd(t_list *scmd);
 
 int	exec_pipeline(t_list *pipeline)
 {
@@ -23,8 +24,8 @@ int	exec_pipeline(t_list *pipeline)
 		if (pid < 0)
 			return (print_error("FORK fail", NULL, NULL, NULL));
 		if (pid == 0)
-			exec_pipeline_element(iter, pipes, i, (iter->next == NULL));
-		close_pipes(pipes, i, (iter->next == NULL));
+			exec_pipeline_element(iter, pipes, i);
+		pipes_close(pipes, i, (iter->next == NULL));
 		iter = iter->next;
 		i++;
 	}
@@ -33,16 +34,40 @@ int	exec_pipeline(t_list *pipeline)
 	return (WEXITSTATUS(status));
 }
 
-static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i, bool last)
+static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i)
 {
 	int		fd[2];
 
-	child_set_pipes(fd, pipes, i, last);
+	pipes_child_set(fd, pipes, i, (element->next == NULL));
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
-	close_pipes(pipes, -1, false);
+	pipes_close(pipes, -1, false);
 	if (cmd_type(element) == CMD_SCMD)
-		execution_scmd(element, true);
+		exec_pipeline_scmd(element);
 	else if (cmd_type(element) == CMD_GROUP)
-		exit(execution_recursive(cmd_content(element)->l_element));
+		exit(exec_recursive(cmd_content(element)->l_element));
+}
+
+static int	exec_pipeline_scmd(t_list *scmd)
+{
+	int			status;
+	char		**argv;
+	t_c_scmd	*c_scmd;
+
+	c_scmd = scmd_content(scmd);
+	// Variable expansion
+	// Wildcard expansion
+	// Redir processing
+	argv = l_token_to_split(c_scmd->l_argv);
+	if (builtin_check(argv))
+		exit(builtin_exec(argv));
+	if (scmd_set_path(argv) != 0)
+	{
+		ft_free_split(&argv);
+		exit(127);
+	}
+	execve(argv[0], argv, g_env);
+	print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
+	ft_free_split(&argv);
+	exit(ERROR);
 }

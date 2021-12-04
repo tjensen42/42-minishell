@@ -16,19 +16,20 @@
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-int	execution_recursive(t_list *l_cmd);
+// EXEC
+int	exec_recursive(t_list *l_cmd);
 
 // EXEC_SCMD
-int	execution_scmd(t_list *scmd, bool pipeline);
+int	exec_scmd(t_list *scmd);
 
 // EXEC_PIPELINE
 int	exec_pipeline(t_list *pipeline);
 
-// EXEC_PIPES
+// EXEC_PIPELINE_UTILS
 void	pipes_init(int pipes[2][2]);
-void	child_set_pipes(int fd[2], int pipes[2][2], int i, bool last);
-int		close_pipe_end(int pipe_end);
-int		close_pipes(int	pipes[2][2], int i, bool last);
+void	pipes_child_set(int fd[2], int pipes[2][2], int i, bool last);
+int		pipes_close_end(int pipe_end);
+int		pipes_close(int	pipes[2][2], int i, bool last);
 
 // EXEC_SCMD_UTILS
 int		scmd_set_path(char **argv);

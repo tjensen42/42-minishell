@@ -52,3 +52,9 @@ https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defi
 
 env
 
+
+04.12
+-> PATH holen
+-> env check with Valgrind
+-> execution pipeline protections
+
