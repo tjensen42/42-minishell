@@ -43,18 +43,26 @@ int	exec_scmd_exec(char **argv)
 {
 	if (!ft_strchr(argv[0], '/') && env_get_value("PATH") != NULL)
 		if (scmd_search_path(argv) == ERROR)
-			return (127);
+			return (EX_NOTFOUND);
 	execve(argv[0], argv, g_env);
-	print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
 	return (EXIT_FAILURE);
 }
 
 void	exec_scmd_exit(int status, char **argv)
 {
-	if (status == 127)
+	if (status == EX_NOTFOUND)
 		print_error(SHELL_NAME, argv[0], NULL, "command not found");
-	else if (errno == EACCES || errno == ENOENT || errno == ENOEXEC)
-		status = EX_NOEXEC;
-	ft_free_split(&argv);
+	else if (errno)
+	{
+		print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
+		if (errno == ENOENT)
+			status = EX_NOTFOUND;
+		else
+			status = EX_NOEXEC;
+	}
+	if (argv)
+		ft_free_split(&argv);
+	if (g_env)
+		ft_free_split(&g_env);
 	exit(status);
 }
