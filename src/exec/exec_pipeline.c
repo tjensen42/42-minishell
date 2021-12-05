@@ -1,6 +1,7 @@
 #include "exec.h"
 #include "cmd.h"
 #include "builtin.h"
+#include "env.h"
 
 static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i);
 static int	exec_pipeline_scmd(t_list *scmd);
@@ -38,7 +39,7 @@ static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i)
 {
 	int		fd[2];
 
-	pipes_child_set(fd, pipes, i, (element->next == NULL));
+	pipes_set(fd, pipes, i, (element->next == NULL));
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	pipes_close(pipes, -1, false);
@@ -50,24 +51,17 @@ static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i)
 
 static int	exec_pipeline_scmd(t_list *scmd)
 {
-	int			status;
-	char		**argv;
-	t_c_scmd	*c_scmd;
+	int		status;
+	char	**argv;
 
-	c_scmd = scmd_content(scmd);
-	// Variable expansion
-	// Wildcard expansion
-	// Redir processing
-	argv = l_token_to_split(c_scmd->l_argv);
+	if (exec_scmd_preperation(scmd, &argv) == ERROR)
+		return (ERROR);
 	if (builtin_check(argv))
-		exit(builtin_exec(argv));
-	if (scmd_search_path(argv) != 0)
 	{
-		ft_free_split(&argv);
-		exit(127);
+		status = builtin_exec(argv);
+		exec_scmd_exit(status, argv);
 	}
-	execve(argv[0], argv, g_env);
-	print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
-	ft_free_split(&argv);
-	exit(ERROR);
+	status = exec_scmd_exec(argv);
+	exec_scmd_exit(status, argv);
+	return (0);
 }

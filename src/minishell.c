@@ -31,6 +31,7 @@ int	main(int argc, char *argv[])
 			minishell_process_input(input);
 		}
 	}
+	ft_free_split(&g_env);
 	return (0);
 }
 
@@ -46,7 +47,7 @@ int	minishell_process_input(char *input)
 		l_parser = parser(l_token);
 	if (l_token != NULL && l_parser != NULL)
 		printf("return: %d\n", exec_recursive(l_parser));
-	// ft_lstclear(&l_parser, c_cmd_destroy);
+	ft_lstclear(&l_parser, c_cmd_destroy);
 	return (0);
 }
 

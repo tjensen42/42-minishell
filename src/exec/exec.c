@@ -16,7 +16,12 @@ int	exec_recursive(t_list *l_cmd)
 	{
 		pid = fork();
 		if (pid == 0)
-			exit(exec_recursive(cmd_content(l_cmd)->l_element));
+		{
+			status = exec_recursive(cmd_content(l_cmd)->l_element);
+			ft_lstclear(&l_cmd, c_cmd_destroy); // für Subshells in subshells müsste man den ursprünglichen listen-Anfang haben
+			ft_free_split(&g_env);
+			exit(status);
+		}
 		waitpid(pid, &status, 0);
 		status = WEXITSTATUS(status);
 	}

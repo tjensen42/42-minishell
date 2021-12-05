@@ -54,15 +54,12 @@ t_c_cmd	*cmd_content(t_list *cmd)
 
 void	c_cmd_destroy(void *c_cmd)
 {
-	t_c_cmd	*free_c_cmd;
-
-	free_c_cmd = c_cmd;
-	if (free_c_cmd->l_element)
+	if (((t_c_cmd *)c_cmd)->type == CMD_SCMD)
+		c_scmd_destroy(c_cmd);
+	else
 	{
-		// if (cmd_list_type(free_c_cmd->l_element) == CMD_L_SCMD)
-		// 	ft_lstclear(&(free_c_cmd->l_element), c_scmd_destroy);
-		// else
-			ft_lstclear(&(free_c_cmd->l_element), c_cmd_destroy);
+		if (((t_c_cmd *)c_cmd)->l_element)
+			ft_lstclear(&(((t_c_cmd *)c_cmd)->l_element), c_cmd_destroy);
+		free(c_cmd);
 	}
-	free(free_c_cmd);
 }

@@ -121,6 +121,8 @@ char	**l_token_to_split(t_list *l_token)
 		iter = iter->next;
 	}
 	split = malloc((i + 1) * sizeof(char *));
+	if (split == NULL)
+		return (NULL);
 	i = 0;
 	iter = l_token;
 	while (iter)
@@ -128,16 +130,33 @@ char	**l_token_to_split(t_list *l_token)
 		if (token_content(iter)->flags & TOK_CONNECTED)
 		{
 			split[i] = ft_strdup(token_content(iter)->string);
+			if (split[i] == NULL)
+			{
+				ft_free_split(&split);
+				return (NULL);
+			}
 			while (token_content(iter)->flags & TOK_CONNECTED)
 			{
 				tmp = split[i];
 				split[i] = ft_strjoin(split[i], token_content(iter->next)->string);
 				free(tmp);
+				if (split[i] == NULL)
+				{
+					ft_free_split(&split);
+					return (NULL);
+				}
 				iter = iter->next;
 			}
 		}
 		else
+		{
 			split[i] = ft_strdup(token_content(iter)->string);
+			if (split[i] == NULL)
+			{
+				ft_free_split(&split);
+				return (NULL);
+			}
+		}
 		iter = iter->next;
 		i++;
 	}

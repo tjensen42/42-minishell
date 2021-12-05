@@ -26,7 +26,7 @@ int	pipes_close(int	pipes[2][2], int i, bool last)
 	return (0);
 }
 
-void	pipes_child_set(int fd[2], int pipes[2][2], int i, bool last)
+void	pipes_set(int fd[2], int pipes[2][2], int i, bool last)
 {
 	if (i == 0)
 	{
