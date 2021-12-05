@@ -44,6 +44,5 @@ int		pipes_close(int	pipes[2][2], int i, bool last);
 
 // EXEC_SCMD_UTILS
 int		scmd_search_path(char **argv);
-char	**l_token_to_split(t_list *l_token);
 
 #endif
