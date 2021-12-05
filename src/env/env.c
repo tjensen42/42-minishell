@@ -76,6 +76,7 @@ int	env_unset_var(char *name)
 
 int	env_put_var(char *str)
 {
+	int		i;
 	int		status;
 	char	*new_var;
 	char	*old_var;
@@ -85,6 +86,7 @@ int	env_put_var(char *str)
 	new_var = ft_strdup(str);
 	if (new_var == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	old_var = env_find_var(str);
 	status = split_replace_str(&g_env, old_var, new_var);
 	if (status == ERROR)
 	{

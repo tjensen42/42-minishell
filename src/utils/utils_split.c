@@ -11,7 +11,7 @@ int	split_count(char **split)
 	return (i);
 }
 
-int	split_append_str(char ***split, char *str)
+int	split_append_str(char ***split, char *new_str)
 {
 	int		i;
 	char	**new_split;
@@ -25,7 +25,7 @@ int	split_append_str(char ***split, char *str)
 		new_split[i] = (*split)[i];
 		i++;
 	}
-	new_split[i] = str;
+	new_split[i] = new_str;
 	new_split[i + 1] = NULL;
 	free(*split);
 	*split = new_split;
@@ -64,7 +64,7 @@ int	split_replace_str(char ***split, char *old_str, char *new_str)
 {
 	int	i;
 
-	if (*split == NULL)
+	if (*split == NULL || old_str == NULL)
 		return (ERROR);
 	i = 0;
 	while ((*split)[i] && (*split)[i] != old_str)
