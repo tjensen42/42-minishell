@@ -52,7 +52,7 @@ void	exec_scmd_exit(int status, char **argv)
 {
 	if (status == EX_NOTFOUND)
 		print_error(SHELL_NAME, argv[0], NULL, "command not found");
-	else if (errno)
+	else if (status && errno)
 	{
 		print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
 		if (errno == ENOENT)
