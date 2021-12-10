@@ -65,7 +65,7 @@ env
 
 // HERE_DOC
 
-// SIGNAL HANDLING
+// SIGNAL HANDLING \
 
 // Variable expansion
 // Wildcard expansion

@@ -14,6 +14,7 @@ int	exec_scmd(t_list *scmd)
 		return (ERROR);
 	if (builtin_check(argv))
 	{
+		// BULTIN special Redir processing
 		status = builtin_exec(argv);
 		ft_free_split(&argv);
 		return (status);
@@ -21,6 +22,7 @@ int	exec_scmd(t_list *scmd)
 	pid = fork();
 	if (pid == 0)
 	{
+		// Redir processing
 		status = exec_scmd_exec(argv);
 		exec_scmd_exit(status, argv);
 	}
@@ -32,7 +34,6 @@ int	exec_scmd_preperation(t_list *scmd, char ***argv)
 {
 	// Variable expansion
 	// Wildcard expansion
-	// Redir processing
 	*argv = l_token_to_split(scmd_content(scmd)->l_argv);
 	if (*argv == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));

@@ -43,7 +43,7 @@ int	main(int argc, char *argv[])
 	}
 	rl_clear_history();
 	ft_free_split(&g_env);
-	return (0);
+	exit(exit_status_get());
 }
 
 int	minishell_process_input(char *input)
