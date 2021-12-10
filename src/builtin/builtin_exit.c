@@ -14,7 +14,7 @@ int	builtin_exit(int argc, char **argv)
 		exit_num = ft_atoi(argv[1]);
 	else if (argc > 2)
 	{
-		print_error(SHELL_NAME, "exit", "too many arguments", NULL);
+		print_error(SHELL_NAME, "exit", NULL, "too many arguments");
 		return (EXIT_FAILURE);
 	}
 	// clear everything
@@ -32,9 +32,7 @@ static bool	num_is_numeric(char *str)
 	{
 		if (!ft_isdigit(str[i]))
 		{
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(str, 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
+			print_error(SHELL_NAME, "exit", str, "numeric argument required");
 			return (false);
 		}
 		i++;

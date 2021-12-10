@@ -5,7 +5,10 @@ int	builtin_env(int argc UNUSED, char **argv UNUSED)
 	int	i;
 
 	if (g_env == NULL)
-		return (print_error(SHELL_NAME, "env", NULL, "env not set"));
+	{
+		print_error(SHELL_NAME, "env", NULL, "environ not set");
+		return (EXIT_FAILURE);
+	}
 	i = 0;
 	while (g_env[i])
 	{

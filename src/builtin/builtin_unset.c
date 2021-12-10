@@ -6,7 +6,7 @@ int	builtin_unset(int argc UNUSED, char **argv)
 	int	i;
 	int	status;
 
-	status = EXIT_SUCCESS;
+	status = 0;
 	i = 1;
 	while (argv[i])
 	{

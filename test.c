@@ -6,6 +6,6 @@
 
 int	main(void)
 {
-	if (putenv("hello=") < 0)
+	if (wait(NULL) < 0)
 		perror("");
 }

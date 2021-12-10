@@ -58,3 +58,16 @@ env
 -> env check with Valgrind
 -> execution pipeline protections
 
+
+
+
+
+
+// HERE_DOC
+
+// SIGNAL HANDLING
+
+// Variable expansion
+// Wildcard expansion
+// Redir processing
+

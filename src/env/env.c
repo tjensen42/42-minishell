@@ -97,6 +97,23 @@ int	env_put_var(char *str)
 	return (0);
 }
 
+int		env_set_env(char *name, char *value)
+{
+	char	*tmp;
+	char	*var_str;
+
+	if (name == NULL || value == NULL)
+		return (ERROR);
+	tmp = ft_strjoin(name, "=");
+	if (tmp == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	var_str = ft_strjoin(tmp, value);
+	free(tmp);
+	if (var_str == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	return (env_put_var(var_str));
+}
+
 bool	env_var_is_value(char *var_name, char *value)
 {
 	char	*env_value;

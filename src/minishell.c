@@ -40,6 +40,7 @@ int	minishell_process_input(char *input)
 	t_list	*l_token;
 	t_list	*l_parser;
 
+	errno = 0;
 	l_token = NULL;
 	l_parser = NULL;
 	l_token = lexer(input);

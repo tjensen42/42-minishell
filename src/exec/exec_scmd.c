@@ -41,6 +41,7 @@ int	exec_scmd_preperation(t_list *scmd, char ***argv)
 
 int	exec_scmd_exec(char **argv)
 {
+	errno = 0;
 	if (!ft_strchr(argv[0], '/') && env_get_value("PATH") != NULL)
 		if (scmd_search_path(argv) == ERROR)
 			return (EX_NOTFOUND);
@@ -54,7 +55,6 @@ void	exec_scmd_exit(int status, char **argv)
 		print_error(SHELL_NAME, argv[0], NULL, "command not found");
 	else if (status && errno)
 	{
-		print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
 		if (errno == ENOENT)
 			status = EX_NOTFOUND;
 		else

@@ -38,6 +38,7 @@ int	builtin_exec(char **argv)
 		NULL
 	};
 
+	errno = 0;
 	i_builtin = builtin_check(argv) - 1;
 	if (i_builtin == -1)
 		return (ERROR);
