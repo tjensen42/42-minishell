@@ -14,7 +14,7 @@ int	exec_scmd(t_list *scmd)
 		return (ERROR);
 	if (builtin_check(argv))
 	{
-		// BULTIN special Redir processing
+		// BUILTIN special redir processing
 		status = builtin_exec(argv);
 		ft_free_split(&argv);
 		return (status);
@@ -22,7 +22,8 @@ int	exec_scmd(t_list *scmd)
 	pid = fork();
 	if (pid == 0)
 	{
-		// Redir processing
+		if (exec_redir(scmd_content(scmd)->l_redir) == ERROR)
+			exec_scmd_exit(EXIT_FAILURE, argv);
 		status = exec_scmd_exec(argv);
 		exec_scmd_exit(status, argv);
 	}

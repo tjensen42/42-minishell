@@ -71,3 +71,7 @@ env
 // Wildcard expansion
 // Redir processing
 
+
+
+// SEGGG Handlig fuer commands in minishell
+

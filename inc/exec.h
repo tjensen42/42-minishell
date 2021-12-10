@@ -53,4 +53,7 @@ int		exec_wait_for_all(int last_pid);
 void	exit_status_set(int status);
 int		exit_status_get(void);
 
+// EXEC_REDIR
+int	exec_redir(t_list *l_token);
+
 #endif

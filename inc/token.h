@@ -44,5 +44,6 @@ t_c_token	*token_content(t_list *token);
 void		c_token_destroy(void *c_token);
 bool		token_is_cmd(t_list *token);
 char		**l_token_to_split(t_list *l_token);
+char		*l_token_to_str(t_list *l_token);
 
 #endif

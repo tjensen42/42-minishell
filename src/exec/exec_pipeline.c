@@ -53,8 +53,9 @@ static int	exec_pipeline_scmd(t_list *scmd)
 	char	**argv;
 
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
-		return (ERROR);
-	// Redir processing
+		exec_scmd_exit(EXIT_FAILURE, argv);
+	if (exec_redir(scmd_content(scmd)->l_redir) == ERROR)
+		exec_scmd_exit(EXIT_FAILURE, argv);
 	if (builtin_check(argv))
 	{
 		status = builtin_exec(argv);

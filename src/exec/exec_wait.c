@@ -25,6 +25,6 @@ int	exec_wait_for_all(int last_pid)
 
 	status = exec_wait_pid(last_pid);
 	while (wait(NULL) >= 0);
-	printf("%d\n", errno);
+	errno = 0;
 	return (status);
 }

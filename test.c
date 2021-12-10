@@ -6,6 +6,9 @@
 
 int	main(void)
 {
-	if (wait(NULL) < 0)
-		perror("");
+	char buf[200];
+
+	int size = read(123, buf, 20);
+	buf[size] = '\0';
+	write(1, buf, size);
 }
