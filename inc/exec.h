@@ -45,4 +45,8 @@ int		pipes_close(int	pipes[2][2], int i, bool last);
 // EXEC_SCMD_UTILS
 int		scmd_search_path(char **argv);
 
+// EXEC_WAIT
+int		exec_wait_pid(int last_pid);
+int		exec_wait_for_all(int last_pid);
+
 #endif

@@ -22,8 +22,7 @@ int	exec_recursive(t_list *l_cmd)
 			ft_free_split(&g_env);
 			exit(status);
 		}
-		waitpid(pid, &status, 0);
-		status = WEXITSTATUS(status);
+		status = exec_wait_pid(pid);
 	}
 	if (l_cmd->next)
 	{

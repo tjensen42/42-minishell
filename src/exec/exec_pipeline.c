@@ -30,9 +30,7 @@ int	exec_pipeline(t_list *pipeline)
 		iter = iter->next;
 		i++;
 	}
-	waitpid(pid, &status, 0);
-	while (wait(NULL) >= 0);
-	return (WEXITSTATUS(status));
+	return (exec_wait_for_all(pid));
 }
 
 static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i)
