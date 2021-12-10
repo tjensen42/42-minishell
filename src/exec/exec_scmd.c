@@ -49,6 +49,7 @@ int	exec_scmd_exec(char **argv)
 		if (scmd_search_path(argv) == ERROR)
 			return (EX_NOTFOUND);
 	execve(argv[0], argv, g_env);
+	print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
 	return (EXIT_FAILURE);
 }
 

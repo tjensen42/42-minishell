@@ -1,4 +1,5 @@
 #include "builtin.h"
+#include "exec.h"
 
 static bool	num_is_numeric(char *str);
 
@@ -7,7 +8,7 @@ int	builtin_exit(int argc, char **argv)
 	int	exit_num;
 
 	ft_putstr_fd("exit\n", 2);
-	exit_num = 0; // set to last exit code
+	exit_num = exit_status_get();
 	if (argc >= 2 && num_is_numeric(argv[1]) == false)
 		exit_num = 255;
 	else if (argc == 2)

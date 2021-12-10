@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/12/10 10:31:51 by tjensen          ###   ########.fr        #
+#    Updated: 2021/12/10 11:58:42 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS		+= token.c cmd/cmd.c cmd/scmd.c env/env.c
 
 SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
 SRCS_PARSER	:= parser.c parser_scmd.c parser_pipeline.c parser_group.c
-SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_utils.c exec_scmd.c exec_scmd_utils.c exec_wait.c
+SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_utils.c exec_scmd.c exec_scmd_utils.c exec_wait.c exec_expand_wildcard.c exec_exit_status.c
 SRCS_BUILTIN:= builtin_echo.c builtin_utils.c builtin_cd.c builtin_exit.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c builtin.c
 SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c
 SRCS_SIGNALS:= signals.c

@@ -1,4 +1,5 @@
 #include "builtin.h"
+#include "exec.h"
 
 int builtin_echo(int argc UNUSED, char **argv)
 {
@@ -11,6 +12,16 @@ int builtin_echo(int argc UNUSED, char **argv)
 		i++;
 	if (i == 1)
 		newline = true;
+
+	///// delete this after variable expansion....
+	if (ft_strncmp(argv[i], "$?", 3) == 0)
+	{
+		ft_putnbr_fd(exit_status_get(), STDOUT_FILENO);
+		ft_putchar_fd('\n', 1);
+		return (0);
+	}
+	///// END delete this after variable expansion....
+
 	while (argv[i])
 	{
 		ft_putstr_fd(argv[i], 1);
