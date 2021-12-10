@@ -4,37 +4,35 @@
 int	exec_recursive(t_list *l_cmd)
 {
 	int	pid;
-	int	status;
 
 	pid = 0;
-	status = 0;
 	if (cmd_type(l_cmd) == CMD_SCMD)
-		status = exec_scmd(l_cmd);
+		exit_status_set(exec_scmd(l_cmd));
 	else if (cmd_type(l_cmd) == CMD_PIPELINE)
-		status = exec_pipeline(l_cmd);
+		exit_status_set(exec_pipeline(l_cmd));
 	else if (cmd_type(l_cmd) == CMD_GROUP)
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			status = exec_recursive(cmd_content(l_cmd)->l_element);
+			exit_status_set(exec_recursive(cmd_content(l_cmd)->l_element));
 			ft_lstclear(&l_cmd, c_cmd_destroy); // für Subshells in subshells müsste man den ursprünglichen listen-Anfang haben
 			ft_free_split(&g_env);
-			exit(status);
+			exit(exit_status_get());
 		}
-		status = exec_wait_pid(pid);
+		exit_status_set(exec_wait_pid(pid));
 	}
 	if (l_cmd->next)
 	{
 		l_cmd = l_cmd->next;
-		while (((cmd_content(l_cmd)->type & CMD_AND) && status != 0)
-				|| ((cmd_content(l_cmd)->type & CMD_OR) && status == 0))
+		while (((cmd_content(l_cmd)->type & CMD_AND) && exit_status_get() != 0)
+				|| ((cmd_content(l_cmd)->type & CMD_OR) && exit_status_get() == 0))
 		{
 			l_cmd = l_cmd->next->next;
 			if (l_cmd == NULL)
-				return (status);
+				return (exit_status_get());
 		}
-		status = exec_recursive(l_cmd->next);
+		exit_status_set(exec_recursive(l_cmd->next));
 	}
-	return (status);
+	return (exit_status_get());
 }
