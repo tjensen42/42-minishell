@@ -43,6 +43,8 @@ char	*l_token_to_str(t_list *l_token)
 	char	*tmp;
 	char	*str;
 
+	if (l_token == NULL || token_content(l_token)->string == NULL)
+		return (NULL);
 	str = ft_strdup(token_content(l_token)->string);
 	while (l_token && (token_content(l_token)->flags & TOK_CONNECTED))
 	{
