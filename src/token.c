@@ -38,6 +38,24 @@ void	c_token_destroy(void *c_token)
 	free(c_token);
 }
 
+char	*l_token_to_str(t_list *l_token)
+{
+	char	*tmp;
+	char	*str;
+
+	str = ft_strdup(token_content(l_token)->string);
+	while (l_token && (token_content(l_token)->flags & TOK_CONNECTED))
+	{
+		tmp = str;
+		str = ft_strjoin(str, token_content(l_token->next)->string);
+		free(tmp);
+		if (str == NULL)
+			return (NULL);
+		l_token = l_token->next;
+	}
+	return (str);
+}
+
 char	**l_token_to_split(t_list *l_token)
 {
 	int		i;
