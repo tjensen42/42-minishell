@@ -22,7 +22,7 @@ int	main(int argc, char *argv[])
 
 	signal(SIGQUIT, SIG_IGN);
 	if (env_init() == ERROR)
-		return (ERROR);
+		return (EXIT_FAILURE);
 	if (argc == 2)
 		minishell_process_input(argv[1]);
 	else
@@ -39,9 +39,10 @@ int	main(int argc, char *argv[])
 				break ;
 			}
 			minishell_process_input(input);
+			free(input);
 		}
+		rl_clear_history();
 	}
-	rl_clear_history();
 	ft_free_split(&g_env);
 	exit(exit_status_get());
 }
@@ -72,8 +73,7 @@ char *minishell_get_line(void)
 	input = readline(PROMPT);
 	if (input == NULL)
 		return (NULL);
-	else if (input[0] != '\0')
+	else if (input && input[0])
 		add_history(input);
-	rl_on_new_line();
 	return (input);
 }

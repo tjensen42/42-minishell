@@ -5,20 +5,30 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-#include <stdbool.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+# include <stdbool.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
-#include "libft.h"
-#include "global.h"
+# include "libft.h"
+# include "global.h"
 
 /* ************************************************************************** */
 /* DEFINES																	  */
 /* ************************************************************************** */
 
 // POSIX BASED EXIT STATUS
-#define EX_NOEXEC	126
-#define EX_NOTFOUND	127
+# define EX_NOEXEC		126
+# define EX_NOTFOUND	127
+
+// REDIR_TYPES
+# define REDIR_OUT		1
+# define REDIR_OUT_APP	2
+# define REDIR_IN		3
+# define REDIR_HEREDOC	4
+
+// REDIR_FDs
+# define REDIR_FILE		0
+# define REDIR_NUM		1
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */

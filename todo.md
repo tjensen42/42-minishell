@@ -29,43 +29,9 @@ heikelste Sache:
 https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defined-environment-variables-in-a-linux-ba
 
 
--> path_get unset PATH execution with or without "./"
-
--> connected token in printer
-
--> PATH test: wenn / vorhanden nur direkt ohne an PATH-Folder anzuhaengen, wenn keins vorhanden nur an alle PATHs anhaengen, auch an einen leeren
-
-
-
-
-
-
-
-// EXECUTION OPTIMIERUNG
-
--> einfache SCMD's nicht in Pipelines packen
--> exitten by pipe error...
--> error management / fork() fail
-+ Builtin_check
-+ Builtin_exec
-
-
-env
-
-
-04.12
--> PATH holen
--> env check with Valgrind
--> execution pipeline protections
-
-
-
-
 
 
 // HERE_DOC
-
-// SIGNAL HANDLING \
 
 // Variable expansion
 // Wildcard expansion
@@ -73,5 +39,6 @@ env
 
 
 
-// SEGGG Handlig fuer commands in minishell
+// SEGGG Handlig fuer commands in minishell ???
+// Mehrere newlines, dann cmd+K und ctrl+D (verrutschtes exit)
 
