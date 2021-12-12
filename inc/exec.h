@@ -11,6 +11,7 @@
 
 # include "libft.h"
 # include "global.h"
+# include "redir.h"
 
 /* ************************************************************************** */
 /* DEFINES																	  */
@@ -19,16 +20,6 @@
 // POSIX BASED EXIT STATUS
 # define EX_NOEXEC		126
 # define EX_NOTFOUND	127
-
-// REDIR_TYPES
-# define REDIR_OUT		1
-# define REDIR_OUT_APP	2
-# define REDIR_IN		3
-# define REDIR_HEREDOC	4
-
-// REDIR_FDs
-# define REDIR_FILE		0
-# define REDIR_NUM		1
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
@@ -62,8 +53,5 @@ int		exec_wait_for_all(int last_pid);
 // EXEC_EXIT_STATUS
 void	exit_status_set(int status);
 int		exit_status_get(void);
-
-// EXEC_REDIR
-int	exec_redir(t_list *l_token);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
+#    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2021/12/10 19:22:03 by hepple           ###   ########.fr        #
+#    Updated: 2021/12/12 15:52:08 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRCS		+= token.c cmd/cmd.c cmd/scmd.c env/env.c
 
 SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
 SRCS_PARSER	:= parser.c parser_scmd.c parser_pipeline.c parser_group.c
-SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_utils.c exec_scmd.c exec_scmd_utils.c exec_wait.c exec_expand_wildcard.c exec_exit_status.c exec_redir.c
+SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_utils.c exec_scmd.c exec_scmd_utils.c exec_wait.c exec_expand_wildcard.c exec_exit_status.c
+SRCS_REDIR	:= redir.c
 SRCS_BUILTIN:= builtin_echo.c builtin_utils.c builtin_cd.c builtin_exit.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c builtin.c
 SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c
 SRCS_SIGNALS:= signals.c
@@ -30,7 +31,7 @@ SRCS_UTILS	:= utils.c utils_lst.c utils_split.c
 SRCS		+= $(addprefix lexer/, $(SRCS_LEXER)) $(addprefix parser/, $(SRCS_PARSER)) \
 			   $(addprefix exec/, $(SRCS_EXEC)) $(addprefix printer/, $(SRCS_PRINTER)) \
 			   $(addprefix builtin/, $(SRCS_BUILTIN)) $(addprefix utils/, $(SRCS_UTILS)) \
-			   $(addprefix signals/, $(SRCS_SIGNALS))
+			   $(addprefix signals/, $(SRCS_SIGNALS)) $(addprefix redir/, $(SRCS_REDIR))
 
 LDLIBS		:= -lft -lreadline
 

@@ -1,39 +1,49 @@
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#ifndef REDIR_H
+# define REDIR_H
 
 /* ************************************************************************** */
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdbool.h>
+# include <stdbool.h>
+#include <limits.h>
+#include <fcntl.h>
 
-#include "libft.h"
-#include "global.h"
+# include "libft.h"
+# include "global.h"
+# include "token.h"
 
 /* ************************************************************************** */
-/* STRUCTS																	  */
+/* DEFINES																	  */
 /* ************************************************************************** */
 
-struct s_builtins
+// REDIR_TYPES
+# define REDIR_OUT		1
+# define REDIR_OUT_APP	2
+# define REDIR_IN		3
+# define REDIR_HEREDOC	4
+
+// REDIR_FDs
+# define REDIR_FILE		0
+# define REDIR_NUM		1
+
+// REDIR_FD_BUILTIN
+# define REDIR_FD_DUP	0
+# define REDIR_FD_OLD	1
+
+typedef struct	s_redir
 {
-	char	*name;
-	int		(*func)(int argc, char **argv);
-};
+	int	old_fd;
+	int	fd;
+}	t_redir;
+
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-int	builtin_check(char **argv);
-int	builtin_exec(char **argv);
-
-int builtin_echo(int argc, char **argv);
-int	builtin_env(int argc, char **argv);
-int	builtin_exit(int argc, char **argv);
-int	builtin_pwd(int argc, char **argv);
-int	builtin_cd(int argc, char **argv);
-int	builtin_export(int argc, char **argv);
-int	builtin_unset(int argc, char **argv);
+// EXEC_REDIR
+int	redir(t_list *l_token, bool is_builtin);
+int	redir_type(char *redir);
 
 #endif

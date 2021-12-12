@@ -1,23 +1,26 @@
 #include "builtin.h"
 
+static const struct	s_builtins g_builtins[] = {
+	{"echo", builtin_echo},
+	{"cd", builtin_cd},
+	{"pwd", builtin_pwd},
+	{"exit", builtin_exit},
+	{"env", builtin_env},
+	{"export", builtin_export},
+	{"unset", builtin_unset},
+	{NULL, NULL},
+};
+
 int	builtin_check(char **argv)
 {
-	int			i;
-	const char	*builtins[] = {
-		"echo",
-		"cd",
-		"pwd",
-		"exit",
-		"env",
-		"export",
-		"unset",
-		NULL
-	};
+	int	i;
+	int	c_name;
 
 	i = 0;
-	while (builtins[i] != NULL)
+	while (g_builtins[i].name != NULL)
 	{
-		if (ft_strncmp(argv[0], builtins[i], ft_strlen(builtins[i]) + 1) == 0)
+		c_name = ft_strlen(g_builtins[i].name);
+		if (ft_strncmp(argv[0], g_builtins[i].name, c_name + 1) == 0)
 			return (i + 1);
 		i++;
 	}
@@ -26,21 +29,11 @@ int	builtin_check(char **argv)
 
 int	builtin_exec(char **argv)
 {
-	int					i_builtin;
-	const t_builtins	builtins_func[] = {
-		builtin_echo,
-		builtin_cd,
-		builtin_pwd,
-		builtin_exit,
-		builtin_env,
-		builtin_export,
-		builtin_unset,
-		NULL
-	};
+	int	i_builtin;
 
-	errno = 0;
 	i_builtin = builtin_check(argv) - 1;
 	if (i_builtin == -1)
 		return (ERROR);
-	return (builtins_func[i_builtin](split_count(argv), argv));
+	errno = 0;
+	return (g_builtins[i_builtin].func(split_count(argv), argv));
 }

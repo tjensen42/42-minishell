@@ -54,14 +54,12 @@ static int	exec_pipeline_scmd(t_list *scmd)
 
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
 		exec_scmd_exit(EXIT_FAILURE, argv);
-	if (exec_redir(scmd_content(scmd)->l_redir) == ERROR)
+	if (redir(scmd_content(scmd)->l_redir, false) == ERROR)
 		exec_scmd_exit(EXIT_FAILURE, argv);
 	if (builtin_check(argv))
-	{
 		status = builtin_exec(argv);
-		exec_scmd_exit(status, argv);
-	}
-	status = exec_scmd_exec(argv);
+	else
+		status = exec_scmd_exec(argv);
 	exec_scmd_exit(status, argv);
 	return (0);
 }

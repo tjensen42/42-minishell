@@ -10,19 +10,22 @@ int	exec_scmd(t_list *scmd)
 	int			status;
 	char		**argv;
 
+	if (scmd_content(scmd)->l_argv == NULL)
+		return (0);
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
 		return (ERROR);
 	if (builtin_check(argv))
 	{
-		// BUILTIN special redir processing
-		status = builtin_exec(argv);
+		// status = redir(scmd_content(scmd)->l_redir, true);
+		// if (status != ERROR)
+			status = builtin_exec(argv);
 		ft_free_split(&argv);
 		return (status);
 	}
 	pid = fork();
 	if (pid == 0)
 	{
-		if (exec_redir(scmd_content(scmd)->l_redir) == ERROR)
+		if (redir(scmd_content(scmd)->l_redir, false) == ERROR)
 			exec_scmd_exit(EXIT_FAILURE, argv);
 		status = exec_scmd_exec(argv);
 		exec_scmd_exit(status, argv);
@@ -35,9 +38,12 @@ int	exec_scmd_preperation(t_list *scmd, char ***argv)
 {
 	// Variable expansion
 	// Wildcard expansion
-	*argv = l_token_to_split(scmd_content(scmd)->l_argv);
-	if (*argv == NULL)
-		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	if (scmd_content(scmd)->l_argv)
+	{
+		*argv = l_token_to_split(scmd_content(scmd)->l_argv);
+		if (*argv == NULL)
+			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	}
 	return (0);
 }
 
@@ -47,6 +53,11 @@ int	exec_scmd_exec(char **argv)
 	signal(SIGQUIT, SIG_DFL);
 	termios_change(true);
 	errno = 0;
+	if (ft_strncmp(argv[0], ".", 2) == 0)
+	{
+		print_error(SHELL_NAME, argv[0], NULL, "filename argument required");
+		return (EXIT_FAILURE);
+	}
 	if (!ft_strchr(argv[0], '/') && env_get_value("PATH") != NULL)
 		if (scmd_search_path(argv) == ERROR)
 			return (EX_NOTFOUND);

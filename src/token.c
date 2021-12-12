@@ -65,6 +65,8 @@ char	**l_token_to_split(t_list *l_token)
 	char	**split;
 	t_list	*iter;
 
+	if (l_token == NULL)
+		return (NULL);
 	i = 0;
 	iter = l_token;
 	while (iter)

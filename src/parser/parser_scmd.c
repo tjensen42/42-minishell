@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "redir.h"
 
 static void	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token);
 
@@ -37,7 +38,13 @@ static void	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
 	while (cmd_type_from_token(*l_token) == CMD_SCMD)
 	{
 		next = (*l_token)->next;
-		if (token_content(*l_token)->flags & (TOK_REDIR | TOK_REDIR_FILE))
+		if (token_content(*l_token)->flags & TOK_REDIR)
+		{
+			// if (redir_type(token_content(*l_token)->string) == REDIR_HEREDOC)
+
+			ft_lstadd_back(&(c_scmd->l_redir), *l_token);
+		}
+		else if (token_content(*l_token)->flags & TOK_REDIR_FILE)
 			ft_lstadd_back(&(c_scmd->l_redir), *l_token);
 		else
 			ft_lstadd_back(&(c_scmd->l_argv), *l_token);

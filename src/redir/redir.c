@@ -1,17 +1,13 @@
-#include "exec.h"
-#include "token.h"
-#include <limits.h>
-#include <fcntl.h>
+#include "redir.h"
 
-static int	exec_redir_do(char *redir, char *file);
-static int	exec_redir_process(char *redir, char *file, int type);
-static int	exec_redir_get_num(char *redir, int type);
-static int	exec_redir_open_file(char *file, int type);
+static int	redir_process(char *redir, char *file, bool is_builtin);
+static int	redir_fd(char *redir, int type);
+static int	redir_open_file(char *file, int type);
 
-int	exec_redir(t_list *l_token)
+int	redir(t_list *l_token, bool is_builtin)
 {
-	t_list	*iter;
 	char	*tmp;
+	t_list	*iter;
 
 	iter = l_token;
 	while (iter && token_content(iter)->flags & TOK_REDIR && iter->next != NULL)
@@ -19,47 +15,52 @@ int	exec_redir(t_list *l_token)
 		tmp = l_token_to_str(iter->next);
 		if (tmp == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		if (exec_redir_do(token_content(iter)->string, tmp) == ERROR)
+		if (redir_process(token_content(iter)->string, tmp, is_builtin) == ERROR)
 		{
 			free(tmp);
 			return (ERROR);
 		}
 		free(tmp);
-		iter = iter->next->next;
+		iter = iter->next;
+		while (iter && token_content(iter)->flags & TOK_CONNECTED)
+			iter = iter->next;
+		iter = iter->next;
 	}
 	if (iter != NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, "ambiguous redirection"));
 	return (0);
 }
 
-static int	exec_redir_do(char *redir, char *file)
+int	redir_type(char *redir)
 {
 	int	i;
-	int	status;
 
 	i = 0;
 	while (ft_isdigit(redir[i]))
 		i++;
 	if (redir[i] == '>' && redir[i + 1] == '\0')
-		status = exec_redir_process(redir, file, REDIR_OUT);
+		return (REDIR_OUT);
 	else if (redir[i] == '>' && redir[i + 1] == '>')
-		status = exec_redir_process(redir, file, REDIR_OUT_APP);
+		return (REDIR_OUT_APP);
 	else if (redir[i] == '<' && redir[i + 1] == '\0')
-		status = exec_redir_process(redir, file, REDIR_IN);
+		return (REDIR_IN);
 	else if (redir[i] == '<' && redir[i + 1] == '<')
-		status = exec_redir_process(redir, file, REDIR_HEREDOC);
+		return (REDIR_HEREDOC);
 	else
-		status = ERROR;
-	return (status);
+		return (ERROR);
 }
 
-static int exec_redir_process(char *redir, char *file, int type)
+static int redir_process(char *redir, char *file, bool is_builtin)
 {
 	int	fd[2];
 	int	status;
+	int	type;
 
-	fd[REDIR_NUM] = exec_redir_get_num(redir, type);
-	fd[REDIR_FILE] = exec_redir_open_file(file, type);
+	type = redir_type(redir);
+	fd[REDIR_NUM] = redir_fd(redir, type);
+	if (is_builtin && fd[REDIR_NUM] > STDERR_FILENO)
+		return (0);
+	fd[REDIR_FILE] = redir_open_file(file, type);
 	if (fd[REDIR_NUM] == -1 || fd[REDIR_FILE] == -1)
 		status = ERROR;
 	if (status != ERROR)
@@ -75,7 +76,7 @@ static int exec_redir_process(char *redir, char *file, int type)
 	return (status);
 }
 
-static int	exec_redir_get_num(char *redir, int type)
+static int	redir_fd(char *redir, int type)
 {
 	int		i;
 	long	fd;
@@ -104,12 +105,16 @@ static int	exec_redir_get_num(char *redir, int type)
 	return (ERROR);
 }
 
-static int exec_redir_open_file(char *file, int type)
+static int redir_open_file(char *file, int type)
 {
 	int	fd;
 
 	fd = -2;
-	if (type == REDIR_IN || type == REDIR_HEREDOC)
+	if (type == REDIR_HEREDOC)
+	{
+		
+	}
+	else if (type == REDIR_IN)
 		fd = open(file, O_RDONLY, 0);
 	else if (type == REDIR_OUT)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -129,7 +134,7 @@ static int exec_redir_open_file(char *file, int type)
 // 	status = 0;
 // 	fd_num = STDIN_FILENO;
 // 	if (ft_isdigit(redir[0]))
-// 		fd_num = exec_redir_get_num(redir);
+// 		fd_num = redir_fd(redir);
 // 	if (fd_num == -1)
 // 		status = ERROR;
 // 	if (here_doc)
@@ -154,7 +159,7 @@ static int exec_redir_open_file(char *file, int type)
 // 	status = 0;
 // 	fd_num = STDOUT_FILENO;
 // 	if (ft_isdigit(redir[0]))
-// 		fd_num = exec_redir_get_num(redir);
+// 		fd_num = redir_fd(redir);
 // 	if (fd_num == -1)
 // 		status = ERROR;
 // 	if (append)
