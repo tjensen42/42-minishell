@@ -60,7 +60,6 @@ int	minishell_process_input(char *input)
 	if (l_token != NULL)
 		l_parser = parser(l_token);
 	if (l_token != NULL && l_parser != NULL)
-		// printf("return: %d\n", exec_recursive(l_parser));
 		exec_recursive(l_parser);
 	ft_lstclear(&l_parser, c_cmd_destroy);
 	return (0);

@@ -20,7 +20,7 @@ int	split_append_str(char ***split, char *new_str)
 	if (new_split == NULL)
 		return (ERROR);
 	i = 0;
-	while ((*split)[i])
+	while (*split && (*split)[i])
 	{
 		new_split[i] = (*split)[i];
 		i++;

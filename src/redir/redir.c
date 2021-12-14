@@ -12,7 +12,7 @@ int	redir(t_list *l_token, bool is_builtin)
 	iter = l_token;
 	while (iter && token_content(iter)->flags & TOK_REDIR && iter->next != NULL)
 	{
-		tmp = l_token_to_str(iter->next);
+		tmp = token_to_str(iter->next);
 		if (tmp == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
 		if (redir_process(token_content(iter)->string, tmp, is_builtin) == ERROR)

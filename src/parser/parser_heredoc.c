@@ -15,10 +15,10 @@ int	parser_heredoc(t_list *l_token)
 	if (l_token && redir_type(token_content(l_token)->string) == REDIR_HEREDOC)
 	{
 		redir_file = l_token->next;
-		limiter = l_token_to_str(redir_file);
+		limiter = token_to_str(redir_file);
 		if (limiter == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		limiter = str_append(limiter, "\n");
+		limiter = str_append_str(limiter, "\n");
 		if (limiter == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
 		free(token_content(redir_file)->string);

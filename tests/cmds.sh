@@ -41,7 +41,17 @@ echo | ca && est && echo | cat
 
 > out && echo 1
 
+echo .*
+
 (exit)
+
+echo "*"$tes"t"
+
+echo 1$tes"t"
+
+ls 'Make'*
+
+touch "*1" && echo "*"* && rm "*1"
 
 # echo 1 | cat <infile << lim
 
@@ -54,7 +64,7 @@ echo | ca && est && echo | cat
 
 echo 1 && echo 2 && cat
 
-
+touch "   " && ls * | grep "   " && rm "   "
 
 env -i bash --noprofile --norc
 

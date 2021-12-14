@@ -38,22 +38,22 @@ void	c_token_destroy(void *c_token)
 	free(c_token);
 }
 
-char	*l_token_to_str(t_list *l_token)
+char	*token_to_str(t_list *token)
 {
 	char	*tmp;
 	char	*str;
 
-	if (l_token == NULL || token_content(l_token)->string == NULL)
+	if (token == NULL || token_content(token)->string == NULL)
 		return (NULL);
-	str = ft_strdup(token_content(l_token)->string);
-	while (l_token && (token_content(l_token)->flags & TOK_CONNECTED))
+	str = ft_strdup(token_content(token)->string);
+	while (token && (token_content(token)->flags & TOK_CONNECTED))
 	{
 		tmp = str;
-		str = ft_strjoin(str, token_content(l_token->next)->string);
+		str = ft_strjoin(str, token_content(token->next)->string);
 		free(tmp);
 		if (str == NULL)
 			return (NULL);
-		l_token = l_token->next;
+		token = token->next;
 	}
 	return (str);
 }

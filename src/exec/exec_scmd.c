@@ -3,6 +3,7 @@
 #include "builtin.h"
 #include "signals.h"
 #include "env.h"
+#include "expand.h"
 
 int	exec_scmd(t_list *scmd)
 {
@@ -14,6 +15,8 @@ int	exec_scmd(t_list *scmd)
 		return (0);
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
 		return (ERROR);
+	if (token_content(scmd_content(scmd)->l_argv)->string[0] == '\0')
+		return (0);
 	if (builtin_check(argv))
 	{
 		// status = redir(scmd_content(scmd)->l_redir, true);
@@ -37,7 +40,9 @@ int	exec_scmd(t_list *scmd)
 int	exec_scmd_preperation(t_list *scmd, char ***argv)
 {
 	// Variable expansion
+	expand_var_scmd(scmd_content(scmd));
 	// Wildcard expansion
+	expand_wildcard(scmd_content(scmd));
 	if (scmd_content(scmd)->l_argv)
 	{
 		*argv = l_token_to_split(scmd_content(scmd)->l_argv);

@@ -41,7 +41,9 @@ https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defi
 // HERE_DOC Signal handling....
 // HERE_DOC get tmp file PATH....
 
-// Variable expansion
+// Variable expansion \
+// Variable expansion \ token_splitting!
+
 // Wildcard expansion
 
 // REDIR undo list

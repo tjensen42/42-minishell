@@ -21,6 +21,7 @@
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-
+int	expand_var_scmd(t_c_scmd *c_scmd);
+int	expand_wildcard(t_c_scmd *c_scmd);
 
 #endif

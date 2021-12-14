@@ -36,7 +36,8 @@ extern char	**g_env;
 /* ************************************************************************** */
 
 int		print_error(char *s1, char *s2, char *s3, char *message);
-char	*str_append(char *str, char *append);
+char	*str_append_str(char *str, char *append);
+char	*str_append_chr(char *str, char append);
 
 int		lst_node_remove(t_list **lst, t_list *node, void (*del)(void *));
 t_list	*lst_node_prev(t_list *lst, t_list *node);
