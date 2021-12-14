@@ -48,9 +48,16 @@ static bool	export_is_valid_argument(char *arg)
 {
 	if (!ft_strchr(arg, '=') && ft_strchr(arg, '?'))
 		return (false);
-	else if (ft_strchr(arg, '=') && ft_strchr(arg, '?'))
+	if (!ft_strchr(arg, '=') && ft_strchr(arg, '$'))
+		return (false);
+	if (ft_strchr(arg, '=') && ft_strchr(arg, '?'))
 	{
 		if (ft_strchr(arg, '?') < ft_strchr(arg, '='))
+			return (false);
+	}
+	if (ft_strchr(arg, '=') && ft_strchr(arg, '$'))
+	{
+		if (ft_strchr(arg, '$') < ft_strchr(arg, '='))
 			return (false);
 	}
 	return (true);

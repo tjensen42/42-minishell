@@ -31,4 +31,7 @@ int			parser_cmd_pipeline_merge(t_list **l_cmd);
 // PARSER_CMD_GROUP
 int			parser_cmd_group_merge(t_list **l_cmd);
 
+// PARSER_HEREDOC
+int			parser_heredoc(t_list *l_token);
+
 #endif

@@ -26,7 +26,12 @@ void	printer_scmd(t_c_scmd *scmd)
 		if (token_content(tmp)->flags & TOK_REDIR)
 			printf("\033[0;35m%s \033[m", token_content(tmp)->string);
 		else
-			printf("\033[0;34m%s \033[m", token_content(tmp)->string);
+		{
+			if (token_content(tmp)->flags & TOK_HEREDOC)
+				printf("\033[0;34mhere_doc \033[m");
+			else
+				printf("\033[0;34m%s \033[m", token_content(tmp)->string);
+		}
 		tmp = tmp->next;
 	}
 }

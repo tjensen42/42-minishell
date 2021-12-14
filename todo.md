@@ -31,14 +31,23 @@ https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defi
 
 
 
-// HERE_DOC
+
+
+
+
+
+** LATER TO DO **
+
+// HERE_DOC Signal handling....
+// HERE_DOC get tmp file PATH....
 
 // Variable expansion
 // Wildcard expansion
-// Redir processing
+
+// REDIR undo list
 
 
+** OPTIONAL **
 
-// SEGGG Handlig fuer commands in minishell ???
-// Mehrere newlines, dann cmd+K und ctrl+D (verrutschtes exit)
-
+// Unsorted export output
+// SEGGG 11: Messages

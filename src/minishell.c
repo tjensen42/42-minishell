@@ -34,7 +34,7 @@ int	main(int argc, char *argv[])
 			input = minishell_get_line();
 			if (input == NULL)
 			{
-				write(1, "\x1b[uexit\n", 9);
+				write(1, "exit\n", 5);
 				termios_change(true);
 				break ;
 			}

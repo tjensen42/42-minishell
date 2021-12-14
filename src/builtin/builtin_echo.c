@@ -14,7 +14,7 @@ int builtin_echo(int argc UNUSED, char **argv)
 		newline = true;
 
 	///// delete this after variable expansion....
-	if (ft_strncmp(argv[i], "$?", 3) == 0)
+	if (argv[i] && ft_strncmp(argv[i], "$?", 3) == 0)
 	{
 		ft_putnbr_fd(exit_status_get(), STDOUT_FILENO);
 		ft_putchar_fd('\n', 1);

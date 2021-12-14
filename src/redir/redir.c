@@ -35,6 +35,8 @@ int	redir_type(char *redir)
 {
 	int	i;
 
+	if (redir == NULL)
+		return (ERROR);
 	i = 0;
 	while (ft_isdigit(redir[i]))
 		i++;
@@ -63,13 +65,10 @@ static int redir_process(char *redir, char *file, bool is_builtin)
 	fd[REDIR_FILE] = redir_open_file(file, type);
 	if (fd[REDIR_NUM] == -1 || fd[REDIR_FILE] == -1)
 		status = ERROR;
-	if (status != ERROR)
+	if (status != ERROR && dup2(fd[REDIR_FILE], fd[REDIR_NUM]) == -1)
 	{
-		if (dup2(fd[REDIR_FILE], fd[REDIR_NUM]) == -1)
-		{
-			print_error(SHELL_NAME, redir, NULL, strerror(errno));
-			status = ERROR;
-		}
+		print_error(SHELL_NAME, redir, NULL, strerror(errno));
+		status = ERROR;
 	}
 	if (fd[REDIR_FILE] != -1)
 		close(fd[REDIR_FILE]);
@@ -107,12 +106,22 @@ static int	redir_fd(char *redir, int type)
 
 static int redir_open_file(char *file, int type)
 {
-	int	fd;
+	int		fd;
+	char	*heredoc_file;
 
 	fd = -2;
 	if (type == REDIR_HEREDOC)
 	{
-		
+		heredoc_file = "tmp/1";
+		fd = open(heredoc_file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (fd == -1)
+			print_error(SHELL_NAME, "here_doc", NULL, strerror(errno));
+		else
+			write(fd, file, ft_strlen(file));
+		close(fd);
+		fd = open(heredoc_file, O_RDONLY, 0);
+		if (fd == -1)
+			print_error(SHELL_NAME, "here_doc", NULL, strerror(errno));
 	}
 	else if (type == REDIR_IN)
 		fd = open(file, O_RDONLY, 0);
@@ -120,58 +129,7 @@ static int redir_open_file(char *file, int type)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == REDIR_OUT_APP)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
+	if (fd == -1 && type != REDIR_HEREDOC)
 		print_error(SHELL_NAME, file, NULL, strerror(errno));
 	return (fd);
 }
-
-// static int	exec_redir_in(char *redir, char *file, bool here_doc)
-// {
-// 	int	fd_num;
-// 	int	fd_file;
-// 	int	status;
-
-// 	status = 0;
-// 	fd_num = STDIN_FILENO;
-// 	if (ft_isdigit(redir[0]))
-// 		fd_num = redir_fd(redir);
-// 	if (fd_num == -1)
-// 		status = ERROR;
-// 	if (here_doc)
-// 		printf("HERE_DOC\n");
-// 	else
-// 		fd_file = open(file, O_RDONLY, 0);
-// 	if (fd_file == -1)
-// 		status = print_error(SHELL_NAME, file, NULL, strerror(errno));
-// 	if (status != ERROR && dup2(fd_file, fd_num) == -1)
-// 		status = print_error(SHELL_NAME, redir, NULL, strerror(errno));
-// 	if (fd_file != -1)
-// 		close(fd_file);
-// 	return (status);
-// }
-
-// static int	exec_redir_out(char *redir, char *file, bool append)
-// {
-// 	int	fd_num;
-// 	int	fd_file;
-// 	int	status;
-
-// 	status = 0;
-// 	fd_num = STDOUT_FILENO;
-// 	if (ft_isdigit(redir[0]))
-// 		fd_num = redir_fd(redir);
-// 	if (fd_num == -1)
-// 		status = ERROR;
-// 	if (append)
-// 		fd_file = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-// 	else
-// 		fd_file = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	if (fd_file == -1)
-// 		status = print_error(SHELL_NAME, file, NULL, strerror(errno));
-// 	if (status != ERROR)
-// 		if (dup2(fd_file, fd_num) == -1)
-// 			status = print_error(SHELL_NAME, redir, NULL, strerror(errno));
-// 	if (fd_file != -1)
-// 		close(fd_file);
-// 	return (status);
-// }

@@ -36,12 +36,13 @@ extern char	**g_env;
 /* ************************************************************************** */
 
 int		print_error(char *s1, char *s2, char *s3, char *message);
-int		split_count(char **argv);
+char	*str_append(char *str, char *append);
 
 int		lst_node_remove(t_list **lst, t_list *node, void (*del)(void *));
 t_list	*lst_node_prev(t_list *lst, t_list *node);
 int		lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 
+int		split_count(char **argv);
 int		split_append_str(char ***split, char *str);
 
 int		split_remove_str(char ***split, char *remove_str);

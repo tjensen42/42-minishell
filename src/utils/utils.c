@@ -26,3 +26,13 @@ int	print_error(char *s1, char *s2, char *s3, char *message)
 	ft_putchar_fd('\n', 2);
 	return (ERROR);
 }
+
+char	*str_append(char *str, char *append)
+{
+	char	*tmp;
+
+	tmp = str;
+	str = ft_strjoin(str, append);
+	free(tmp);
+	return (str);
+}
