@@ -35,31 +35,31 @@ int	parser_cmd_group_merge(t_list **l_cmd)
 static t_list	*group_open(t_list *l_cmd)
 {
 	t_list	*iter;
-	t_list	*bracket_o;
+	t_list	*open;
 
-	bracket_o = NULL;
+	open = NULL;
 	iter = l_cmd;
 	while (iter != NULL)
 	{
 		if (cmd_content(iter)->type == CMD_O_BRACKET)
-			bracket_o = iter;
-		else if (bracket_o && cmd_content(iter)->type == CMD_PIPE)
-			bracket_o = NULL;
-		else if (bracket_o && cmd_content(iter)->type == CMD_C_BRACKET)
-			return (bracket_o);
+			open = iter;
+		else if (open && cmd_content(iter)->type == CMD_PIPE)
+			open = NULL;
+		else if (open && cmd_content(iter)->type == CMD_C_BRACKET)
+			return (open);
 		iter = iter->next;
 	}
 	return (NULL);
 }
 
-static t_list	*group_close(t_list *bracket_o)
+static t_list	*group_close(t_list *open)
 {
-	t_list	*bracket_c;
+	t_list	*close;
 
-	bracket_c = bracket_o;
-	while (bracket_c && cmd_content(bracket_c)->type != CMD_C_BRACKET)
-		bracket_c = bracket_c->next;
-	if (bracket_c == bracket_o)
+	close = open;
+	while (close && cmd_content(close)->type != CMD_C_BRACKET)
+		close = close->next;
+	if (close == open)
 		return (NULL);
-	return (bracket_c);
+	return (close);
 }

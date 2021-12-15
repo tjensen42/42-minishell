@@ -5,10 +5,10 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-#include <stdbool.h>
+# include <stdbool.h>
 
-#include "libft.h"
-#include "global.h"
+# include "libft.h"
+# include "global.h"
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */

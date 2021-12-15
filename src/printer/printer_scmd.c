@@ -2,38 +2,13 @@
 #include "printer.h"
 #include "cmd.h"
 
+static void	printer_scmd_argv(t_list *l_argv);
+static void	printer_scmd_redir(t_list *l_redir);
+
 void	printer_scmd(t_c_scmd *scmd)
 {
-	t_list	*tmp;
-	bool	command;
-
-	command = true;
-	tmp = scmd->l_argv;
-	while (tmp)
-	{
-		if (command == true)
-		{
-			printf("\033[0;33m%s \033[m", token_content(tmp)->string);
-			command = false;
-		}
-		else
-			printf("\033[0;32m%s \033[m", token_content(tmp)->string);
-		tmp = tmp->next;
-	}
-	tmp = scmd->l_redir;
-	while (tmp)
-	{
-		if (token_content(tmp)->flags & TOK_REDIR)
-			printf("\033[0;35m%s \033[m", token_content(tmp)->string);
-		else
-		{
-			if (token_content(tmp)->flags & TOK_HEREDOC)
-				printf("\033[0;34mhere_doc \033[m");
-			else
-				printf("\033[0;34m%s \033[m", token_content(tmp)->string);
-		}
-		tmp = tmp->next;
-	}
+	printer_scmd_argv(scmd->l_argv);
+	printer_scmd_redir(scmd->l_redir);
 }
 
 void	printer_other(int type)
@@ -63,4 +38,39 @@ void	printer_scmd_pipeline(t_list *l_scmd_pipeline, bool newline)
 	}
 	if (newline)
 		printf("\n");
+}
+
+static void	printer_scmd_argv(t_list *l_argv)
+{
+	bool	command;
+
+	command = true;
+	while (l_argv)
+	{
+		if (command == true)
+		{
+			printf("\033[0;33m%s \033[m", token_content(l_argv)->string);
+			command = false;
+		}
+		else
+			printf("\033[0;32m%s \033[m", token_content(l_argv)->string);
+		l_argv = l_argv->next;
+	}
+}
+
+static void	printer_scmd_redir(t_list *l_redir)
+{
+	while (l_redir)
+	{
+		if (token_content(l_redir)->flags & TOK_REDIR)
+			printf("\033[0;35m%s \033[m", token_content(l_redir)->string);
+		else
+		{
+			if (token_content(l_redir)->flags & TOK_HEREDOC)
+				printf("\033[0;34mhere_doc \033[m");
+			else
+				printf("\033[0;34m%s \033[m", token_content(l_redir)->string);
+		}
+		l_redir = l_redir->next;
+	}
 }

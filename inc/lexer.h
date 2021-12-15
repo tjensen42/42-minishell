@@ -46,16 +46,7 @@ int			lexer_token_redir(char *str, int *i, t_list **l_token);
 int			lexer_token_pipe(char *str, int *i, t_list **l_token);
 int			lexer_token_bracket(char *str, int *i, t_list **l_token);
 
-// TOKEN_UTILS
-bool		token_is_cmd(t_list *token);
-t_list		*token_create(char *string, int type);
-void		c_token_destroy(void *content);
-t_c_token	*token_content(t_list *token);
-
 // SYNTAX
 int			lexer_syntax_check(t_list *l_token);
-
-// PRINTER
-void		printer_token(t_list *l_token);
 
 #endif

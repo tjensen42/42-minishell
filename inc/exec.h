@@ -18,15 +18,15 @@
 /* ************************************************************************** */
 
 // POSIX BASED EXIT STATUS
-# define EX_NOEXEC		126
-# define EX_NOTFOUND	127
+# define EXEC_NOEXEC	126
+# define EXEC_NOTFOUND	127
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
 // EXEC
-int	exec_recursive(t_list *l_cmd);
+int		exec_recursive(t_list *l_cmd);
 
 // EXEC_SCMD
 int		exec_scmd(t_list *scmd);

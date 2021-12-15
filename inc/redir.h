@@ -6,8 +6,8 @@
 /* ************************************************************************** */
 
 # include <stdbool.h>
-#include <limits.h>
-#include <fcntl.h>
+# include <limits.h>
+# include <fcntl.h>
 
 # include "libft.h"
 # include "global.h"
@@ -31,7 +31,7 @@
 # define REDIR_FD_OLD	0
 # define REDIR_FD_NEW	1
 
-typedef struct	s_redir
+typedef struct s_redir
 {
 	int		fd_replaced;
 	int		fd_replaced_dup;

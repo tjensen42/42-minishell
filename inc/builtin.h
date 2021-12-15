@@ -5,11 +5,11 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdbool.h>
+# include <stdio.h>
+# include <stdbool.h>
 
-#include "libft.h"
-#include "global.h"
+# include "libft.h"
+# include "global.h"
 
 /* ************************************************************************** */
 /* STRUCTS																	  */
@@ -28,7 +28,7 @@ struct s_builtins
 int	builtin_check(char **argv);
 int	builtin_exec(char **argv);
 
-int builtin_echo(int argc, char **argv);
+int	builtin_echo(int argc, char **argv);
 int	builtin_env(int argc, char **argv);
 int	builtin_exit(int argc, char **argv);
 int	builtin_pwd(int argc, char **argv);

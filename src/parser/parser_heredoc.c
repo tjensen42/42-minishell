@@ -1,9 +1,8 @@
 #include "parser.h"
 #include "redir.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 
-static char	*parser_read_heredoc(char *limiter);
+static char	*parser_heredoc_read(char *limiter);
+static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token);
 
 int	parser_heredoc(t_list *l_token)
 {
@@ -23,25 +22,16 @@ int	parser_heredoc(t_list *l_token)
 			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
 		free(token_content(redir_file)->string);
 		token_content(redir_file)->flags |= TOK_HEREDOC;
-		token_content(redir_file)->string = parser_read_heredoc(limiter);
+		token_content(redir_file)->string = parser_heredoc_read(limiter);
 		free(limiter);
 		if (token_content(redir_file)->string == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		iter = redir_file->next;
-		while (iter && token_content(iter)->flags & TOK_REDIR_FILE)
-		{
-			if (token_content(iter)->flags & TOK_S_QUOTE)
-				token_content(redir_file)->flags |= TOK_S_QUOTE;
-			tmp = iter->next;
-			lst_node_remove(&l_token, iter, c_token_destroy);
-			iter = tmp;
-		}
+		parser_heredoc_merge(redir_file, &l_token);
 	}
 	return (0);
 }
 
-// SIGNAL HANDLING ???
-static char	*parser_read_heredoc(char *limiter)
+static char	*parser_heredoc_read(char *limiter)
 {
 	char	*tmp;
 	char	*read_str;
@@ -65,4 +55,27 @@ static char	*parser_read_heredoc(char *limiter)
 	}
 	free(read_str);
 	return (here_str);
+}
+
+static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token)
+{
+	t_list	*tmp;
+	t_list	*iter;
+
+	if (token_content(redir_file)->flags & TOK_CONNECTED)
+	{
+		token_content(redir_file)->flags &= ~(TOK_CONNECTED);
+		iter = redir_file->next;
+		while (iter && token_content(iter)->flags & TOK_CONNECTED)
+		{
+			if (token_content(iter)->flags & TOK_S_QUOTE)
+				token_content(redir_file)->flags |= TOK_S_QUOTE;
+			tmp = iter->next;
+			lst_node_remove(l_token, iter, c_token_destroy);
+			iter = tmp;
+		}
+		if (token_content(iter)->flags & TOK_S_QUOTE)
+			token_content(redir_file)->flags |= TOK_S_QUOTE;
+		lst_node_remove(l_token, iter, c_token_destroy);
+	}
 }

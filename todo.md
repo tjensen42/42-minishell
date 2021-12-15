@@ -53,3 +53,5 @@ https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defi
 
 // Unsorted export output
 // SEGGG 11: Messages
+// exit printen in pipelines
+// HEREDOC var exansion for s_quote/d_qoute

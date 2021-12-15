@@ -14,17 +14,17 @@
 /* DEFINES																	  */
 /* ************************************************************************** */
 
-# define TOK_TEXT			0b00000000001
-# define TOK_S_QUOTE		0b00000000010
-# define TOK_D_QUOTE		0b00000000100
-# define TOK_REDIR_FILE		0b00000001000
-# define TOK_CONNECTED		0b00000010000
-# define TOK_BIN_OP			0b00000100000
-# define TOK_PIPE			0b00001000000
-# define TOK_O_BRACKET		0b00010000000
-# define TOK_C_BRACKET		0b00100000000
-# define TOK_REDIR			0b01000000000
-# define TOK_HEREDOC		0b10000000000
+# define TOK_TEXT			1
+# define TOK_S_QUOTE		2
+# define TOK_D_QUOTE		4
+# define TOK_REDIR_FILE		8
+# define TOK_CONNECTED		16
+# define TOK_BIN_OP			32
+# define TOK_PIPE			64
+# define TOK_O_BRACKET		128
+# define TOK_C_BRACKET		256
+# define TOK_REDIR			512
+# define TOK_HEREDOC		1024
 
 /* ************************************************************************** */
 /* STRUCTS																	  */
