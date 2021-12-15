@@ -20,7 +20,10 @@ char	*str_append_chr(char *str, char append)
 		return (NULL);
 	new_str = malloc(ft_strlen(str) + 2);
 	if (new_str == NULL)
+	{
+		free(str);
 		return (NULL);
+	}
 	i = 0;
 	while (str[i])
 	{

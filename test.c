@@ -19,3 +19,35 @@ int	main(void)
 	write(1, buf, size);
 	write(1, "\n", 1);
 }
+
+
+
+
+static bool	expand_wildcard_match_fname(char *wildcard, char *fname)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (wildcard[i])
+	{
+		if (wildcard[i] == WILDCARD)
+		{
+			i++;
+			while (fname[j] && fname[j] != wildcard[i])
+				j++;
+		}
+		else
+		{
+			if (wildcard[i] != fname[j])
+				return (false);
+			i++;
+			j++;
+		}
+	}
+	if (fname[j] == '\0')
+		return (true);
+	return (false);
+}
+

@@ -53,6 +53,10 @@ ls 'Make'*
 
 touch "*1" && echo "*"* && rm "*1"
 
+touch "a" "aa" && echo *a && rm "a" "aa"
+
+touch "a" "aa" "aaa" && echo *a*a && rm "a" "aa" "aaa"
+
 # echo 1 | cat <infile << lim
 
 # echo 1 | cat <<lim <infile

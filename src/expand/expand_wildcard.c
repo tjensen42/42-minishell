@@ -1,10 +1,18 @@
 #include <dirent.h>
 #include "expand.h"
 
+#define WILDCARD	 -1
+
 static char **expand_fname_get(void);
 static bool expand_token_is_wildcard(t_list *token);
-static bool	expand_fname_is_wild(char *fname, t_list *token);
+
+static int count_dups(char *str);
 static int	expand_wildcard_token(t_list *token);
+
+static bool	expand_wildcard_match_fname(char *wildcard, char *fname);
+
+static char	*expand_wildcard_get(t_list *token);
+static char	*expand_wildcard_append_str(char *wildcard, t_list *token);
 
 int	expand_wildcard(t_c_scmd *c_scmd)
 {
@@ -13,9 +21,11 @@ int	expand_wildcard(t_c_scmd *c_scmd)
 	iter = c_scmd->l_argv;
 	while (iter)
 	{
-		// if (expand_token_is_wildcard(iter))
+		if (expand_token_is_wildcard(iter))
 			if (expand_wildcard_token(iter) == ERROR)
 				return (ERROR);
+		while (token_content(iter)->flags & TOK_CONNECTED)
+			iter = iter->next;
 		iter = iter->next;
 	}
 	iter = c_scmd->l_redir;
@@ -24,6 +34,8 @@ int	expand_wildcard(t_c_scmd *c_scmd)
 		if (expand_token_is_wildcard(iter))
 			if (expand_wildcard_token(iter) == ERROR)
 				return (ERROR);
+		while (token_content(iter)->flags & TOK_CONNECTED)
+			iter = iter->next;
 		iter = iter->next;
 	}
 	return (0);
@@ -31,22 +43,23 @@ int	expand_wildcard(t_c_scmd *c_scmd)
 
 static bool expand_token_is_wildcard(t_list *token)
 {
-	if (!(token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE))
-		&& ft_strchr(token_content(token)->string, '*') == NULL)
-		return (true);
-	while (token_content(token)->flags & TOK_CONNECTED)
+	while (token && token_content(token)->flags & TOK_CONNECTED)
 	{
-		token = token->next;
 		if (!(token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE))
-			&& ft_strchr(token_content(token)->string, '*') == NULL)
+			&& ft_strchr(token_content(token)->string, '*'))
 			return (true);
+		token = token->next;
 	}
+	if (token && !(token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE))
+		&& ft_strchr(token_content(token)->string, '*'))
+		return (true);
 	return (false);
 }
 
 static int	expand_wildcard_token(t_list *token)
 {
 	int		i;
+	char	*wildcard;
 	char	**fname;
 	t_list	*new_token;
 	t_list	*l_wildcards;
@@ -58,19 +71,24 @@ static int	expand_wildcard_token(t_list *token)
 		return (ERROR);
 	}
 	l_wildcards = NULL;
+	wildcard = expand_wildcard_get(token);
+	if (wildcard == NULL)
+	{
+		ft_free_split(&fname);
+		return (ERROR);
+	}
 	i = 0;
 	while (fname[i])
 	{
-		if (expand_fname_is_wild(fname[i], token))
+		if (expand_wildcard_match_fname(wildcard, fname[i]))
 		{
-			new_token = token_create(fname[i], token_content(token)->flags);
-			token_content(token)->flags &= ~(TOK_S_QUOTE | TOK_D_QUOTE);
+			new_token = token_create(ft_strdup(fname[i]), token_content(token)->flags); // strdup protec
 			if (new_token == NULL)
 			{
-				print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM);
-				ft_lstclear(&l_wildcards, c_token_destroy);
-				break ;
+				ft_free_split(&fname);
+				free(wildcard);
 			}
+			token_content(new_token)->flags &= ~(TOK_CONNECTED | TOK_D_QUOTE | TOK_S_QUOTE);
 			ft_lstadd_back(&l_wildcards, new_token);
 		}
 		i++;
@@ -80,51 +98,113 @@ static int	expand_wildcard_token(t_list *token)
 		printf("%s\n", token_content(l_wildcards)->string);
 		l_wildcards = l_wildcards->next;
 	}
-
+	free(wildcard);
 	ft_free_split(&fname);
 	return (0);
 }
 
-static bool	expand_fname_is_wild(char *fname, t_list *token)
+// static bool	expand_wildcard_match_fname(char *wildcard, char *fname)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (wildcard[i])
+// 	{
+// 		if (wildcard[i] == WILDCARD)
+// 		{
+// 			i++;
+// 			if (wildcard[i] == '\0')
+// 				return (true);
+// 			while (fname[j] && fname[j] != wildcard[i])
+// 				j++;
+// 			if (fname[j] == '\0')
+// 				return (false);
+// 			if (count_dups(&wildcard[i]) > count_dups(&fname[j]))
+// 				return (false);
+// 			i += count_dups(&wildcard[i]);
+// 			j += count_dups(&fname[j]);
+// 		}
+// 		else
+// 		{
+// 			if (wildcard[i] != fname[j])
+// 				return (false);
+// 			i++;
+// 			j++;
+// 			if (wildcard[i] == '\0' && fname[j] == '\0')
+// 				return (true);
+// 		}
+// 	}
+// 	return (false);
+// }
+
+// static int count_dups(char *str)
+// {
+// 	int i;
+// 	int count;
+
+// 	i = 0;
+// 	count = 0;
+// 	while (str[i] == str[i + 1])
+// 	{
+// 		count++;
+// 		i++;
+// 	}
+// 	return (count);
+// }
+
+
+
+
+
+
+
+
+
+static char	*expand_wildcard_get(t_list *token)
+{
+	int 	i;
+	char	*wildcard;
+
+	wildcard = ft_strdup("");
+	if (wildcard == NULL)
+		return (NULL);
+	while (token && token_content(token)->flags & TOK_CONNECTED)
+	{
+		wildcard = expand_wildcard_append_str(wildcard, token);
+		if (wildcard == NULL)
+			return (NULL);
+		token = token->next;
+	}
+	wildcard = expand_wildcard_append_str(wildcard, token);
+	if (wildcard == NULL)
+		return (NULL);
+	return (wildcard);
+}
+
+static char	*expand_wildcard_append_str(char *wildcard, t_list *token)
 {
 	int		i;
-	int		j;
-	char	*wildcard;
-	bool	quoted;
+	char	*str;
 
-	j = 0;
-	while (token)
+	str = token_content(token)->string;
+	if (token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE))
+		return (str_append_str(wildcard, str));
+	i = 0;
+	while (str[i])
 	{
-		quoted = false;
-		if (token_content(token)->flags & (TOK_S_QUOTE | TOK_D_QUOTE))
-			quoted = true;
-		i = 0;
-		wildcard = token_content(token)->string;
-		while (wildcard && wildcard[i])
-		{
-			while (!quoted && wildcard[i] == '*' && wildcard[i + 1] == '*')
-				i++;
-			if (!quoted && wildcard[i] == '*')
-				i++;
-			// printf("%d\n", i);
-			while (wildcard[i] && fname[j] && fname[j] != wildcard[i])
-				j++;
-			if (fname[j] != wildcard[i])
-				return (false);
-			while (wildcard[i] && wildcard[i] == fname[j]
-					&& (quoted || wildcard[i] != '*'))
-			{
-				i++;
-				j++;
-			}
+		while (str[i] == '*' && str[i + 1] == '*')
 			i++;
-		}
-		if (token_content(token)->flags & TOK_CONNECTED)
-			token = token->next;
+		if (str[i] == '*')
+			wildcard = str_append_chr(wildcard, WILDCARD);
 		else
-			token = NULL;
+			wildcard = str_append_chr(wildcard, str[i]);
+		if (wildcard == NULL)
+			return (NULL);
+		i++;
 	}
-	return (true);
+	return (wildcard);
 }
 
 static char **expand_fname_get(void)
@@ -158,80 +238,83 @@ static char **expand_fname_get(void)
 
 
 
-
-
-
-
-
-
-// #include "exec.h"
-// #include "cmd.h"
-
-// int	exec_expand_wildcard(t_c_scmd *c_scmd)
+// static bool	expand_fname_is_wild(char *fname, t_list *token)
 // {
-// 	t_list	*iter;
+// 	int		i;
+// 	int		j;
+// 	char	*wildcard;
+// 	bool	quoted;
 
-// 	iter = c_scmd->l_argv;
-// 	while (iter)
+// 	j = 0;
+// 	while (token)
 // 	{
-// 		if (expand_wildcard_needed(iter))
+// 		quoted = false;
+// 		if (token_content(token)->flags & (TOK_S_QUOTE | TOK_D_QUOTE))
+// 			quoted = true;
+// 		i = 0;
+// 		wildcard = token_content(token)->string;
+// 		while (wildcard && wildcard[i])
 // 		{
-// 			if (ft_strnstr())
+// 			while (!quoted && wildcard[i] == '*' && wildcard[i + 1] == '*')
+// 				i++;
+// 			if (!quoted && wildcard[i] == '*')
+// 				i++;
+// 			// printf("%d\n", i);
+// 			while (wildcard[i] && fname[j] && fname[j] != wildcard[i])
+// 				j++;
+// 			if (fname[j] != wildcard[i])
+// 				return (false);
+// 			while (wildcard[i] && wildcard[i] == fname[j]
+// 					&& (quoted || wildcard[i] != '*'))
+// 			{
+// 				i++;
+// 				j++;
+// 			}
+// 			i++;
 // 		}
-// 		while (token_content(iter)->flags & TOK_CONNECTED)
-// 			iter = iter->next;
-// 		iter = iter->next;
+// 		if (token_content(token)->flags & TOK_CONNECTED)
+// 			token = token->next;
+// 		else
+// 			token = NULL;
 // 	}
-// }
-
-
-// directory_matches_str(char *dir, char *str)
-// {
-// 	int	i_dir;
-// 	int	i_str;
-// 	int	l_dir;
-// 	int	l_str;
-
-// 	l_dir = ft_strlen(dir);
-// 	l_str = ft_strlen(str);
-// 	i_dir = 0;
-// 	i_str = 0;
-// 	ft_strnstr(&dir[i], &str[i])
+// 	return (true);
 // }
 
 
 
 
 
+static bool	expand_wildcard_match_fname(char *wildcard, char *fname)
+{
+	int		i;
+	char	*shifted_fname;
+	char	**splitted;
 
-
-
-// bool	expand_wildcard_needed(t_list *token)
-// {
-// 	if (token_need_wildcard_expansion(token))
-// 		return (true);
-// 	while (token_content(token)->flags & TOK_CONNECTED)
-// 	{
-// 		token = token->next;
-// 		if (token_need_wildcard_expansion(token))
-// 			return (true);
-// 	}
-// 	return (false);
-// }
-
-// bool	token_need_wildcard_expansion(t_list *token)
-// {
-// 	if (!(token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE)))
-// 		if (ft_strchr(token_content(token)->string, '*') == 0)
-// 			return (true);
-// 	return (false);
-// }
-
-
-// ls *
-
-// ls before*
-
-// ls *after
-
-// ls before*after
+	splitted = ft_split(wildcard, WILDCARD);
+	if (splitted == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	shifted_fname = fname;
+	i = 0;
+	while (splitted[i])
+	{
+		shifted_fname = ft_strnstr(shifted_fname, splitted[i], ft_strlen(shifted_fname));
+		if (shifted_fname == NULL)
+			return (false);
+		shifted_fname += ft_strlen(splitted[i]);
+		i++;
+	}
+	if (wildcard[0] != WILDCARD)
+	{
+		if (ft_strncmp(fname, splitted[0], ft_strlen(splitted[0])) != 0)
+			return (false);
+	}
+	if (wildcard[ft_strlen(wildcard) - 1] != WILDCARD)
+	{
+		if (ft_strncmp(fname + ft_strlen(fname) - ft_strlen(splitted[i - 1]), splitted[i - 1], ft_strlen(splitted[i - 1]) + 1) != 0)
+			return (false);
+	}
+	if (wildcard[0] != '.' && fname[0] == '.')
+		return (false);
+	ft_free_split(&splitted);
+	return (true);
+}
