@@ -2,104 +2,104 @@ echo 1 || echo 2 | echo 3
 
 echo 1 | (echo 2 || echo 3 && echo 4) || echo 5 | echo 6
 
-# Pipe redirected echo
-echo 2 > tmp1 && echo 1 | grep 1
+# # Pipe redirected echo
+# echo 2 > tmp1 && echo 1 | grep 1
 
-echo "1\"2"
+# echo "1\"2"
 
-("ec"ho 1) | grep 1
+# ("ec"ho 1) | grep 1
 
-< test.txt && ls
+# < test.txt && ls
 
-echo "'$HOME'"
+# echo "'$HOME'"
 
-echo '"$HOME"'
+# echo '"$HOME"'
 
-export ARG=echo && $ARG 1
+# export ARG=echo && $ARG 1
 
-touch tmp99 && touch tmp98 && echo hallo > tmp9* && diff tmp99 tmp98
+# touch tmp99 && touch tmp98 && echo hallo > tmp9* && diff tmp99 tmp98
 
-export arg=2 && echo $arg
+# export arg=2 && echo $arg
 
-export arg=5 echo $arg
+# export arg=5 echo $arg
 
-echo >/dev/null 1
+# echo >/dev/null 1
 
-echo 1 >/dev/null | grep 1
+# echo 1 >/dev/null | grep 1
 
-echo >/dev/null 1 | echo 2
+# echo >/dev/null 1 | echo 2
 
-grep 2>tmp-error-redirected
+# grep 2>tmp-error-redirected
 
-echo 1 > tmp-17 | grep 1 0<tmp-17
+# echo 1 > tmp-17 | grep 1 0<tmp-17
 
-echo $"ARG"
+# echo $"ARG"
 
-export ARG="*" && echo $ARG && echo "$ARG"
+# export ARG="*" && echo $ARG && echo "$ARG"
 
-echo | ca && est && echo | cat
+# echo | ca && est && echo | cat
 
-> out && echo 1
+# > out && echo 1
 
-echo .*
+# echo .*
 
-(exit)
+# (exit)
 
-echo "*"$tes"t"
+# echo "*"$tes"t"
 
-echo 1$tes"t"
+# echo 1$tes"t"
 
-ls 'Make'*
+# ls 'Make'*
 
-touch "*1" && echo "*"* && rm "*1"
+# touch "*1" && echo "*"* && rm "*1"
 
-touch "a" "aa" && echo *a && rm "a" "aa"
+# touch "a" "aa" && echo *a && rm "a" "aa"
 
-touch "a" "aa" "aaa" && echo *a*a && rm "a" "aa" "aaa"
+# touch "a" "aa" "aaa" && echo *a*a && rm "a" "aa" "aaa"
 
-# echo 1 | cat <infile << lim
+# # echo 1 | cat <infile << lim
 
-# echo 1 | cat <<lim <infile
-
-
-(((echo 1)))
-
-((echo 1) | (echo 2) | (echo 3 | (echo 4)))
-
-echo 1 && echo 2 && cat
-
-touch "   " && ls * | grep "   " && rm "   "
-
-env -i bash --noprofile --norc
+# # echo 1 | cat <<lim <infile
 
 
-<in grep 42 | wc -l && (echo "1 2 3" > out 4 || echo 2 >out >>out'out')
+# (((echo 1)))
 
-< : in : grep : 42 : | : wc : -l : && : ( : echo : 1 2 3 : > : out : 4 : || : echo : 2 : > : out : >> : out + out : )
+# ((echo 1) | (echo 2) | (echo 3 | (echo 4)))
 
-grep 42 < in | wc -l && ( echo 1 2 3 4 > out || echo 2 > out >> out out )
+# echo 1 && echo 2 && cat
 
-	P				&&	(P					||	P						)
-	P				&&	G
+# touch "   " && ls * | grep "   " && rm "   "
+
+# env -i bash --noprofile --norc
 
 
+# <in grep 42 | wc -l && (echo "1 2 3" > out 4 || echo 2 >out >>out'out')
 
-(echo 1 | cat 2 && (sleep 5 | sleep 3)) | (sleep 4 | echo 42 || cat)
+# < : in : grep : 42 : | : wc : -l : && : ( : echo : 1 2 3 : > : out : 4 : || : echo : 2 : > : out : >> : out + out : )
 
-(	P			&&		(	P	)	)	| (	P				||	P)
-(	P			&&			G			| (	P				||	P)
-				G						|	G
-										P
+# grep 42 < in | wc -l && ( /bin/echo 1 2 3 4 > out || /bin/echo 2 > out >> out out )
 
-while (brackets left)
-	1. Pipelines erstellen
-	2. Groups
-1. Pipelines erstellen
+# 	P				&&	(P					||	P						)
+# 	P				&&	G
 
 
 
+# (echo 1 | cat 2 && (sleep 1 | sleep 1)) | (sleep 1 | echo 42 || cat)
 
-echo 1 | (grep 1) | cat | (wc -l)
+# (	P			&&		(	P	)	)	| (	P				||	P)
+# (	P			&&			G			| (	P				||	P)
+# 				G						|	G
+# 										P
+
+# while (brackets left)
+# 	1. Pipelines erstellen
+# 	2. Groups
+# 1. Pipelines erstellen
+
+
+
+
+# echo 1 | (grep 1) | cat | (wc -l)
 
 
 
