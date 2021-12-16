@@ -35,3 +35,11 @@ char	*str_append_chr(char *str, char append)
 	free(str);
 	return (new_str);
 }
+
+char	str_last_chr(char *str)
+{
+	if (str[0] != '\0')
+		return (str[ft_strlen(str) - 1]);
+	else
+		return ('\0');
+}

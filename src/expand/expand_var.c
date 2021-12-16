@@ -157,13 +157,15 @@ static int	expand_var_token_list_split(t_list **l_token)
 			i = 0;
 			while (split[i])
 			{
-				new_token = token_create(ft_strdup(split[i]), token_content(iter)->flags & !TOK_CONNECTED);
+				new_token = token_create(ft_strdup(split[i]), token_content(iter)->flags & ~TOK_CONNECTED);
 				ft_lstadd_back(&l_splitted, new_token);
 				i++;
 			}
 			ft_free_split(&split);
-			if (token_content(iter)->flags & TOK_CONNECTED)
+			if ((token_content(iter)->flags & TOK_CONNECTED) && str_last_chr(token_content(iter)->string) != VAR_SPACE)
 				token_content(ft_lstlast(l_splitted))->flags |= TOK_CONNECTED;
+			if (token_content(iter)->string[0] == VAR_SPACE)
+				token_content(lst_node_prev(*l_token, iter))->flags &= ~TOK_CONNECTED;
 			expand_lst_replace(l_token, iter, l_splitted);
 		}
 		iter = iter->next;
