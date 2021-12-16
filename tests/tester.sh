@@ -22,7 +22,7 @@ do
 		bash -c "$line" | cat -e > "$BASH_OUT" 2>/dev/null
 		if ! diff -q "$MINISHELL_OUT" "$BASH_OUT" &>/dev/null;
 		then
-  			echo -e "\033[0;31mKO\033[m"
+  			echo -e "\033[0;31mKO\033[m [ $line ]"
 			echo $line >> "$DIFF_FILE"
 		else
 			echo -e "\033[0;32mOK\033[m"
