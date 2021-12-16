@@ -18,8 +18,8 @@ do
 	if [[ $line != \#* ]] && [[ $line != "" ]] ;
 	then
 		echo -n "$i: "
-  		../minishell "$line" > "$MINISHELL_OUT" 2>/dev/null
-		bash -c "$line" > "$BASH_OUT" 2>/dev/null
+  		../minishell "$line" | cat -e > "$MINISHELL_OUT" 2>/dev/null
+		bash -c "$line" | cat -e > "$BASH_OUT" 2>/dev/null
 		if ! diff -q "$MINISHELL_OUT" "$BASH_OUT" &>/dev/null;
 		then
   			echo -e "\033[0;31mKO\033[m"

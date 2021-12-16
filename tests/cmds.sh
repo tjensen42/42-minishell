@@ -1,6 +1,40 @@
-echo 1 || echo 2 | echo 3
+### VARIABLES ###
+export X="  A  B  " && echo "1"$X'2'
 
-echo 1 | (echo 2 || echo 3 && echo 4) || echo 5 | echo 6
+export X=" A  B  " && echo "1"$X'2'
+
+export X="A  B  " && echo "1"$X'2'
+
+export X="  A  B " && echo "1"$X'2'
+
+export X="  A  B" && echo "1"$X'2'
+
+export X="  A B  " && echo "1"$X'2'
+
+export X="  AB  " && echo "1"$X'2'
+
+export X="  A  B  " && echo $X'2'
+
+export X="  A  B  " && echo "1"$X
+
+export X="" && echo "1"$X'2'
+
+export X=" " && echo "1"$X'2'
+
+export X="   " && echo "1"$X'2'
+
+export X="  A  B  " && echo ?$X'2'
+
+export X="  A  B  " && echo "1"$X?
+
+export test=" * " && touch "$USER * ?eHallo" && echo "$USER "*" ?e"* && rm "$USER * ?eHallo"
+
+echo "Mak"'e'*'*'
+
+
+# echo 1 || echo 2 | echo 3
+
+# echo 1 | (echo 2 || echo 3 && echo 4) || echo 5 | echo 6
 
 # # Pipe redirected echo
 # echo 2 > tmp1 && echo 1 | grep 1
@@ -77,14 +111,12 @@ echo 1 | (echo 2 || echo 3 && echo 4) || echo 5 | echo 6
 
 # < : in : grep : 42 : | : wc : -l : && : ( : echo : 1 2 3 : > : out : 4 : || : echo : 2 : > : out : >> : out + out : )
 
-export test=" * " && touch "$USER * ?eHallo" && echo "$USER "*" ?e"* && rm "$USER * ?eHallo"
 
 # grep 42 < in | wc -l && ( /bin/echo 1 2 3 4 > out || /bin/echo 2 > out >> out out )
 
 # 	P				&&	(P					||	P						)
 # 	P				&&	G
 
-# echo "Mak"'e'*'*'
 
 # (echo 1 | cat 2 && (sleep 1 | sleep 1)) | (sleep 1 | echo 42 || cat)
 

@@ -7,6 +7,7 @@ static int	expand_var_token_list(t_list *l_token);
 static void	expand_var_replace_whitespaces(char *str);
 static int	expand_var_split_list(t_list **l_token);
 static int	expand_var_token_list_split(t_list **l_token);
+static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token);
 static char	*expand_var_token_needs_splitting(t_list *token);
 static int	expand_var_token(t_c_token *c_token);
 static int	expand_var_append(char **expanded_str, char *str);
@@ -140,36 +141,46 @@ static char	*expand_var_token_needs_splitting(t_list *token)
 
 static int	expand_var_token_list_split(t_list **l_token)
 {
-	int		i;
-	char	**split;
 	t_list	*iter;
-	t_list	*new_token;
 	t_list	*l_splitted;
 
 	iter = *l_token;
 	while (iter)
 	{
-		l_splitted = NULL;
 		if (expand_var_token_needs_splitting(iter) != NULL)
 		{
-			expand_var_replace_whitespaces(token_content(iter)->string);
-			split = ft_split(token_content(iter)->string, VAR_SPACE);
-			i = 0;
-			while (split[i])
-			{
-				new_token = token_create(ft_strdup(split[i]), token_content(iter)->flags & ~TOK_CONNECTED);
-				ft_lstadd_back(&l_splitted, new_token);
-				i++;
-			}
-			ft_free_split(&split);
-			if ((token_content(iter)->flags & TOK_CONNECTED) && str_last_chr(token_content(iter)->string) != VAR_SPACE)
-				token_content(ft_lstlast(l_splitted))->flags |= TOK_CONNECTED;
+			l_splitted = NULL;
+			expand_var_token_list_split_2(&l_splitted, iter);
 			if (token_content(iter)->string[0] == VAR_SPACE)
 				token_content(lst_node_prev(*l_token, iter))->flags &= ~TOK_CONNECTED;
-			expand_lst_replace(l_token, iter, l_splitted);
+			if (l_splitted != NULL)
+				expand_lst_replace(l_token, iter, l_splitted);
+			else
+				lst_node_remove(l_token, iter, c_token_destroy);
 		}
 		iter = iter->next;
 	}
+	return (0);
+}
+
+static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token)
+{
+	t_list	*new_token;
+	char	**split;
+	int		i;
+
+	expand_var_replace_whitespaces(token_content(token)->string);
+	split = ft_split(token_content(token)->string, VAR_SPACE);
+	i = 0;
+	while (split[i])
+	{
+		new_token = token_create(ft_strdup(split[i]), token_content(token)->flags & ~TOK_CONNECTED);
+		ft_lstadd_back(l_splitted, new_token);
+		i++;
+	}
+	ft_free_split(&split);
+	if ((token_content(token)->flags & TOK_CONNECTED) && str_last_chr(token_content(token)->string) != VAR_SPACE)
+		token_content(ft_lstlast(*l_splitted))->flags |= TOK_CONNECTED;
 	return (0);
 }
 
