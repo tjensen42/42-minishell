@@ -3,54 +3,42 @@
 #include "lexer.h"
 #include "env.h"
 
+static int	expand_var_token_list(t_list *l_token);
+static void	expand_var_replace_whitespaces(char *str);
+static int	expand_var_split_list(t_list **l_token);
+static int	expand_var_token_list_split(t_list **l_token);
+static char	*expand_var_token_needs_splitting(t_list *token);
 static int	expand_var_token(t_c_token *c_token);
 static int	expand_var_append(char **expanded_str, char *str);
 
 int	expand_var_scmd(t_c_scmd *c_scmd)
 {
+	int		status;
+
+	status = expand_var_token_list(c_scmd->l_argv);
+	if (status != ERROR)
+		status = expand_var_token_list(c_scmd->l_redir);
+	if (status != ERROR)
+		status = expand_var_token_list_split(&(c_scmd->l_argv));
+	if (status != ERROR)
+		status = expand_var_token_list_split(&(c_scmd->l_redir));
+	return (status);
+}
+
+static int	expand_var_token_list(t_list *l_token)
+{
 	t_list	*iter;
 
-	iter = c_scmd->l_argv;
+	iter = l_token;
 	while (iter)
 	{
 		if (expand_var_token(token_content(iter)) == ERROR)
 			return (ERROR);
 		iter = iter->next;
 	}
-	iter = c_scmd->l_redir;
-	while (iter)
-	{
-		if (expand_var_token(token_content(iter)) == ERROR)
-			return (ERROR);
-		iter = iter->next;
-	}
-	// Token Splitting
-	// l_token_splitting(c_scmd->l_argv);
-	// l_token_splitting(c_scmd->l_argv);
 	return (0);
 }
 
-// static int	l_token_splitting(t_list *l_token)
-// {
-// 	int	i;
-
-// 	while (l_token)
-// 	{
-// 		if (!(token_content(l_token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE)))
-// 		{
-// 			i = 0;
-// 			while (token_content(l_token)->string[i])
-// 			{
-// 				if (ft_strchr(WHITESPACES, token_content(l_token)->string[i]))
-// 				{
-
-// 				}
-// 				i++;
-// 			}
-// 		}
-// 		l_token = l_token->next;
-// 	}
-// }
 
 static int	expand_var_token(t_c_token *c_token)
 {
@@ -131,4 +119,67 @@ static int expand_var_append(char **expanded_str, char *str)
 	if (*expanded_str == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
 	return (i);
+}
+
+static char	*expand_var_token_needs_splitting(t_list *token)
+{
+	int		i;
+
+	if (token && !(token_content(token)->flags & (TOK_S_QUOTE | TOK_D_QUOTE)))
+	{
+		i = 0;
+		while (token_content(token)->string[i])
+		{
+			if (ft_strchr(WHITESPACES, token_content(token)->string[i]))
+				return (&(token_content(token)->string[i]));
+			i++;
+		}
+	}
+	return (NULL);
+}
+
+static int	expand_var_token_list_split(t_list **l_token)
+{
+	int		i;
+	char	**split;
+	t_list	*iter;
+	t_list	*new_token;
+	t_list	*l_splitted;
+
+	iter = *l_token;
+	while (iter)
+	{
+		l_splitted = NULL;
+		if (expand_var_token_needs_splitting(iter) != NULL)
+		{
+			expand_var_replace_whitespaces(token_content(iter)->string);
+			split = ft_split(token_content(iter)->string, VAR_SPACE);
+			i = 0;
+			while (split[i])
+			{
+				new_token = token_create(ft_strdup(split[i]), token_content(iter)->flags & !TOK_CONNECTED);
+				ft_lstadd_back(&l_splitted, new_token);
+				i++;
+			}
+			ft_free_split(&split);
+			if (token_content(iter)->flags & TOK_CONNECTED)
+				token_content(ft_lstlast(l_splitted))->flags |= TOK_CONNECTED;
+			expand_lst_replace(l_token, iter, l_splitted);
+		}
+		iter = iter->next;
+	}
+	return (0);
+}
+
+static void	expand_var_replace_whitespaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strchr(WHITESPACES, str[i]))
+			str[i] = VAR_SPACE;
+		i++;
+	}
 }
