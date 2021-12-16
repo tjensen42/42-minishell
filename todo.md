@@ -55,3 +55,6 @@ https://superuser.com/questions/420295/how-do-i-see-a-list-of-all-currently-defi
 // SEGGG 11: Messages
 // exit printen in pipelines
 // HEREDOC var exansion for s_quote/d_qoute
+// ./minishe*l wildcards in current dir mit "./"
+// Wildcard expansion sorting nach ASCII (Split nach ASCII sortieren)
+

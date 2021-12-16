@@ -16,7 +16,7 @@ bool	expand_token_is_wildcard(t_list *token)
 	return (false);
 }
 
-char	*expand_wildcard_get(t_list *token)
+char	*expand_pattern_get(t_list *token)
 {
 	int 	i;
 	char	*wildcard;
@@ -61,7 +61,7 @@ char	*expand_wildcard_append_str(char *wildcard, t_list *token)
 	return (wildcard);
 }
 
-char	**expand_fname_get(void)
+char	**expand_files_current_dir(void)
 {
 	DIR				*dir;
 	struct dirent	*dirent;

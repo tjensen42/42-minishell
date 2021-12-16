@@ -25,6 +25,7 @@
 # define TOK_C_BRACKET		256
 # define TOK_REDIR			512
 # define TOK_HEREDOC		1024
+# define TOK_WILDCARD		2048
 
 /* ************************************************************************** */
 /* STRUCTS																	  */

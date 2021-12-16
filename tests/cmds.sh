@@ -82,7 +82,7 @@ echo 1 | (echo 2 || echo 3 && echo 4) || echo 5 | echo 6
 # 	P				&&	(P					||	P						)
 # 	P				&&	G
 
-
+# echo "Mak"'e'*'*'
 
 # (echo 1 | cat 2 && (sleep 1 | sleep 1)) | (sleep 1 | echo 42 || cat)
 
