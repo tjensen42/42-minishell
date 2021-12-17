@@ -1,4 +1,11 @@
-### VARIABLES ###
+# **************************************************************************** #
+#	VARIABLES  																   #
+# **************************************************************************** #
+
+### VARIABLE REPLACEMENT ###
+
+
+### VARIABLE SPLITTING ###
 export X="  A  B  " && echo "1"$X'2'
 
 export X=" A  B  " && echo "1"$X'2'
@@ -32,9 +39,45 @@ export test=" * " && touch "$USER * ?eHallo" && echo "$USER "*" ?e"* && rm "$USE
 echo "Mak"'e'*'*'
 
 
-# echo 1 || echo 2 | echo 3
+# **************************************************************************** #
+#	PIPELINES  																   #
+# **************************************************************************** #
 
+
+# **************************************************************************** #
+#	WILDCARDS  																   #
+# **************************************************************************** #
+
+touch "   " && ls * | grep "   " && rm "   "
+
+
+# **************************************************************************** #
+#	GROUPS  																   #
+# **************************************************************************** #
+
+# (echo 1 | cat 2 && (sleep 1 | sleep 1)) | (sleep 1 | echo 42 || cat)
 # echo 1 | (echo 2 || echo 3 && echo 4) || echo 5 | echo 6
+
+
+# **************************************************************************** #
+#	OPERATORS  																   #
+# **************************************************************************** #
+
+echo 1 && echo 2
+cat file_does_not_exist && echo 2
+
+echo 1 || echo 2
+cat file_does_not_exist || echo 2
+
+echo 1 || echo 2 | echo 3
+
+
+# **************************************************************************** #
+#	MIX  																       #
+# **************************************************************************** #
+
+grep 42 < in | wc -l && ( /bin/echo 1 2 3 4 > out || /bin/echo 2 > out >> out out )
+
 
 # # Pipe redirected echo
 # echo 2 > tmp1 && echo 1 | grep 1
@@ -104,42 +147,4 @@ echo "Mak"'e'*'*'
 
 # touch "   " && ls * | grep "   " && rm "   "
 
-# env -i bash --noprofile --norc
-
-
-# <in grep 42 | wc -l && (echo "1 2 3" > out 4 || echo 2 >out >>out'out')
-
-# < : in : grep : 42 : | : wc : -l : && : ( : echo : 1 2 3 : > : out : 4 : || : echo : 2 : > : out : >> : out + out : )
-
-
-# grep 42 < in | wc -l && ( /bin/echo 1 2 3 4 > out || /bin/echo 2 > out >> out out )
-
-# 	P				&&	(P					||	P						)
-# 	P				&&	G
-
-
-# (echo 1 | cat 2 && (sleep 1 | sleep 1)) | (sleep 1 | echo 42 || cat)
-
-# (	P			&&		(	P	)	)	| (	P				||	P)
-# (	P			&&			G			| (	P				||	P)
-# 				G						|	G
-# 										P
-
-# while (brackets left)
-# 	1. Pipelines erstellen
-# 	2. Groups
-# 1. Pipelines erstellen
-
-
-
-
 # echo 1 | (grep 1) | cat | (wc -l)
-
-
-
-
-
-
-
-
-

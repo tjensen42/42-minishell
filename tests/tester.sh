@@ -17,15 +17,23 @@ while read line ;
 do
 	if [[ $line != \#* ]] && [[ $line != "" ]] ;
 	then
-		echo -n "$i: "
-  		../minishell "$line" | cat -e > "$MINISHELL_OUT" 2>/dev/null
-		bash -c "$line" | cat -e > "$BASH_OUT" 2>/dev/null
-		if ! diff -q "$MINISHELL_OUT" "$BASH_OUT" &>/dev/null;
+		echo -ne "$i: "
+  		../minishell "$line" 2>/dev/null > "$MINISHELL_OUT"
+		minishell_exit=$?
+		bash -c "$line" 2>/dev/null > "$BASH_OUT"
+		bash_exit=$?
+		if ! diff -q "$MINISHELL_OUT" "$BASH_OUT" >/dev/null ;
 		then
-  			echo -e "\033[0;31mKO\033[m [ $line ]"
+  			echo -ne "\033[0;31mKO\033[m [ $line ]"
 			echo $line >> "$DIFF_FILE"
 		else
-			echo -e "\033[0;32mOK\033[m"
+			echo -ne "\033[0;32mOK\033[m"
+		fi
+		if [[ $minishell_exit != $bash_exit ]] ;
+		then
+			echo "[ exit fail: (minishell: $minishell_exit) (bash: $bash_exit) ]"
+		else
+			echo ""
 		fi
 		((i++))
 	fi
