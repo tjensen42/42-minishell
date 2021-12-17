@@ -5,7 +5,6 @@
 
 static int	expand_var_token_list(t_list *l_token);
 static void	expand_var_replace_whitespaces(char *str);
-static int	expand_var_split_list(t_list **l_token);
 static int	expand_var_token_list_split(t_list **l_token);
 static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token);
 static char	*expand_var_token_needs_splitting(t_list *token);
@@ -45,7 +44,6 @@ static int	expand_var_token(t_c_token *c_token)
 {
 	int		i;
 	int		i_tmp;
-	char	*tmp;
 	char	*expanded_str;
 
 	if (c_token->string == NULL || c_token->flags & TOK_S_QUOTE || !ft_strchr(c_token->string, '$'))

@@ -13,7 +13,6 @@ int	env_unset_var(char *name)
 
 int	env_put_var(char *str)
 {
-	int		i;
 	int		status;
 	char	*new_var;
 	char	*old_var;

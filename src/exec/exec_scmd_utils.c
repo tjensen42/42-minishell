@@ -8,8 +8,6 @@ static int	path_split_set(char **path_split, char **argv);
 
 int	scmd_search_path(char **argv)
 {
-	int		i;
-	char	*tmp;
 	char	**path_split;
 
 	path_split = NULL;

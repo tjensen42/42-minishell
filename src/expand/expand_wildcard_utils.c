@@ -18,7 +18,6 @@ bool	expand_token_is_wildcard(t_list *token)
 
 char	*expand_pattern_get(t_list *token)
 {
-	int 	i;
 	char	*wildcard;
 
 	wildcard = ft_strdup("");

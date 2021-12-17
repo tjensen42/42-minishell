@@ -10,7 +10,6 @@ int	exec_pipeline(t_list *pipeline)
 {
 	int		i;
 	int		pid;
-	int		status;
 	int		pipes[2][2];
 	t_list	*iter;
 

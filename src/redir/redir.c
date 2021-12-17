@@ -62,8 +62,8 @@ static int redir_process(char *redir, char *file, t_list **l_undo)
 	int	fd[2];
 	int	status;
 	int	type;
-	int	tmp_fd;
 
+	status = 0;
 	type = redir_type(redir);
 	fd[REDIR_NUM] = redir_fd(redir, type);
 	fd[REDIR_FILE] = redir_open_file(file, type, l_undo);

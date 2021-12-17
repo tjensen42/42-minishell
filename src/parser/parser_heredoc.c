@@ -8,8 +8,6 @@ int	parser_heredoc(t_list *l_token)
 {
 	char	*limiter;
 	t_list	*redir_file;
-	t_list	*iter;
-	t_list	*tmp;
 
 	if (l_token && redir_type(token_content(l_token)->string) == REDIR_HEREDOC)
 	{
