@@ -51,15 +51,18 @@ static int	exec_pipeline_scmd(t_list *scmd)
 {
 	int		status;
 	char	**argv;
+	t_list	*l_redir_undo;
 
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
 		exec_scmd_exit(EXIT_FAILURE, argv);
-	if (redir(scmd_content(scmd)->l_redir, false) == ERROR)
+	if (redir(scmd_content(scmd)->l_redir, &l_redir_undo) == ERROR)
 		exec_scmd_exit(EXIT_FAILURE, argv);
 	if (builtin_check(argv))
 		status = builtin_exec(argv);
 	else
 		status = exec_scmd_exec(argv);
+	if (redir_undo(&l_redir_undo) == ERROR)
+		status = ERROR;
 	exec_scmd_exit(status, argv);
 	return (0);
 }

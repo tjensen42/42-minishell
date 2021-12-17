@@ -31,19 +31,20 @@
 # define REDIR_FD_OLD	0
 # define REDIR_FD_NEW	1
 
-typedef struct s_redir
+typedef struct s_redir_undo_content
 {
 	int		fd_replaced;
 	int		fd_replaced_dup;
 	char	*here_doc_file;
-}	t_redir;
+}	t_c_redir_undo;
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
 // EXEC_REDIR
-int	redir(t_list *l_token, bool is_builtin);
+int	redir(t_list *l_token, t_list **l_undo);
 int	redir_type(char *redir);
+int	redir_undo(t_list **l_undo);
 
 #endif

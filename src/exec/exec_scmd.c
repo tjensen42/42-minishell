@@ -10,6 +10,7 @@ int	exec_scmd(t_list *scmd)
 	int			pid;
 	int			status;
 	char		**argv;
+	t_list		*l_redir_undo;
 
 	if (scmd_content(scmd)->l_argv == NULL)
 		return (0);
@@ -19,18 +20,22 @@ int	exec_scmd(t_list *scmd)
 		return (0);
 	if (builtin_check(argv))
 	{
-		// status = redir(scmd_content(scmd)->l_redir, true);
-		// if (status != ERROR)
+		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
+		if (status != ERROR)
 			status = builtin_exec(argv);
+		if (redir_undo(&l_redir_undo) == ERROR)
+			status = ERROR;
 		ft_free_split(&argv);
 		return (status);
 	}
 	pid = fork();
 	if (pid == 0)
 	{
-		if (redir(scmd_content(scmd)->l_redir, false) == ERROR)
+		if (redir(scmd_content(scmd)->l_redir, &l_redir_undo) == ERROR)
 			exec_scmd_exit(EXIT_FAILURE, argv);
 		status = exec_scmd_exec(argv);
+		if (redir_undo(&l_redir_undo) == ERROR)
+			status = ERROR;
 		exec_scmd_exit(status, argv);
 	}
 	ft_free_split(&argv);
@@ -39,10 +44,10 @@ int	exec_scmd(t_list *scmd)
 
 int	exec_scmd_preperation(t_list *scmd, char ***argv)
 {
-	// Variable expansion
-	expand_var_scmd(scmd_content(scmd));
-	// Wildcard expansion
-	expand_wildcard(scmd_content(scmd));
+	if (expand_var_scmd(scmd_content(scmd)) == ERROR)
+		return (ERROR);
+	if (expand_wildcard(scmd_content(scmd)) == ERROR)
+		return (ERROR);
 	if (scmd_content(scmd)->l_argv)
 	{
 		*argv = l_token_to_split(scmd_content(scmd)->l_argv);
