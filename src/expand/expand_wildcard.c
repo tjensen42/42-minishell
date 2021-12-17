@@ -33,6 +33,7 @@ static int	expand_wildcard_list(t_list	**l_token, char **files)
 		tmp = iter;
 		while (token_content(tmp)->flags & TOK_CONNECTED)
 			tmp = tmp->next;
+		tmp = tmp->next;
 		if (expand_token_is_wildcard(iter))
 		{
 			if (expand_wildcard_token(iter, &l_wildcard, files) == ERROR)
@@ -40,7 +41,7 @@ static int	expand_wildcard_list(t_list	**l_token, char **files)
 			if (l_wildcard != NULL)
 				expand_lst_replace_connected(l_token, iter, l_wildcard);
 		}
-		iter = tmp->next;
+		iter = tmp;
 	}
 	return (0);
 }

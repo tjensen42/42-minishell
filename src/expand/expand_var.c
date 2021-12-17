@@ -141,12 +141,14 @@ static char	*expand_var_token_needs_splitting(t_list *token)
 
 static int	expand_var_token_list_split(t_list **l_token)
 {
+	t_list	*tmp;
 	t_list	*iter;
 	t_list	*l_splitted;
 
 	iter = *l_token;
 	while (iter)
 	{
+		tmp = iter->next;
 		if (expand_var_token_needs_splitting(iter) != NULL)
 		{
 			l_splitted = NULL;
@@ -158,7 +160,7 @@ static int	expand_var_token_list_split(t_list **l_token)
 			else
 				lst_node_remove(l_token, iter, c_token_destroy);
 		}
-		iter = iter->next;
+		iter = tmp;
 	}
 	return (0);
 }
