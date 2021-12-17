@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <termios.h>
+#include <signal.h>
 #include <readline/readline.h>
 
 #include "signals.h"
