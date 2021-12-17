@@ -21,6 +21,6 @@ int builtin_echo(int argc UNUSED, char **argv)
 	}
 	if (newline)
 		ft_putchar_fd('\n', 1);
-	sleep(10);
+	// sleep(10); // zum testen für redirs "lsof -c minishell"
 	return (0);
 }
