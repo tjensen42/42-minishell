@@ -41,7 +41,7 @@ int	main(int argc, char *argv[])
 			minishell_process_input(input);
 			free(input);
 		}
-		rl_clear_history();
+		// rl_clear_history();
 	}
 	ft_free_split(&g_env);
 	exit(exit_status_get());
@@ -72,7 +72,7 @@ char *minishell_get_line(void)
 	input = readline(PROMPT);
 	if (input == NULL)
 		return (NULL);
-	else if (input && input[0])
-		add_history(input);
+	// else if (input && input[0])
+	// 	add_history(input);
 	return (input);
 }

@@ -109,8 +109,9 @@ static int expand_var_append(char **expanded_str, char *str)
 			i++;
 		}
 		var_value = env_get_value(var_name);
+		free(var_name);
 		if (var_value == NULL)
-			var_value = ft_strdup("");
+			var_value = ft_strdup(""); // muss freed() werden
 	}
 	if (var_value == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));

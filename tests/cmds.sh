@@ -34,6 +34,8 @@ export X="  A  B  " && echo ?$X'2'
 
 export X="  A  B  " && echo "1"$X?
 
+export X="  A  B  " && echo "1"$X2?
+
 export test=" * " && touch "$USER * ?eHallo" && echo "$USER "*" ?e"* && rm "$USER * ?eHallo"
 
 echo "Mak"'e'*'*'
@@ -54,6 +56,8 @@ touch "   " && ls * | grep "   " && rm "   "
 # **************************************************************************** #
 #	GROUPS  																   #
 # **************************************************************************** #
+
+(echo 1 | echo 2 && ((echo 3 | grep 3) | (echo 4 | grep 4)))
 
 # (echo 1 | cat 2 && (sleep 1 | sleep 1)) | (sleep 1 | echo 42 || cat)
 # echo 1 | (echo 2 || echo 3 && echo 4) || echo 5 | echo 6

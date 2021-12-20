@@ -16,7 +16,7 @@ int	exec_recursive(t_list *l_cmd)
 		if (pid == 0)
 		{
 			exit_status_set(exec_recursive(cmd_content(l_cmd)->l_element));
-			ft_lstclear(&l_cmd, c_cmd_destroy); // für Subshells in subshells müsste man den ursprünglichen listen-Anfang haben
+			ft_lstclear(&l_cmd, c_cmd_destroy); // für Subshells in subshells müsste man den ursprünglichen listen-Anfang haben zum freen
 			ft_free_split(&g_env);
 			exit(exit_status_get());
 		}
