@@ -11,7 +11,7 @@ int	scmd_search_path(char **argv)
 	char	**path_split;
 
 	path_split = NULL;
-	if (env_get_value("PATH"))
+	if (env_get_value("PATH") && argv[0][0] != '\0')
 	{
 		path_split = path_split_get();
 		if (path_split == NULL)

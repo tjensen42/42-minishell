@@ -17,10 +17,10 @@ int	builtin_check(char **argv)
 	int	c_name;
 
 	i = 0;
-	while (g_builtins[i].name != NULL)
+	while (g_builtins[i].name != NULL && argv)
 	{
 		c_name = ft_strlen(g_builtins[i].name);
-		if (ft_strncmp(argv[0], g_builtins[i].name, c_name + 1) == 0)
+		if (argv[0] && !ft_strncmp(argv[0], g_builtins[i].name, c_name + 1))
 			return (i + 1);
 		i++;
 	}

@@ -1,9 +1,56 @@
 # **************************************************************************** #
+#	BUILTINS  																   #
+# **************************************************************************** #
+
+### ECHO ###
+echo test1
+echo "test1 test2"
+echo "test1 test2" test3
+echo " test1 test2 " 'test3 '
+echo test1		test2
+
+echo -n test1
+echo -n "test1 test2"
+echo -n "test1 test2" test3
+echo -n " test1 test2 " 'test3 '
+echo -n test1		test2
+
+echo test1 -n
+echo "test1 -n"
+
+echo -n -n test1
+echo -n -n -n -n -n test1
+echo "-n test1 -n test2"
+echo "test1 -n test2"
+
+### CD ###
+cd .. && pwd
+cd .. && pwd
+
+
+# **************************************************************************** #
+#	SCMD  																   	   #
+# **************************************************************************** #
+
+ls
+cat cmds.sh
+/bin/echo test1
+
+""
+"ls"
+"cat cmds.sh"
+"/bin/echo" test1
+""'/bin/'echo test1
+
+# **************************************************************************** #
 #	VARIABLES  																   #
 # **************************************************************************** #
 
-### VARIABLE REPLACEMENT ###
-
+### SCMD IN VARIABLE ###
+export tmp_test="/bin/echo 1" && $tmp_test
+unset tmp_test
+export tmp_test="/bin/echo" && $tmp_test 1
+unset tmp_test
 
 ### VARIABLE SPLITTING ###
 export X="  A  B  " && echo "1"$X'2'
@@ -38,19 +85,31 @@ export X="  A  B  " && echo "1"$X2?
 
 export test=" * " && touch "$USER * ?eHallo" && echo "$USER "*" ?e"* && rm "$USER * ?eHallo"
 
-echo "Mak"'e'*'*'
-
-
-# **************************************************************************** #
-#	PIPELINES  																   #
-# **************************************************************************** #
-
 
 # **************************************************************************** #
 #	WILDCARDS  																   #
 # **************************************************************************** #
 
 touch "   " && ls * | grep "   " && rm "   "
+
+echo "Mak"'e'*'*'
+echo "Mak"'e'**
+echo ***"Mak"'e'**
+
+
+# **************************************************************************** #
+#	REDIRS  																   #
+# **************************************************************************** #
+
+>tmp_std_outfile && ls | grep tmp_std_outfile
+rm tmp_std_outfile
+
+"" >tmp_std_outfile && ls | grep tmp_std_outfile
+rm tmp_std_outfile
+
+# **************************************************************************** #
+#	PIPELINES  																   #
+# **************************************************************************** #
 
 
 # **************************************************************************** #
@@ -67,14 +126,47 @@ touch "   " && ls * | grep "   " && rm "   "
 #	OPERATORS  																   #
 # **************************************************************************** #
 
+### SIMPLE OPERATORS ###
 echo 1 && echo 2
 cat file_does_not_exist && echo 2
 
 echo 1 || echo 2
 cat file_does_not_exist || echo 2
 
+echo 1 && echo 2 && echo 3
+echo 1 || echo 2 || echo 3
+
+### OPERATORS WITH PIPELINES ###
+echo 1 && echo 2 | echo 3
 echo 1 || echo 2 | echo 3
 
+echo 1 && cat file_does_not_exist | echo 3
+echo 1 && echo 3 | cat file_does_not_exist
+echo 1 || cat file_does_not_exist | echo 3
+echo 1 || echo 2 | cat file_does_not_exist
+cat file_does_not_exist && echo 2 | echo 3
+cat file_does_not_exist || echo 2 | echo 3
+
+
+echo 1 | echo 2 && echo 3
+echo 1 | echo 2 || echo 3
+
+echo 1 | echo 2 && echo 3
+echo 1 | echo 2 || echo 3
+
+
+echo 1 | echo 2 && echo 3 | echo 4
+echo 1 | echo 2 || echo 3 | echo 4
+
+echo 1 | echo 2 && echo 3 | echo 4
+echo 1 | echo 2 || echo 3 | echo 4
+
+
+echo 1 | echo 2 | echo 3 && echo 4 | echo 5
+echo 1 | echo 2 | echo 3 || echo 4 | echo 5
+
+echo 1 | echo 2 | echo 3 && echo 4 | echo 5
+echo 1 | echo 2 | echo 3 || echo 4 | echo 5
 
 # **************************************************************************** #
 #	MIX  																       #

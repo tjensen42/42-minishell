@@ -12,12 +12,15 @@ int	exec_scmd(t_list *scmd)
 	char		**argv;
 	t_list		*l_redir_undo;
 
-	if (scmd_content(scmd)->l_argv == NULL)
-		return (0);
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
 		return (ERROR);
-	if (token_content(scmd_content(scmd)->l_argv)->string[0] == '\0')
-		return (0);
+	if (!(scmd_content(scmd)->l_argv) && scmd_content(scmd)->l_redir)
+	{
+		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
+		if (redir_undo(&l_redir_undo) == ERROR)
+			status = ERROR;
+		return (status);
+	}
 	if (builtin_check(argv))
 	{
 		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
