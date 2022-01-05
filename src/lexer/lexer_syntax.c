@@ -97,6 +97,10 @@ static int	lexer_syntax_missing_op(t_list *l_token)
 	while (l_token)
 	{
 		if (token_content(l_token)->flags & TOK_C_BRACKET
+			&& l_token->next
+			&& token_content(l_token->next)->flags & TOK_O_BRACKET)
+			return (print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_MISS_OP));
+		else if (token_content(l_token)->flags & TOK_C_BRACKET
 			&& token_is_cmd(l_token->next))
 			return (print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_MISS_OP));
 		else if (token_is_cmd(l_token)

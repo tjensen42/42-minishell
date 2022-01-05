@@ -75,8 +75,8 @@ static int redir_process(char *redir, char *file, t_list **l_undo)
 			status = ERROR;
 		if (status != ERROR && dup2(fd[REDIR_FILE], fd[REDIR_NUM]) == -1)
 		{
-			print_error(SHELL_NAME, redir, NULL, strerror(errno));
-			status = ERROR;
+			status = print_error(SHELL_NAME, redir, NULL, strerror(errno));
+			errno = 0;
 		}
 	}
 	if (fd[REDIR_FILE] != -1)
@@ -147,7 +147,10 @@ static int redir_open_file(char *file, int type, t_list **l_undo)
 	else if (type == REDIR_OUT_APP)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1 && type != REDIR_HEREDOC)
+	{
 		print_error(SHELL_NAME, file, NULL, strerror(errno));
+		errno = 0;
+	}
 	return (fd);
 }
 

@@ -39,7 +39,6 @@ static int	expand_var_token_list(t_list *l_token)
 	return (0);
 }
 
-
 static int	expand_var_token(t_c_token *c_token)
 {
 	int		i;
@@ -56,7 +55,8 @@ static int	expand_var_token(t_c_token *c_token)
 	{
 		while (c_token->string[i] == '$' && c_token->string[i + 1] == '$')
 			i++;
-		if (c_token->string[i] == '$')
+		if ((c_token->string[i] == '$' && c_token->string[i + 1] != '\0') ||
+			(c_token->string[i] == '$' && c_token->string[i + 1] == '\0' && !(c_token->flags & (TOK_S_QUOTE | TOK_D_QUOTE)) && c_token->flags & TOK_CONNECTED))
 		{
 			i_tmp = expand_var_append(&expanded_str, &(c_token->string[i]));
 			if (i_tmp == ERROR)
@@ -79,7 +79,7 @@ static int	expand_var_token(t_c_token *c_token)
 	}
 	free(c_token->string);
 	c_token->string = expanded_str;
-	return (0);
+	return (0); 
 }
 
 static int expand_var_append(char **expanded_str, char *str)

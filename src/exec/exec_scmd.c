@@ -35,7 +35,10 @@ int	exec_scmd(t_list *scmd)
 	if (pid == 0)
 	{
 		if (redir(scmd_content(scmd)->l_redir, &l_redir_undo) == ERROR)
+		{
+			write(2, "2\n", 2);
 			exec_scmd_exit(EXIT_FAILURE, argv);
+		}
 		status = exec_scmd_exec(argv);
 		if (redir_undo(&l_redir_undo) == ERROR)
 			status = ERROR;
@@ -69,7 +72,7 @@ int	exec_scmd_exec(char **argv)
 	if (ft_strncmp(argv[0], ".", 2) == 0)
 	{
 		print_error(SHELL_NAME, argv[0], NULL, "filename argument required");
-		return (EXIT_FAILURE);
+		return (2); // EXIT_FAILURE
 	}
 	if (!ft_strchr(argv[0], '/') && env_get_value("PATH") != NULL)
 		if (scmd_search_path(argv) == ERROR)

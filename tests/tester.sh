@@ -32,6 +32,7 @@ do
 		if [[ $minishell_exit != $bash_exit ]] ;
 		then
 			echo "[ exit fail: (minishell: $minishell_exit) (bash: $bash_exit) ]"
+			echo $line >> "$DIFF_FILE"
 		else
 			echo ""
 		fi
@@ -41,3 +42,17 @@ done < "$INPUT_FILE"
 
 # Clean all tmp files
 rm -f tmp*
+
+
+
+##################
+# UPGRADES
+##################
+
+# unset PATH
+# Start Shells without env (env -i bash -c 'echo $HOME $USER')
+# lsof -c tests
+# ulimit tests....
+# testfor redirs // all files created with correct permissions and lsof ...
+
+# HERE_DOC ???

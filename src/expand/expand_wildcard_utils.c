@@ -70,7 +70,10 @@ char	**expand_files_current_dir(void)
 	file_names = NULL;
 	dir = opendir("./");
 	if (dir == NULL)
+	{
 		print_error(SHELL_NAME, NULL, NULL, strerror(errno));
+		errno = 0;
+	}
 	if (dir == NULL)
 		return (NULL);
 	dirent = readdir(dir);
