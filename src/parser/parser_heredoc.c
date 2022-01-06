@@ -38,7 +38,8 @@ static char	*parser_heredoc_read(char *limiter)
 	here_str = ft_strdup("");
 	if (here_str == NULL)
 		return (NULL);
-	write(1, "> ", 2);
+	if (isatty(STDIN_FILENO))
+		write(1, "> ", 2);
 	read_str = ft_get_next_line(STDIN_FILENO);
 	while (read_str && ft_strncmp(read_str, limiter, ft_strlen(limiter) + 1))
 	{
@@ -47,8 +48,9 @@ static char	*parser_heredoc_read(char *limiter)
 		if (here_str == NULL)
 			break ;
 		free(tmp);
+		if (isatty(STDIN_FILENO))
+			write(1, "> ", 2);
 		free(read_str);
-		write(1, "> ", 2);
 		read_str = ft_get_next_line(STDIN_FILENO);
 	}
 	free(read_str);

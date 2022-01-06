@@ -34,7 +34,7 @@ int	main(int argc, char *argv[])
 			input = minishell_get_line();
 			if (input == NULL)
 			{
-				write(1, "exit\n", 5);
+				write(STDERR_FILENO, "exit\n", 5);
 				termios_change(true);
 				break ;
 			}
@@ -69,8 +69,15 @@ int	minishell_process_input(char *input)
 char *minishell_get_line(void)
 {
 	char	*input;
+	char	*prompt;
 
-	input = readline(PROMPT);
+	prompt = env_get_value("PS1");
+	if (prompt == NULL)
+		prompt = PROMPT;
+	if (isatty(STDIN_FILENO))
+		input = readline(prompt);
+	else
+		input = ft_get_next_line(STDIN_FILENO);
 	if (input == NULL)
 		return (NULL);
 	else if (input && input[0])

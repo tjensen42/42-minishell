@@ -35,12 +35,9 @@ int	exec_scmd(t_list *scmd)
 	if (pid == 0)
 	{
 		if (redir(scmd_content(scmd)->l_redir, &l_redir_undo) == ERROR)
-		{
-			write(2, "2\n", 2);
 			exec_scmd_exit(EXIT_FAILURE, argv);
-		}
 		status = exec_scmd_exec(argv);
-		if (redir_undo(&l_redir_undo) == ERROR)
+		if (redir_undo(&l_redir_undo) == ERROR) // geht so nicht, da nur im error case undo wird.....
 			status = ERROR;
 		exec_scmd_exit(status, argv);
 	}

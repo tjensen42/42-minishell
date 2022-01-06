@@ -79,7 +79,7 @@ static int	expand_var_token(t_c_token *c_token)
 	}
 	free(c_token->string);
 	c_token->string = expanded_str;
-	return (0); 
+	return (0);
 }
 
 static int expand_var_append(char **expanded_str, char *str)
@@ -125,7 +125,7 @@ static char	*expand_var_token_needs_splitting(t_list *token)
 {
 	int		i;
 
-	if (token && !(token_content(token)->flags & (TOK_S_QUOTE | TOK_D_QUOTE)))
+	if (token && !(token_content(token)->flags & (TOK_S_QUOTE | TOK_D_QUOTE | TOK_HEREDOC)))
 	{
 		i = 0;
 		while (token_content(token)->string[i])
