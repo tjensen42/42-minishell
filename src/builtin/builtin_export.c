@@ -46,6 +46,8 @@ static void	export_print_vars(void)
 
 static bool	export_is_valid_argument(char *arg)
 {
+	if (arg[0] == '=')
+		return (false);
 	if (!ft_strchr(arg, '=') && ft_strchr(arg, '?'))
 		return (false);
 	if (!ft_strchr(arg, '=') && ft_strchr(arg, '$'))

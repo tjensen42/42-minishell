@@ -1,58 +1,75 @@
-#!/bin/bash
+NL=$'\n'
 
-# INPUT	 / OUTPUT FILES
-INPUT_FILE='cmds.sh'
-DIFF_FILE='diff_result.sh'
+main() {
+	if [[ $1 == "m" ]] ; then
+		test_mandatory
+	elif [[ $1 == "b" ]] ; then
+		test_bonus
+	elif [[ $1 == "a" ]] ; then
+		test_mandatory
+		test_bonus
+	else
+		echo "usage: bash test.sh [m,b,a]"
+	fi
+}
 
-MINISHELL_OUT='tmp-minishell_out'
-BASH_OUT='tmp-bash_out'
+test_mandatory() {
+	test_from_file "cmds/mand/builtins.sh"
+}
 
-# Append the actual date, to have a clear seperation between multiple test-runs
-echo "" >> "$DIFF_FILE"
-echo $(date) >> "$DIFF_FILE"
+test_bonus() {
+	test_from_file "cmds/bonus/groups.sh"
+}
 
-# Main "tester"
-i=1
-while read line ;
-do
-	if [[ $line != \#* ]] && [[ $line != "" ]] ;
-	then
-		echo -ne "$i: "
-  		../minishell "$line" 2>/dev/null > "$MINISHELL_OUT"
-		minishell_exit=$?
-		bash -c "$line" 2>/dev/null > "$BASH_OUT"
-		bash_exit=$?
-		if ! diff -q "$MINISHELL_OUT" "$BASH_OUT" >/dev/null ;
-		then
-  			echo -ne "\033[0;31mKO\033[m [ $line ]"
-			echo $line >> "$DIFF_FILE"
+test_from_file() {
+	i=1
+	end_of_file=0
+	while [[ $end_of_file == 0 ]] ;
+	do
+		read -r line
+		end_of_file=$?
+		if [[ $line == \#* ]] || [[ $line == "" ]] ; then
+			if [[ $line == "###"*"###" ]] ; then
+				echo -e "\033[0;33m$line\033[m"
+			elif [[ $line == "#"* ]] ; then
+				echo -e "\033[0;36m$line\033[m"
+			fi
+			continue
 		else
-			echo -ne "\033[0;32mOK\033[m"
-		fi
-		if [[ $minishell_exit != $bash_exit ]] ;
-		then
-			echo "[ exit fail: (minishell: $minishell_exit) (bash: $bash_exit) ]"
-			echo $line >> "$DIFF_FILE"
-		else
+			echo -ne "\033[0;35m$i:\033[m "
+			while [[ $end_of_file == 0 ]] && [[ $line != \#* ]] && [[ $line != "" ]] ;
+			do
+				INPUT+="$line$NL"
+				read -r line
+				end_of_file=$?
+			done
+			../minishell <<< "$INPUT" 2>/dev/null >tmp_out_minishell
+			exit_minishell=$?
+			bash <<< "$INPUT" 2>/dev/null >tmp_out_bash
+			exit_bash=$?
+			echo -ne "\033[0;34mSTD_OUT:\033[m "
+			if ! diff -q tmp_out_minishell tmp_out_bash >/dev/null ;
+			then
+				echo -ne "\033[0;31mKO" [ ${INPUT:0:30} ... ] "\033[m\t"
+			else
+				echo -ne "\033[0;32mOK\033[m\t"
+			fi
+			echo -ne "\033[0;36mEXIT_CODE:\033[m "
+			if [[ $exit_minishell != $exit_bash ]] ;
+			then
+				echo -ne "\033[0;31mKO [ minishell($exit_minishell)  bash($exit_bash) ]" [ ${INPUT:0:30} ... ] "\033[m"
+			else
+				echo -ne "\033[0;32mOK\033[m\t"
+			fi
+			INPUT=""
+			((i++))
 			echo ""
 		fi
-		((i++))
-	fi
-done < "$INPUT_FILE"
+	done < "$1"
+}
+
+# Start the tester
+main "$@"
 
 # Clean all tmp files
-rm -f tmp*
-
-
-
-##################
-# UPGRADES
-##################
-
-# unset PATH
-# Start Shells without env (env -i bash -c 'echo $HOME $USER')
-# lsof -c tests
-# ulimit tests....
-# testfor redirs // all files created with correct permissions and lsof ...
-
-# HERE_DOC ???
+# rm -f tmp_*
