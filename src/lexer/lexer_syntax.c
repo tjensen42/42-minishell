@@ -20,6 +20,8 @@ int	lexer_syntax_check(t_list *l_token)
 
 static int	lexer_syntax_bin_op(t_list *l_token)
 {
+	if (l_token && token_content(l_token)->flags & TOK_BIN_OP)
+		return (print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_LIST));
 	while (l_token)
 	{
 		if (token_content(l_token)->flags & TOK_BIN_OP)
@@ -45,6 +47,8 @@ static int	lexer_syntax_bin_op(t_list *l_token)
 
 static int	lexer_syntax_pipe(t_list *l_token)
 {
+	if (l_token && token_content(l_token)->flags & TOK_PIPE)
+		return (print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_PIPE));
 	while (l_token)
 	{
 		if (token_content(l_token)->flags & TOK_PIPE)
