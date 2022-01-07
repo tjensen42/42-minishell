@@ -19,6 +19,7 @@
 # define QUOT_MARKS			"\'\""
 
 # define ERR_SYNTAX			"syntax error"
+# define ERR_SYNTAX_EXIT	2
 
 # define ERR_UNO_BRACKET	"unopened brackets"
 # define ERR_UNC_BRACKET	"unclosed brackets"
