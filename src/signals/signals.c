@@ -17,6 +17,15 @@ void	signal_ctlc(int sig)
 	}
 }
 
+void	signal_ctlc_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		close(0);
+		write(STDERR_FILENO, "\n", 1);
+	}
+}
+
 int	termios_change(bool echo_ctl_chr)
 {
 	int				status;
