@@ -1,6 +1,7 @@
 #include "exec.h"
 #include "token.h"
 #include "env.h"
+#include <sys/stat.h>
 
 static char	**path_split_get(void);
 static int	path_split_append_slash(char **path_split);
@@ -30,8 +31,9 @@ int	scmd_search_path(char **argv)
 /* Returns 0 if a path was found, if no path matches it returns ERROR and the argv[0] leaves untouched  */
 static int	path_split_set(char **path_split, char **argv)
 {
-	int		i;
-	char	*tmp;
+	int			i;
+	char		*tmp;
+	struct stat	s;
 
 	i = 0;
 	while (path_split && path_split[i])
@@ -42,7 +44,7 @@ static int	path_split_set(char **path_split, char **argv)
 			print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM);
 			return (ERROR);
 		}
-		if (access(tmp, F_OK) == 0)
+		if (access(tmp, F_OK) == 0 && (!stat(tmp, &s) && !S_ISDIR(s.st_mode)))
 		{
 			free(*argv);
 			*argv = tmp;
