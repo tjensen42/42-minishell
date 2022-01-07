@@ -1,5 +1,7 @@
 #!/bin/bash
 
+MINISHELL_PATH=../
+
 NL=$'\n'
 TAB=$'\t'
 
@@ -9,6 +11,13 @@ TEST_KO_ERR=0
 TEST_KO_EXIT=0
 
 main() {
+	if [[ ! -f $MINISHELL_PATH/minishell ]] ; then
+		echo -e "\033[0;31m# **************************************************************************** #"
+		echo "#    MINISHELL NOT COMPILED                                                    #"
+		echo "#    TRY TO COMPILE ...                                                        #"
+		echo -e "# **************************************************************************** #\033[m"
+		make -C $MINISHELL_PATH
+	fi
 	if [[ $1 == "m" ]] ; then
 		test_mandatory
 	elif [[ $1 == "b" ]] ; then
@@ -86,7 +95,7 @@ test_from_file() {
 				read -r line
 				end_of_file=$?
 			done
-			../minishell <<< "$INPUT" 2>tmp_err_minishell >tmp_out_minishell
+			$MINISHELL_PATH/minishell <<< "$INPUT" 2>tmp_err_minishell >tmp_out_minishell
 			exit_minishell=$?
 			bash <<< "enable -n .$NL$INPUT" 2>tmp_err_bash >tmp_out_bash
 			exit_bash=$?
