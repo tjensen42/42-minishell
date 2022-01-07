@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2022/01/06 21:28:35 by tjensen          ###   ########.fr        #
+#    Updated: 2022/01/07 16:33:16 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,4 +131,4 @@ else
 endif
 
 test:
-	@cd tests && bash tester.sh a
+	@cd tests && chmod +x tester.sh && ./tester.sh a

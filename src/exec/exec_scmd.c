@@ -66,11 +66,11 @@ int	exec_scmd_exec(char **argv)
 	signal(SIGQUIT, SIG_DFL);
 	termios_change(true);
 	errno = 0;
-	if (ft_strncmp(argv[0], ".", 2) == 0)
-	{
-		print_error(SHELL_NAME, argv[0], NULL, "filename argument required");
-		return (2); // EXIT_FAILURE
-	}
+	// if (ft_strncmp(argv[0], ".", 2) == 0)
+	// {
+	// 	print_error(SHELL_NAME, argv[0], NULL, "filename argument required");
+	// 	return (2); // EXIT_FAILURE
+	// }
 	if (!ft_strchr(argv[0], '/') && env_get_value("PATH") != NULL)
 		if (scmd_search_path(argv) == ERROR)
 			return (EXEC_NOTFOUND);

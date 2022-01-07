@@ -34,7 +34,8 @@ int	main(int argc, char *argv[])
 			input = minishell_get_line();
 			if (input == NULL)
 			{
-				write(STDERR_FILENO, "exit\n", 5);
+				if (isatty(STDERR_FILENO))
+					write(STDERR_FILENO, "exit\n", 5);
 				termios_change(true);
 				break ;
 			}
