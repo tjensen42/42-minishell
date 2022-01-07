@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include "printer.h"
 #include "env.h"
+#include "exec.h"
 
 static t_list	*lexer_token_list_get(char *input);
 static int		lexer_redir_mark_files(t_list *l_token);
@@ -14,11 +15,13 @@ t_list	*lexer(char *input)
 		return (NULL);
 	if (lexer_syntax_check(l_token) == ERROR)
 	{
+		exit_status_set(ERR_SYNTAX_EXIT);
 		ft_lstclear(&l_token, c_token_destroy);
 		return (NULL);
 	}
 	if (lexer_redir_mark_files(l_token) == ERROR)
 	{
+		exit_status_set(ERR_SYNTAX_EXIT);
 		ft_lstclear(&l_token, c_token_destroy);
 		return (NULL);
 	}
