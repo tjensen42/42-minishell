@@ -4,6 +4,7 @@
 
 ### SIMPLE ###
 /bin/echo 42 > tmp_redir_out
+ls -la | grep tmp_redir_out | awk '{print $1 $2}'
 cat tmp_redir_out
 rm tmp_redir_out
 

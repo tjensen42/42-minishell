@@ -5,6 +5,12 @@
 ### ECHO ###
 echo
 
+echo ''
+
+echo ""
+
+echo '' ""
+
 echo echo
 
 echo test1
@@ -153,6 +159,14 @@ pwd
 cd "1$HOME"
 pwd
 
+### ENV ###
+env | grep DOESNT_EXIST
+
+env | grep HOME
+
+env | grep USER
+
+env | wc -l
 
 ### PWD ###
 pwd
@@ -268,15 +282,6 @@ unset HOME
 unset HOME
 unset HOME
 /bin/echo $HOME
-
-### ENV ###
-env | grep DOESNT_EXIST
-
-env | grep HOME
-
-env | grep USER
-
-env | wc -l
 
 ###  EXIT ###
 exit

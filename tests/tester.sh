@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Change if you store the tester in another PATH
-MINISHELL_PATH=../
-EXECUTABLE=minishell
+export MINISHELL_PATH=../
+export EXECUTABLE=minishell
 
 NL=$'\n'
 TAB=$'\t'
@@ -27,6 +27,7 @@ main() {
 	elif [[ $1 == "a" ]] ; then
 		test_mandatory
 		test_bonus
+		# test_from_file "cmds/test.sh"
 	else
 		echo "usage: bash test.sh [m,b,a]"
 	fi
