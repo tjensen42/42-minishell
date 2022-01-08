@@ -16,6 +16,7 @@
 /bin/echo $'HOME'
 /bin/echo $
 /bin/echo "$"
+/bin/echo '$='
 /bin/echo "$""$"
 /bin/echo $"$"
 /bin/echo $"42$"
@@ -37,6 +38,23 @@
 /bin/echo '$?'
 /bin/echo "'$?'"
 /bin/echo '"$?"'
+
+### UPDATE PWD ###
+mkdir "tmp_test_folder"
+/bin/echo $PWD
+cd "tmp_test_folder"
+/bin/echo $PWD
+cd ..
+/bin/echo $PWD
+rm -rf "tmp_test_folder"
+
+mkdir "tmp_test folder"
+/bin/echo $PWD
+cd "tmp_test folder"
+/bin/echo $PWD
+cd ..
+/bin/echo $PWD
+rm -rf "tmp_test folder"
 
 ### SCMD IN VARIABLE ###
 export tmp_test="/bin/echo 1" && $tmp_test

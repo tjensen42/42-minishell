@@ -12,7 +12,7 @@ ls 'test'*
 ls "test"*
 
 touch "*1"
-echo "*"*
+/usr/bin/printf "%s\n" "*"* | sort
 rm "*1"
 
 touch "   "
@@ -20,30 +20,38 @@ ls * | grep "   "
 rm "   "
 
 touch "a" "aa"
-echo *a
+/usr/bin/printf "%s\n" *a | sort
 rm "a" "aa"
 
 touch "a" "aa" "aaa"
-echo *a*a
+/usr/bin/printf "%s\n" *a*a | sort
 rm "a" "aa" "aaa"
 
-/bin/echo "Mak"'e'*'*'
-/bin/echo "Mak"'e'**
-/bin/echo ***"Mak"'e'**
-/bin/echo "."*
-/bin/echo *"."
-/bin/echo *"."*
-/bin/echo "*"
-/bin/echo '*'
+/usr/bin/printf "%s\n" "Mak"'e'*'*' | sort
 
-/bin/echo Minishe*l
-/bin/echo minishe*l
+/usr/bin/printf "%s\n" "Mak"'e'** | sort
+
+/usr/bin/printf "%s\n" ***"Mak"'e'** | sort
+
+/usr/bin/printf "%s\n" "."* | sort
+
+/usr/bin/printf "%s\n" *"." | sort
+
+/usr/bin/printf "%s\n" *"."* | sort
+
+/usr/bin/printf "%s\n" "*" | sort
+
+/usr/bin/printf "%s\n" '*' | sort
+
+/usr/bin/printf "%s\n" Minishe*l | sort
+
+/usr/bin/printf "%s\n" minishe*l | sort
 
 touch minishelxxxl
-/bin/echo minishe*l
-/bin/echo minishel*l
-/bin/echo minishelxxx*l
-/bin/echo minishel*xxx*l
+/usr/bin/printf "%s\n" minishe*l | sort
+/usr/bin/printf "%s\n" minishel*l | sort
+/usr/bin/printf "%s\n" minishelxxx*l | sort
+/usr/bin/printf "%s\n" minishel*xxx*l | sort
 rm minishelxxxl
 
 touch tmp_out

@@ -226,7 +226,48 @@ export mini_test=
 env | grep mini_test
 
 ### UNSET ###
+unset ""
 
+unset =
+
+unset "="
+
+unset ""=
+
+unset =""
+
+unset ==
+
+unset ?
+
+unset "?"
+
+unset $
+
+unset "$"
+
+unset $""
+
+/bin/echo $HOME
+unset $HOME
+/bin/echo $HOME
+
+/bin/echo $HOME
+unset HOME
+/bin/echo $HOME
+
+/bin/echo $HOME
+unset HOME
+unset HOME
+unset HOME
+/bin/echo $HOME
+
+/bin/echo $HOME
+unset HOME
+unset HOME
+unset HOME
+unset HOME
+/bin/echo $HOME
 
 ### ENV ###
 env | grep DOESNT_EXIST

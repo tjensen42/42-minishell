@@ -5,8 +5,7 @@
 
 ** LATER TO DO **
 
-// REDIR undo list
-
+// VAR NAMES safety? bsp: /=1
 
 ** OPTIONAL **
 

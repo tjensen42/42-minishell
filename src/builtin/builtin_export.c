@@ -48,10 +48,11 @@ static bool	export_is_valid_argument(char *arg)
 {
 	if (arg[0] == '=')
 		return (false);
-	if (!ft_strchr(arg, '=') && ft_strchr(arg, '?'))
-		return (false);
-	if (!ft_strchr(arg, '=') && ft_strchr(arg, '$'))
-		return (false);
+	if (!ft_strchr(arg, '='))
+	{
+		if (ft_strchr(arg, '?') || ft_strchr(arg, '$') || ft_strchr(arg, '/'))
+			return (false);
+	}
 	if (ft_strchr(arg, '=') && ft_strchr(arg, '?'))
 	{
 		if (ft_strchr(arg, '?') < ft_strchr(arg, '='))
@@ -60,6 +61,11 @@ static bool	export_is_valid_argument(char *arg)
 	if (ft_strchr(arg, '=') && ft_strchr(arg, '$'))
 	{
 		if (ft_strchr(arg, '$') < ft_strchr(arg, '='))
+			return (false);
+	}
+	if (ft_strchr(arg, '=') && ft_strchr(arg, '/'))
+	{
+		if (ft_strchr(arg, '/') < ft_strchr(arg, '='))
 			return (false);
 	}
 	return (true);

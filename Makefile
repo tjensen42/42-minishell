@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2022/01/07 16:33:16 by tjensen          ###   ########.fr        #
+#    Updated: 2022/01/08 13:20:50 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,8 +52,8 @@ ODIR		:= obj
 OBJS		:= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
 
 LIBDIRS		:= $(wildcard lib/*)
-LDLIBS		:= $(addprefix -L./, $(LIBDIRS)) $(LDLIBS)
-INCLUDES	:= -I./inc/ $(addprefix -I./, $(LIBDIRS)) \
+LDLIBS		:= -L/usr/local/opt/readline/lib $(addprefix -L./, $(LIBDIRS)) $(LDLIBS)
+INCLUDES	:= -I/usr/local/opt/readline/include -I./inc/ $(addprefix -I./, $(LIBDIRS)) \
 			   $(addprefix -I./, $(addsuffix /inc, $(LIBDIRS)))
 
 # COLORS
