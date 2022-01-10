@@ -21,7 +21,7 @@ void	signal_ctlc_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		close(0);
+		close(STDIN_FILENO);
 		write(STDERR_FILENO, "\n", 1);
 	}
 }

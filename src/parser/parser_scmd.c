@@ -1,7 +1,7 @@
 #include "parser.h"
 #include "redir.h"
 
-static void	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token);
+static int	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token);
 
 t_list	*parser_scmd_tokens(t_list *l_token)
 {
@@ -13,14 +13,14 @@ t_list	*parser_scmd_tokens(t_list *l_token)
 	while (l_token != NULL)
 	{
 		scmd = scmd_create(cmd_type_from_token(l_token));
-		if (scmd == NULL)
+		if (scmd == NULL
+			|| (scmd_content(scmd)->type == CMD_SCMD
+			&& scmd_token_set(scmd_content(scmd), &l_token) == ERROR))
 		{
 			ft_lstclear(&l_scmd, c_scmd_destroy);
 			return (NULL);
 		}
-		if (scmd_content(scmd)->type == CMD_SCMD)
-			scmd_token_set(scmd_content(scmd), &l_token);
-		else
+		if (scmd_content(scmd)->type != CMD_SCMD)
 		{
 			next = l_token->next;
 			ft_lstdelone(l_token, c_token_destroy);
@@ -31,7 +31,7 @@ t_list	*parser_scmd_tokens(t_list *l_token)
 	return (l_scmd);
 }
 
-static void	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
+static int	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
 {
 	t_list	*next;
 
@@ -41,7 +41,10 @@ static void	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
 		if (token_content(*l_token)->flags & TOK_REDIR)
 		{
 			if (redir_type(token_content(*l_token)->string) == REDIR_HEREDOC)
-				parser_heredoc(*l_token);
+			{
+				if (parser_heredoc(*l_token) == ERROR)
+					return (ERROR);
+			}
 			ft_lstadd_back(&(c_scmd->l_redir), *l_token);
 		}
 		else if (token_content(*l_token)->flags & TOK_REDIR_FILE)
@@ -51,4 +54,5 @@ static void	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
 		(*l_token)->next = NULL;
 		*l_token = next;
 	}
+	return (0);
 }

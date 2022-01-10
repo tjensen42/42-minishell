@@ -123,7 +123,7 @@ static int expand_var_append(char **expanded_str, char *str)
 
 static char	*expand_var_token_needs_splitting(t_list *token)
 {
-	int		i;
+	int	i;
 
 	if (token && !(token_content(token)->flags & (TOK_S_QUOTE | TOK_D_QUOTE | TOK_HEREDOC)))
 	{

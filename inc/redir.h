@@ -35,7 +35,6 @@ typedef struct s_redir_undo_content
 {
 	int		fd_replaced;
 	int		fd_replaced_dup;
-	char	*here_doc_file;
 }	t_c_redir_undo;
 
 /* ************************************************************************** */

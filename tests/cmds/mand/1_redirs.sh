@@ -107,6 +107,18 @@ $NOVAR
 $HOME
 lim
 
+cat << lim''
+$USER
+$NOVAR
+$HOME
+lim
+
+cat << ''lim
+$USER
+$NOVAR
+$HOME
+lim
+
 cat << 'lim'
 $USER
 $NOVAR
