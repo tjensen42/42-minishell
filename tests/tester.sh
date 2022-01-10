@@ -28,9 +28,10 @@ main() {
 		test_mandatory
 		test_bonus
 	elif [[ $1 == "-f" ]] ; then
+		[[ ! -f $2 ]] && echo "\"$2\" FILE NOT FOUND"
 		[[ -f $2 ]] && test_from_file $2
 	else
-		echo "usage: bash test.sh [m,b,a]"
+		echo "usage: bash test.sh [m,b,a] || usage with special file: bash test.sh -f ..path_to_file_to_test"
 	fi
 	if [[ $TEST_COUNT -gt 0 ]] ; then
 		print_stats
