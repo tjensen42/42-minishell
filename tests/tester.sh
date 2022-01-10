@@ -19,6 +19,9 @@ main() {
 		echo "#    TRY TO COMPILE ...                                                        #"
 		echo -e "# **************************************************************************** #\033[m"
 		make -C $MINISHELL_PATH
+		if [[ ! -f $MINISHELL_PATH/$EXECUTABLE ]] ; then
+			echo -e "\033[0;31mCOMPILING FAILED\033[m" && exit 1
+		fi
 	fi
 	if [[ $1 == "m" ]] ; then
 		test_mandatory
