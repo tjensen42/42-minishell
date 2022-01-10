@@ -9,8 +9,11 @@
 ** OPTIONAL **
 
 // SEGGG 11: Messages
+
 // exit printen in pipelines
-// HEREDOC var exansion for s_quote/d_qoute
+// exit printen in SUBSHELLS
+
+// HEREDOC var expansion for s_quote/d_qoute
 // ./minishe*l wildcards in current dir mit "./"
 // heredoc && printer at same time
 // Unsorted export output
