@@ -83,7 +83,10 @@ static int	lexer_syntax_brackets(t_list *l_token)
 			count++;
 			if (l_token->next
 				&& token_content(l_token->next)->flags & TOK_C_BRACKET)
-				return (print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_EMPTY_BRACKET));
+			{
+				print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_EMPTY_BRACKET);
+				return (ERROR);
+			}
 		}
 		else if (token_content(l_token)->flags & TOK_C_BRACKET)
 			count--;

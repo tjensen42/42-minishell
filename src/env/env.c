@@ -29,7 +29,6 @@ int	env_init(void)
 	return (0);
 }
 
-/* Searchs for a env variable "name" and returns a pointer to it's value */
 char	*env_get_value(char *name)
 {
 	char	*env_var;
@@ -41,7 +40,6 @@ char	*env_get_value(char *name)
 		return (NULL);
 }
 
-/* Searchs for a env variable "name" and returns a pointer to the whole variable including the name */
 char	*env_find_var(char *name)
 {
 	int	i;

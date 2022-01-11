@@ -1,11 +1,8 @@
 #include "redir.h"
 
-static t_c_redir_undo *redir_undo_content(t_list *redir_undo);
-static int	redir_undo_add_fd(t_list **l_undo, int fd);
 static int	redir_process(char *redir, char *file, t_list **l_undo);
 static int	redir_fd(char *redir, int type);
 static int	redir_open_file(char *file, int type);
-static t_list	*redir_undo_create(int fd_replaced, int fd_replaced_dup);
 
 int	redir(t_list *l_token, t_list **l_undo)
 {
@@ -57,7 +54,7 @@ int	redir_type(char *redir)
 		return (ERROR);
 }
 
-static int redir_process(char *redir, char *file, t_list **l_undo)
+static int	redir_process(char *redir, char *file, t_list **l_undo)
 {
 	int	fd[2];
 	int	status;
@@ -99,7 +96,7 @@ static int	redir_fd(char *redir, int type)
 			if (fd > INT_MAX)
 			{
 				print_error(SHELL_NAME, redir, NULL,
-								"file descriptor out of range");
+					"file descriptor out of range");
 				return (ERROR);
 			}
 			i++;
@@ -113,105 +110,30 @@ static int	redir_fd(char *redir, int type)
 	return (ERROR);
 }
 
-static int redir_open_file(char *file, int type)
+static int	redir_open_file(char *file, int type)
 {
-	int			fildes[2];
-	int			fd;
+	int	fd[2];
 
-	fd = -2;
 	if (type == REDIR_HEREDOC)
 	{
-		if (pipe(fildes) == -1)
+		if (pipe(fd) == -1)
+			fd[0] = -1;
+		else
 		{
-			print_error(SHELL_NAME, NULL, NULL, strerror(errno));
-			errno = 0;
-			return (-1);
+			write(fd[1], file, ft_strlen(file));
+			close(fd[1]);
 		}
-		write(fildes[1], file, ft_strlen(file));
-		close(fildes[1]);
-		fd = fildes[0];
 	}
 	else if (type == REDIR_IN)
-		fd = open(file, O_RDONLY, 0);
+		fd[0] = open(file, O_RDONLY, 0);
 	else if (type == REDIR_OUT)
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd[0] = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == REDIR_OUT_APP)
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1 && type != REDIR_HEREDOC)
+		fd[0] = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd[0] == -1)
 	{
 		print_error(SHELL_NAME, file, NULL, strerror(errno));
 		errno = 0;
 	}
-	return (fd);
-}
-
-static int		redir_undo_add_fd(t_list **l_undo, int fd)
-{
-	int		tmp;
-	t_list	*iter;
-	t_list	*redir_undo;
-
-	iter = *l_undo;
-	while (iter)
-	{
-		if (redir_undo_content(iter)->fd_replaced == fd)
-			return (0);
-		iter = iter->next;
-	}
-	errno = 0;
-	tmp = dup(fd);
-	if (tmp == -1 && errno != EBADF)
-		return (print_error(SHELL_NAME, NULL, NULL, strerror(errno)));
-	else
-	{
-		redir_undo = redir_undo_create(fd, tmp);
-		if (redir_undo == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		ft_lstadd_back(l_undo, redir_undo);
-	}
-	return (0);
-}
-
-static t_list	*redir_undo_create(int fd_replaced, int fd_replaced_dup)
-{
-	t_c_redir_undo	*redir_undo;
-
-	redir_undo = malloc(sizeof(t_c_redir_undo));
-	if (redir_undo == NULL)
-		return (NULL);
-	redir_undo->fd_replaced = fd_replaced;
-	redir_undo->fd_replaced_dup = fd_replaced_dup;
-	return (ft_lstnew(redir_undo));
-}
-
-static t_c_redir_undo *redir_undo_content(t_list *redir_undo)
-{
-	return ((t_c_redir_undo *)(redir_undo->content));
-}
-
-int	redir_undo(t_list **l_undo)
-{
-	int		status;
-	int		fd_replaced;
-	int		fd_replaced_dup;
-	t_list	*iter;
-
-	status = 0;
-	iter = *l_undo;
-	while (iter)
-	{
-		fd_replaced = redir_undo_content(iter)->fd_replaced;
-		fd_replaced_dup = redir_undo_content(iter)->fd_replaced_dup;
-		if (fd_replaced_dup == -1)
-			close(fd_replaced);
-		else if (fd_replaced_dup != -1)
-		{
-			if (dup2(fd_replaced_dup, fd_replaced) == -1)
-				status = print_error(SHELL_NAME, NULL, NULL, strerror(errno));
-			close(fd_replaced_dup);
-		}
-		iter = iter->next;
-	}
-	ft_lstclear(l_undo, free);
-	return (status);
+	return (fd[0]);
 }

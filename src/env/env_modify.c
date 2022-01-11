@@ -33,7 +33,7 @@ int	env_put_var(char *str)
 	return (0);
 }
 
-int		env_set_env(char *name, char *value)
+int	env_set_env(char *name, char *value)
 {
 	char	*tmp;
 	char	*var_str;

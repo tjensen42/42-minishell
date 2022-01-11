@@ -17,13 +17,11 @@
 /* DEFINES																	  */
 /* ************************************************************************** */
 
-# define ERROR				-1
+# define ERROR		-1
 
-# define SHELL_NAME			"minishell"
-# define DEBUG_ENV			"DEBUG"
-# define ERR_NO_MEM			strerror(ENOMEM)
-
-# define UNUSED				__attribute__((unused))
+# define SHELL_NAME	"minishell"
+# define DEBUG_ENV	"DEBUG"
+# define ERR_NO_MEM	strerror(ENOMEM)
 
 /* ************************************************************************** */
 /* GLOBAL VARIABLES															  */

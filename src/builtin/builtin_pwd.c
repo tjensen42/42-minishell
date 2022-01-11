@@ -1,7 +1,8 @@
 #include <limits.h>
 #include "builtin.h"
 
-int	builtin_pwd(int argc UNUSED, char **argv UNUSED)
+int	builtin_pwd(int argc __attribute((unused)),
+	char **argv __attribute((unused)))
 {
 	char	buf[PATH_MAX];
 

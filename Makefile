@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
+#    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2022/01/10 15:30:45 by tjensen          ###   ########.fr        #
+#    Updated: 2022/01/11 14:49:38 by hepple           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ SRCS		:= minishell.c
 
 SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
 SRCS_PARSER	:= parser.c parser_scmd.c parser_pipeline.c parser_group.c parser_heredoc.c
-SRCS_REDIR	:= redir.c
+SRCS_REDIR	:= redir.c redir_undo.c
 SRCS_CMD	:= cmd.c scmd.c
-SRCS_TOKEN	:= token.c
+SRCS_TOKEN	:= token.c token_list.c
 SRCS_ENV	:= env.c env_modify.c
 SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_utils.c exec_scmd.c exec_scmd_utils.c exec_wait.c exec_exit_status.c
 SRCS_BUILTIN:= builtin_echo.c builtin_cd.c builtin_exit.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c builtin.c

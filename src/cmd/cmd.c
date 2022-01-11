@@ -20,7 +20,7 @@ t_list	*cmd_create(int type)
 	return (cmd);
 }
 
-int cmd_type(t_list *cmd)
+int	cmd_type(t_list *cmd)
 {
 	return (*(int *)(cmd->content));
 }

@@ -1,7 +1,7 @@
 #include "builtin.h"
 #include "exec.h"
 
-int builtin_echo(int argc UNUSED, char **argv)
+int	builtin_echo(int argc __attribute((unused)), char **argv)
 {
 	int		i;
 	bool	newline;
@@ -21,6 +21,5 @@ int builtin_echo(int argc UNUSED, char **argv)
 	}
 	if (newline)
 		ft_putchar_fd('\n', 1);
-	// sleep(10); // zum testen für redirs "lsof -c minishell"
 	return (0);
 }

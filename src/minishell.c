@@ -16,34 +16,29 @@ int		minishell_process_input(char *input);
 
 char	**g_env = NULL;
 
-int	main(int argc, char *argv[])
+int	main(void)
 {
 	char	*input;
 
 	signal(SIGQUIT, SIG_IGN);
 	if (env_init() == ERROR)
 		return (EXIT_FAILURE);
-	if (argc == 2)
-		minishell_process_input(argv[1]);
-	else
+	while (1)
 	{
-		while (1)
+		signal(SIGINT, signal_ctlc);
+		termios_change(false);
+		input = minishell_get_line();
+		if (input == NULL)
 		{
-			signal(SIGINT, signal_ctlc);
-			termios_change(false);
-			input = minishell_get_line();
-			if (input == NULL)
-			{
-				if (isatty(STDERR_FILENO))
-					write(STDERR_FILENO, "exit\n", 5);
-				termios_change(true);
-				break ;
-			}
-			minishell_process_input(input);
-			free(input);
+			if (isatty(STDERR_FILENO))
+				write(STDERR_FILENO, "exit\n", 5);
+			termios_change(true);
+			break ;
 		}
-		rl_clear_history();
+		minishell_process_input(input);
+		free(input);
 	}
+	rl_clear_history();
 	if (g_env)
 		ft_free_split(&g_env);
 	exit(exit_status_get());
@@ -70,7 +65,7 @@ int	minishell_process_input(char *input)
 	return (0);
 }
 
-char *minishell_get_line(void)
+char	*minishell_get_line(void)
 {
 	char	*input;
 	char	*prompt;

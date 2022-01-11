@@ -1,7 +1,7 @@
 #include "builtin.h"
 #include "env.h"
 
-int	builtin_unset(int argc UNUSED, char **argv)
+int	builtin_unset(int argc __attribute((unused)), char **argv)
 {
 	int	i;
 	int	status;

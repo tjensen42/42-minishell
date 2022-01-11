@@ -1,10 +1,10 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <termios.h>
 #include <signal.h>
 #include <readline/readline.h>
 
 #include "signals.h"
-#include "global.h"
 
 void	signal_ctlc(int sig)
 {

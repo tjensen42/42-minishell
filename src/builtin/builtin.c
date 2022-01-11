@@ -1,6 +1,6 @@
 #include "builtin.h"
 
-static const struct	s_builtins g_builtins[] = {
+static const struct s_builtins	g_builtins[] = {
 	{"echo", builtin_echo},
 	{"cd", builtin_cd},
 	{"pwd", builtin_pwd},

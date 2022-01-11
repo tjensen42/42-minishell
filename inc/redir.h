@@ -33,17 +33,20 @@
 
 typedef struct s_redir_undo_content
 {
-	int		fd_replaced;
-	int		fd_replaced_dup;
+	int		fd_repl;
+	int		fd_repl_dup;
 }	t_c_redir_undo;
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-// EXEC_REDIR
+// REDIR
 int	redir(t_list *l_token, t_list **l_undo);
 int	redir_type(char *redir);
+
+// REDIR_UNDO
 int	redir_undo(t_list **l_undo);
+int	redir_undo_add_fd(t_list **l_undo, int fd);
 
 #endif

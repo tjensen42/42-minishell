@@ -15,7 +15,7 @@ t_list	*parser_scmd_tokens(t_list *l_token)
 		scmd = scmd_create(cmd_type_from_token(l_token));
 		if (scmd == NULL
 			|| (scmd_content(scmd)->type == CMD_SCMD
-			&& scmd_token_set(scmd_content(scmd), &l_token) == ERROR))
+				&& scmd_token_set(scmd_content(scmd), &l_token) == ERROR))
 		{
 			ft_lstclear(&l_scmd, c_scmd_destroy);
 			return (NULL);

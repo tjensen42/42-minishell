@@ -1,6 +1,7 @@
 #include "builtin.h"
 
-int	builtin_env(int argc UNUSED, char **argv UNUSED)
+int	builtin_env(int argc __attribute((unused)),
+	char **argv __attribute((unused)))
 {
 	int	i;
 

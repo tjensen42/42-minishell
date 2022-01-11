@@ -22,12 +22,10 @@ int	parser_heredoc(t_list *l_token)
 			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
 		free(token_content(redir_file)->string);
 		token_content(redir_file)->flags |= TOK_HEREDOC;
-		// dup
 		fd = dup(STDIN_FILENO);
 		token_content(redir_file)->string = parser_heredoc_read(limiter);
 		if (errno == EBADF)
 		{
-			// dup2();
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 			return (ERROR);
