@@ -55,7 +55,7 @@ static int	expand_var_token(t_c_token *c_token)
 	{
 		while (c_token->string[i] == '$' && c_token->string[i + 1] == '$')
 			i++;
-		if ((c_token->string[i] == '$' && c_token->string[i + 1] != '\0') ||
+		if ((c_token->string[i] == '$' && c_token->string[i + 1] != '\0' && !ft_strchr(WHITESPACES, c_token->string[i + 1])) ||
 			(c_token->string[i] == '$' && c_token->string[i + 1] == '\0' && !(c_token->flags & (TOK_S_QUOTE | TOK_D_QUOTE)) && c_token->flags & TOK_CONNECTED))
 		{
 			i_tmp = expand_var_append(&expanded_str, &(c_token->string[i]));

@@ -24,3 +24,10 @@ echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -
 ls -la ../ | grep "."
 
 unset TEST | cat -e
+
+cat tmp_lol.c | cat > tmp_lol.c
+rm -rf tmp_lol.c
+
+/bin/echo 1 > tmp_lol.c
+cat tmp_lol.c | cat > tmp_lol.c
+rm -rf tmp_lol.c

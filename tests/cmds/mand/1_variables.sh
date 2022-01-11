@@ -6,23 +6,42 @@
 /bin/echo $?
 
 /bin/echo $HOME
+
 /bin/echo $HOME$USER
+
 /bin/echo $"HOME"$USER
+
 /bin/echo $"HOM"E$USER
+
 /bin/echo $"'HOM'E"$USER
+
 /bin/echo $'HOM'E$USER
 
 /bin/echo $"HOME"
+
 /bin/echo $'HOME'
+
 /bin/echo $
+
 /bin/echo "$"
+
 /bin/echo '$='
+
 /bin/echo "$""$"
+
 /bin/echo $"$"
+
 /bin/echo $"42$"
+
 /bin/echo "$"$
+
 /bin/echo $'$'
+
 /bin/echo '$'$
+
+/bin/echo "$ "
+
+/bin/echo '$ '
 
 /bin/echo $TESTNOTFOUND
 /bin/echo $HOME$TESTNOTFOUND

@@ -28,7 +28,12 @@ static bool	num_is_numeric(char *str)
 	int	i;
 
 	i = 0;
-	if ((str[0] == '-' || str[0] == '+') && str[1] != '\0')
+	if (str[0] == '\0')
+	{
+		print_error(SHELL_NAME, "exit", str, "numeric argument required");
+		return (false);
+	}
+	else if ((str[0] == '-' || str[0] == '+') && str[1] != '\0')
 		i++;
 	while (str[i])
 	{

@@ -286,6 +286,8 @@ unset HOME
 ###  EXIT ###
 exit
 
+exit ""
+
 exit 0
 
 exit 10

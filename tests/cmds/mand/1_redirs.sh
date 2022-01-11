@@ -8,9 +8,15 @@ ls -la | grep tmp_redir_out | awk '{print $1 $2}'
 cat tmp_redir_out
 rm tmp_redir_out
 
+/bin/echo 42 > tmp_redir_out 42
+cat tmp_redir_out
+rm tmp_redir_out
+
 /bin/echo "cat this text\n" > tmp_redir_out
 cat <tmp_redir_out
 rm tmp_redir_out
+
+cat | cat | ls
 
 cat < /dev/null
 
@@ -74,6 +80,15 @@ rm -f tmp_std_outfile
 
 ### HERE_DOC ###
 cat << lim
+ "lim"
+HELLO
+42
+ lim
+testing your minishell
+limm
+lim
+
+<<lim cat
  "lim"
 HELLO
 42
