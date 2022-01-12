@@ -3,13 +3,19 @@
 # **************************************************************************** #
 
 ls
+
 cat cmds.sh
+
 /bin/echo test1
 
 ""
+
 "ls"
+
 "cat cmds.sh"
+
 "/bin/echo" test1
+
 ""'/bin/'echo test1
 
 
