@@ -26,6 +26,7 @@ int	builtin_exit(int argc, char **argv, t_list *l_free)
 	rl_clear_history();
 	if (g_env)
 		ft_free_split(&g_env);
+	ft_free_split(&argv);
 	exit(exit_num);
 }
 
