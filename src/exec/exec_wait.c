@@ -22,9 +22,12 @@ int	exec_wait_pid(int last_pid)
 int	exec_wait_for_all(int last_pid)
 {
 	int	status;
+	int	pid;
 
 	status = exec_wait_pid(last_pid);
-	while (wait(NULL) >= 0);
+	pid = 0;
+	while (pid >= 0)
+		pid = wait(NULL);
 	errno = 0;
 	return (status);
 }

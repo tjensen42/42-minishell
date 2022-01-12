@@ -1,9 +1,12 @@
 #include "builtin.h"
 #include "exec.h"
+#include "cmd.h"
+
+#include <readline/readline.h>
 
 static bool	num_is_numeric(char *str);
 
-int	builtin_exit(int argc, char **argv)
+int	builtin_exit(int argc, char **argv, t_list *l_free)
 {
 	int	exit_num;
 
@@ -19,7 +22,10 @@ int	builtin_exit(int argc, char **argv)
 		print_error(SHELL_NAME, "exit", NULL, "too many arguments");
 		return (EXIT_FAILURE);
 	}
-	// clear everything
+	ft_lstclear(&l_free, c_cmd_destroy);
+	rl_clear_history();
+	if (g_env)
+		ft_free_split(&g_env);
 	exit(exit_num);
 }
 

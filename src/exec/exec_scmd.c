@@ -5,7 +5,7 @@
 #include "env.h"
 #include "expand.h"
 
-int	exec_scmd(t_list *scmd)
+int	exec_scmd(t_list *scmd, t_list *l_free)
 {
 	int			pid;
 	int			status;
@@ -25,7 +25,7 @@ int	exec_scmd(t_list *scmd)
 	{
 		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
 		if (status != ERROR)
-			status = builtin_exec(argv);
+			status = builtin_exec(argv, l_free);
 		if (redir_undo(&l_redir_undo) == ERROR)
 			status = ERROR;
 		ft_free_split(&argv);
