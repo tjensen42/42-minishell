@@ -4,26 +4,10 @@ static int		expand_wildcard_token(t_list *token, t_list **l_wildcard,
 					char **files);
 static bool		expand_pattern_match_file(char *pattern, char **split,
 					char *file);
-static int		expand_wildcard_list(t_list	**l_token, char **files);
 static t_list	*expand_pattern_to_list(char *pattern, char **split,
 					char **files);
 
-int	expand_wildcard(t_c_scmd *c_scmd)
-{
-	int		status;
-	char	**files;
-
-	files = expand_files_current_dir();
-	if (files == NULL)
-		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
-	status = expand_wildcard_list(&(c_scmd->l_argv), files);
-	if (status != ERROR)
-		status = expand_wildcard_list(&(c_scmd->l_redir), files);
-	ft_free_split(&files);
-	return (status);
-}
-
-static int	expand_wildcard_list(t_list	**l_token, char **files)
+int	expand_wildcard_list(t_list	**l_token, char **files)
 {
 	t_list	*tmp;
 	t_list	*iter;

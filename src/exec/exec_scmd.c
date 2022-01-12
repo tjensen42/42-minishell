@@ -47,7 +47,7 @@ int	exec_scmd(t_list *scmd)
 
 int	exec_scmd_preperation(t_list *scmd, char ***argv)
 {
-	if (expand_var_scmd(scmd_content(scmd)) == ERROR)
+	if (expand_var(scmd_content(scmd)) == ERROR)
 		return (ERROR);
 	if (expand_wildcard(scmd_content(scmd)) == ERROR)
 		return (ERROR);
