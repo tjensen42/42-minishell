@@ -138,6 +138,15 @@ test_from_file() {
 			else
 				echo -ne "\033[0;32mOK\033[m  "
 			fi
+			# echo -ne "\033[0;36mLEAKS:\033[m "
+			# valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt $MINISHELL_PATH/$EXECUTABLE <<< "$INPUT" 2>/dev/null >/dev/null
+			# cat valgrind-out.txt | grep LEAK >/dev/null
+			# leaks -atExit -- $MINISHELL_PATH/$EXECUTABLE <<< "$INPUT" 2>/dev/null >/dev/null
+			# if [[ $? == 0 ]] ; then
+			# 	echo -ne "\033[0;31mKO\033[m  "
+			# else
+			# 	echo -ne "\033[0;32mOK\033[m  "
+			# fi
 			INPUT=""
 			((i++))
 			((TEST_COUNT++))
