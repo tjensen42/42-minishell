@@ -82,6 +82,7 @@ static int	expand_var_append_exit(char **exp_str)
 	if (exit_str == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	*exp_str = str_append_str(*exp_str, exit_str);
+	free(exit_str);
 	if (*exp_str == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	return (0);
