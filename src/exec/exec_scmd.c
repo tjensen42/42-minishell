@@ -35,11 +35,11 @@ int	exec_scmd(t_list *scmd, t_list *l_free)
 	if (pid == 0)
 	{
 		if (redir(scmd_content(scmd)->l_redir, NULL) == ERROR)
-			exec_scmd_exit(EXIT_FAILURE, argv);
+			exec_scmd_exit(EXIT_FAILURE, argv, l_free);
 		status = exec_scmd_exec(argv);
 		// if (redir_undo(&l_redir_undo) == ERROR) // geht so nicht, da nur im error case undo wird.....
 		// 	status = ERROR;
-		exec_scmd_exit(status, argv);
+		exec_scmd_exit(status, argv, l_free);
 	}
 	ft_free_split(&argv);
 	return (exec_wait_pid(pid));
@@ -79,7 +79,7 @@ int	exec_scmd_exec(char **argv)
 	return (EXIT_FAILURE);
 }
 
-void	exec_scmd_exit(int status, char **argv)
+void	exec_scmd_exit(int status, char **argv, t_list *l_free)
 {
 	if (status == EXEC_NOTFOUND)
 		print_error(SHELL_NAME, argv[0], NULL, "command not found");
@@ -94,5 +94,7 @@ void	exec_scmd_exit(int status, char **argv)
 		ft_free_split(&argv);
 	if (g_env)
 		ft_free_split(&g_env);
+	if (l_free)
+		ft_lstclear(&l_free, c_cmd_destroy);
 	exit(status);
 }

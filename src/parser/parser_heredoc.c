@@ -2,6 +2,8 @@
 #include "redir.h"
 #include "signals.h"
 
+#include <signal.h>
+
 static char	*parser_heredoc_read(char *limiter);
 static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token);
 

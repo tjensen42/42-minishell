@@ -32,7 +32,7 @@ int		exec_recursive(t_list *l_cmd, t_list *l_free);
 int		exec_scmd(t_list *scmd, t_list *l_free);
 int		exec_scmd_preperation(t_list *scmd, char ***argv);
 int		exec_scmd_exec(char **argv);
-void	exec_scmd_exit(int status, char **argv);
+void	exec_scmd_exit(int status, char **argv, t_list *l_free);
 
 // EXEC_PIPELINE
 int		exec_pipeline(t_list *pipeline, t_list *l_free);

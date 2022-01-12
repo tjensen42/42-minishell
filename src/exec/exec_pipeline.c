@@ -52,13 +52,13 @@ static int	exec_pipeline_scmd(t_list *scmd, t_list *l_free)
 	char	**argv;
 
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
-		exec_scmd_exit(EXIT_FAILURE, argv);
+		exec_scmd_exit(EXIT_FAILURE, argv, l_free);
 	if (redir(scmd_content(scmd)->l_redir, NULL) == ERROR)
-		exec_scmd_exit(EXIT_FAILURE, argv);
+		exec_scmd_exit(EXIT_FAILURE, argv, l_free);
 	if (builtin_check(argv))
 		status = builtin_exec(argv, l_free);
 	else
 		status = exec_scmd_exec(argv);
-	exec_scmd_exit(status, argv);
+	exec_scmd_exit(status, argv, l_free);
 	return (0);
 }
