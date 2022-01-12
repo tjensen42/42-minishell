@@ -2,6 +2,11 @@
 #   WILD                                                                       #
 # **************************************************************************** #
 
+/bin/echo '\1$42' > tmp_redir_out
+ls -la | grep tmp_redir_out | awk '{print $1 $2}'
+cat -e tmp_redir_out
+rm tmp_redir_out
+
 sleep 0 | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
 
 grep 1 < filedoesnotexist | echo 1 | grep 1 | head -1 | cat
@@ -32,11 +37,6 @@ echo 42 | grep 1 < tmp_out
 rm -f tmp_out
 
 /usr/bin/env -i bash -c "env" | wc -l
-
-/bin/echo '\1$42' > tmp_redir_out
-ls -la | grep tmp_redir_out | awk '{print $1 $2}'
-cat -e tmp_redir_out
-rm tmp_redir_out
 
 export test=" arg1 arg2 "
 echo 'echo $1' > tmp_test_sh
