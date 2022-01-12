@@ -35,6 +35,7 @@ int	env_put_var(char *str)
 
 int	env_set_env(char *name, char *value)
 {
+	int		status;
 	char	*tmp;
 	char	*var_str;
 
@@ -47,5 +48,7 @@ int	env_set_env(char *name, char *value)
 	free(tmp);
 	if (var_str == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
-	return (env_put_var(var_str));
+	status = env_put_var(var_str);
+	free(var_str);
+	return (status);
 }
