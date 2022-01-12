@@ -36,7 +36,6 @@ int	main(void)
 			break ;
 		}
 		minishell_process_input(input);
-		free(input);
 	}
 	rl_clear_history();
 	if (g_env)
@@ -54,6 +53,7 @@ int	minishell_process_input(char *input)
 	l_token = NULL;
 	l_parser = NULL;
 	l_token = lexer(input);
+	free(input);
 	if (l_token != NULL)
 		l_parser = parser(l_token);
 	if (l_token != NULL && l_parser != NULL)
