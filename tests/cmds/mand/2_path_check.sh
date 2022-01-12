@@ -6,40 +6,40 @@ unset PATH
 echo $PATH
 cat
 ls
-/bin/ls
 echo 1
+/bin/echo 42
 
 unset PATH
-/bin/ls
+/bin/echo 42
 unset PATH
 unset PATH
 unset PATH
 echo $PATH
 cat
 ls
-/bin/ls
 echo 1
+/bin/echo 42
 
 export PATH=""
 echo $PATH
 cat
 ls
-/bin/ls
 echo 1
+/bin/echo 42
 
 export PATH=
 echo $PATH
 cat
 ls
-/bin/ls
 echo 1
+/bin/echo 42
 
 export PATH=1
 echo $PATH
 cat
 ls
-/bin/ls
 echo 1
+/bin/echo 42
 
 touch tmp_x_file1
 tmp_x_file1
@@ -57,5 +57,5 @@ tmp_x_file1
 echo $?
 ./tmp_x_file1
 echo $?
-/bin/ls
+/bin/echo 42
 /bin/rm -f tmp_x_file1
