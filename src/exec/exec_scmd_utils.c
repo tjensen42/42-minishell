@@ -41,7 +41,7 @@ static int	path_split_set(char **path_split, char **argv)
 		tmp = ft_strjoin(path_split[i], *argv);
 		if (tmp == NULL)
 		{
-			print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM);
+			print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM));
 			return (ERROR);
 		}
 		if (access(tmp, F_OK) == 0 && (!stat(tmp, &s) && !S_ISDIR(s.st_mode)))
@@ -66,7 +66,7 @@ static char	**path_split_get(void)
 		path_split = ft_split(env_get_value("PATH"), ':');
 		if (path_split == NULL)
 		{
-			print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM);
+			print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM));
 			return (NULL);
 		}
 	}
@@ -93,7 +93,7 @@ static int	path_split_append_slash(char **path_split)
 			if (path_split[i] == NULL)
 			{
 				path_split[i] = tmp;
-				return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+				return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 			}
 			free(tmp);
 		}

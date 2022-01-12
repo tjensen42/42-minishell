@@ -16,8 +16,8 @@ int	redir(t_list *l_token, t_list **l_undo)
 	{
 		tmp = token_to_str(iter->next);
 		if (tmp == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		if (redir_process(token_content(iter)->string, tmp, l_undo) == ERROR)
+			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+		if (redir_process(token_content(iter)->str, tmp, l_undo) == ERROR)
 		{
 			free(tmp);
 			return (ERROR);

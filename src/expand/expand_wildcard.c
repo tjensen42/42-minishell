@@ -1,9 +1,12 @@
 #include "expand.h"
 
-static int		expand_wildcard_token(t_list *token, t_list **l_wildcard, char **files);
-static bool		expand_pattern_match_file(char *pattern, char **split, char *file);
+static int		expand_wildcard_token(t_list *token, t_list **l_wildcard,
+					char **files);
+static bool		expand_pattern_match_file(char *pattern, char **split,
+					char *file);
 static int		expand_wildcard_list(t_list	**l_token, char **files);
-static t_list	*expand_pattern_to_list(char *pattern, char **split, char **files);
+static t_list	*expand_pattern_to_list(char *pattern, char **split,
+					char **files);
 
 int	expand_wildcard(t_c_scmd *c_scmd)
 {
@@ -12,7 +15,7 @@ int	expand_wildcard(t_c_scmd *c_scmd)
 
 	files = expand_files_current_dir();
 	if (files == NULL)
-		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	status = expand_wildcard_list(&(c_scmd->l_argv), files);
 	if (status != ERROR)
 		status = expand_wildcard_list(&(c_scmd->l_redir), files);
@@ -46,7 +49,8 @@ static int	expand_wildcard_list(t_list	**l_token, char **files)
 	return (0);
 }
 
-static int	expand_wildcard_token(t_list *token, t_list **l_wildcard, char **files)
+static int	expand_wildcard_token(t_list *token, t_list **l_wildcard,
+				char **files)
 {
 	t_list	*iter;
 	char	*pattern;
@@ -59,7 +63,7 @@ static int	expand_wildcard_token(t_list *token, t_list **l_wildcard, char **file
 		free(pattern);
 		if (split != NULL)
 			ft_free_split(&split);
-		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	}
 	*l_wildcard = expand_pattern_to_list(pattern, split, files);
 	iter = *l_wildcard;
@@ -75,7 +79,8 @@ static int	expand_wildcard_token(t_list *token, t_list **l_wildcard, char **file
 	return (0);
 }
 
-static t_list	*expand_pattern_to_list(char *pattern, char **split, char **files)
+static t_list	*expand_pattern_to_list(char *pattern, char **split,
+					char **files)
 {
 	int		i;
 	char	*tmp;
@@ -124,7 +129,7 @@ static bool	expand_pattern_match_file(char *pattern, char **split, char *file)
 	if (pattern[ft_strlen(pattern) - 1] != WILDCARD
 		&& ft_strncmp(file + ft_strlen(file) - ft_strlen(split[i - 1]),
 			split[i - 1], ft_strlen(split[i - 1]) + 1) != 0)
-			return (false);
+		return (false);
 	if (pattern[0] != '.' && file[0] == '.')
 		return (false);
 	return (true);

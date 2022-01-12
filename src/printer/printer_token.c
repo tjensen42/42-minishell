@@ -10,11 +10,11 @@ void	printer_token(t_list *l_token)
 		while (l_token->next != NULL)
 		{
 			if (token_content(l_token)->flags & TOK_CONNECTED)
-				printf("%s \033[0;35m+ \033[m", token_content(l_token)->string);
+				printf("%s \033[0;35m+ \033[m", token_content(l_token)->str);
 			else
-				printf("%s \033[0;32m: \033[m", token_content(l_token)->string);
+				printf("%s \033[0;32m: \033[m", token_content(l_token)->str);
 			l_token = l_token->next;
 		}
-		printf("%s\n", token_content(l_token)->string);
+		printf("%s\n", token_content(l_token)->str);
 	}
 }

@@ -33,9 +33,9 @@ int	cmd_type_from_token(t_list *token)
 		return (CMD_SCMD);
 	else if (token_content(token)->flags & TOK_BIN_OP)
 	{
-		if (token_content(token)->string[0] == '&')
+		if (token_content(token)->str[0] == '&')
 			return (CMD_AND);
-		else if (token_content(token)->string[0] == '|')
+		else if (token_content(token)->str[0] == '|')
 			return (CMD_OR);
 	}
 	else if (token_content(token)->flags & TOK_PIPE)

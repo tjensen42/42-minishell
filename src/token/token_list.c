@@ -26,7 +26,7 @@ char	**l_token_to_split(t_list *l_token)
 	{
 		if (token_content(iter)->flags & TOK_CONNECTED)
 		{
-			split[i] = ft_strdup(token_content(iter)->string);
+			split[i] = ft_strdup(token_content(iter)->str);
 			if (split[i] == NULL)
 			{
 				ft_free_split(&split);
@@ -35,7 +35,7 @@ char	**l_token_to_split(t_list *l_token)
 			while (token_content(iter)->flags & TOK_CONNECTED)
 			{
 				tmp = split[i];
-				split[i] = ft_strjoin(split[i], token_content(iter->next)->string);
+				split[i] = ft_strjoin(split[i], token_content(iter->next)->str);
 				free(tmp);
 				if (split[i] == NULL)
 				{
@@ -47,7 +47,7 @@ char	**l_token_to_split(t_list *l_token)
 		}
 		else
 		{
-			split[i] = ft_strdup(token_content(iter)->string);
+			split[i] = ft_strdup(token_content(iter)->str);
 			if (split[i] == NULL)
 			{
 				ft_free_split(&split);

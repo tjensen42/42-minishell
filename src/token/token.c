@@ -23,7 +23,7 @@ t_list	*token_create(char *string, int type)
 	if (c_token == NULL)
 		return (NULL);
 	c_token->flags = type;
-	c_token->string = string;
+	c_token->str = string;
 	token = ft_lstnew(c_token);
 	if (token == NULL)
 		return (NULL);
@@ -33,8 +33,8 @@ t_list	*token_create(char *string, int type)
 
 void	c_token_destroy(void *c_token)
 {
-	free(((t_c_token *)c_token)->string);
-	((t_c_token *)c_token)->string = NULL;
+	free(((t_c_token *)c_token)->str);
+	((t_c_token *)c_token)->str = NULL;
 	free(c_token);
 }
 
@@ -43,13 +43,13 @@ char	*token_to_str(t_list *token)
 	char	*tmp;
 	char	*str;
 
-	if (token == NULL || token_content(token)->string == NULL)
+	if (token == NULL || token_content(token)->str == NULL)
 		return (NULL);
-	str = ft_strdup(token_content(token)->string);
+	str = ft_strdup(token_content(token)->str);
 	while (token && (token_content(token)->flags & TOK_CONNECTED))
 	{
 		tmp = str;
-		str = ft_strjoin(str, token_content(token->next)->string);
+		str = ft_strjoin(str, token_content(token->next)->str);
 		free(tmp);
 		if (str == NULL)
 			return (NULL);

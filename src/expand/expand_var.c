@@ -9,7 +9,9 @@ static int	expand_var_token_list_split(t_list **l_token);
 static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token);
 static char	*expand_var_token_needs_splitting(t_list *token);
 static int	expand_var_token(t_c_token *c_token);
-static int	expand_var_append(char **expanded_str, char *str);
+static int	expand_var_append(char **exp_str, char *str);
+static int	expand_var_append_exit(char **exp_str);
+static int	expand_var_expansion(t_c_token *c_token, char **exp_str, int *i);
 
 int	expand_var_scmd(t_c_scmd *c_scmd)
 {
@@ -42,96 +44,108 @@ static int	expand_var_token_list(t_list *l_token)
 static int	expand_var_token(t_c_token *c_token)
 {
 	int		i;
-	int		i_tmp;
-	char	*expanded_str;
+	char	*exp_str;
 
-	if (c_token->string == NULL || c_token->flags & TOK_S_QUOTE || !ft_strchr(c_token->string, '$'))
+	if (c_token->str == NULL || (c_token->flags & TOK_S_QUOTE)
+		|| !ft_strchr(c_token->str, '$'))
 		return (0);
-	expanded_str = ft_strdup("");
-	if (expanded_str == NULL)
-		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+	exp_str = ft_strdup("");
+	if (exp_str == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	i = 0;
-	while (c_token->string[i])
+	while (c_token->str[i])
 	{
-		while (c_token->string[i] == '$' && c_token->string[i + 1] == '$')
+		while (c_token->str[i] == '$' && c_token->str[i + 1] == '$')
 			i++;
-		if ((c_token->string[i] == '$' && c_token->string[i + 1] != '\0' && !ft_strchr(WHITESPACES, c_token->string[i + 1])) ||
-			(c_token->string[i] == '$' && c_token->string[i + 1] == '\0' && !(c_token->flags & (TOK_S_QUOTE | TOK_D_QUOTE)) && c_token->flags & TOK_CONNECTED))
+		if (expand_var_expansion(c_token, &exp_str, &i) == ERROR)
 		{
-			i_tmp = expand_var_append(&expanded_str, &(c_token->string[i]));
-			if (i_tmp == ERROR)
-			{
-				free(expanded_str);
-				return (ERROR);
-			}
-			i += i_tmp;
+			free(exp_str);
+			return (ERROR);
 		}
-		else
-		{
-			expanded_str = str_append_chr(expanded_str, c_token->string[i]);
-			i++;
-		}
-		if (expanded_str == NULL)
-		{
-			free(expanded_str);
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		}
+		i++;
 	}
-	free(c_token->string);
-	c_token->string = expanded_str;
+	free(c_token->str);
+	c_token->str = exp_str;
 	return (0);
 }
 
-static int expand_var_append(char **expanded_str, char *str)
+static int	expand_var_expansion(t_c_token *c_token, char **exp_str, int *i)
 {
-	int		i;
-	int		tmp;
+	if (c_token->str[*i] == '$' && c_token->str[*i + 1] == '?')
+	{
+		if (expand_var_append_exit(exp_str) == ERROR)
+			return (ERROR);
+		(*i)++;
+	}
+	else if (c_token->str[*i] == '$' && (is_var_char(c_token->str[*i + 1])
+			|| (c_token->str[*i + 1] == '\0'
+				&& !(c_token->flags & (TOK_S_QUOTE | TOK_D_QUOTE))
+				&& c_token->flags & TOK_CONNECTED)))
+	{
+		if (expand_var_append(exp_str, &(c_token->str[*i])) == ERROR)
+			return (ERROR);
+		while (is_var_char(c_token->str[*i + 1]))
+			(*i)++;
+	}
+	else
+		*exp_str = str_append_chr(*exp_str, c_token->str[*i]);
+	if (*exp_str == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+	return (0);
+}
+
+static int	expand_var_append_exit(char **exp_str)
+{
+	char	*exit_str;
+
+	exit_str = ft_itoa(exit_status_get());
+	if (exit_str == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+	*exp_str = str_append_str(*exp_str, exit_str);
+	if (*exp_str == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+	return (0);
+}
+
+static int	expand_var_append(char **exp_str, char *str)
+{
 	char	*var_name;
 	char	*var_value;
+	int		i;
 
 	var_name = ft_strdup("");
 	if (var_name == NULL)
-		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	i = 1;
-	if (str[i] == '?')
+	while (is_var_char(str[i]))
 	{
-		tmp = exit_status_get();
-		var_value = ft_itoa(tmp);
+		var_name = str_append_chr(var_name, str[i]);
+		if (var_name == NULL)
+			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		i++;
 	}
-	else
-	{
-		while (str[i] && str[i] != '$' && str[i] != '?' && !ft_strchr(WHITESPACES, str[i]) && !ft_strchr(QUOT_MARKS, str[i]))
-		{
-			var_name = str_append_chr(var_name, str[i]);
-			if (var_name == NULL)
-				return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-			i++;
-		}
-		var_value = env_get_value(var_name);
-		free(var_name);
-		if (var_value == NULL)
-			var_value = ft_strdup(""); // muss freed() werden
-	}
+	var_value = env_get_value(var_name);
+	free(var_name);
 	if (var_value == NULL)
-		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-	*expanded_str = str_append_str(*expanded_str, var_value);
-	if (*expanded_str == NULL)
-		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-	return (i);
+		var_value = "";
+	*exp_str = str_append_str(*exp_str, var_value);
+	if (*exp_str == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+	return (0);
 }
 
 static char	*expand_var_token_needs_splitting(t_list *token)
 {
 	int	i;
 
-	if (token && !(token_content(token)->flags & (TOK_S_QUOTE | TOK_D_QUOTE | TOK_HEREDOC)))
+	if (token && !(token_content(token)->flags
+			& (TOK_S_QUOTE | TOK_D_QUOTE | TOK_HEREDOC)))
 	{
 		i = 0;
-		while (token_content(token)->string[i])
+		while (token_content(token)->str[i])
 		{
-			if (ft_strchr(WHITESPACES, token_content(token)->string[i]))
-				return (&(token_content(token)->string[i]));
+			if (ft_strchr(WHITESPACES, token_content(token)->str[i]))
+				return (&(token_content(token)->str[i]));
 			i++;
 		}
 	}
@@ -151,9 +165,11 @@ static int	expand_var_token_list_split(t_list **l_token)
 		if (expand_var_token_needs_splitting(iter) != NULL)
 		{
 			l_splitted = NULL;
-			expand_var_token_list_split_2(&l_splitted, iter);
-			if (token_content(iter)->string[0] == VAR_SPACE)
-				token_content(lst_node_prev(*l_token, iter))->flags &= ~TOK_CONNECTED;
+			if (expand_var_token_list_split_2(&l_splitted, iter) == ERROR)
+				return (ERROR);
+			if (token_content(iter)->str[0] == VAR_SPACE)
+				token_content(
+					lst_node_prev(*l_token, iter))->flags &= ~TOK_CONNECTED;
 			if (l_splitted != NULL)
 				expand_lst_replace(l_token, iter, l_splitted);
 			else
@@ -168,19 +184,24 @@ static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token)
 {
 	t_list	*new_token;
 	char	**split;
+	char	*tmp;
 	int		i;
 
-	expand_var_replace_whitespaces(token_content(token)->string);
-	split = ft_split(token_content(token)->string, VAR_SPACE);
+	expand_var_replace_whitespaces(token_content(token)->str);
+	split = ft_split(token_content(token)->str, VAR_SPACE);
+	if (split == NULL)
+		return (ERROR);
 	i = 0;
 	while (split[i])
 	{
-		new_token = token_create(ft_strdup(split[i]), token_content(token)->flags & ~TOK_CONNECTED);
+		new_token = token_create(ft_strdup(split[i]),
+				token_content(token)->flags & ~TOK_CONNECTED);
 		ft_lstadd_back(l_splitted, new_token);
 		i++;
 	}
 	ft_free_split(&split);
-	if ((token_content(token)->flags & TOK_CONNECTED) && str_last_chr(token_content(token)->string) != VAR_SPACE)
+	if ((token_content(token)->flags & TOK_CONNECTED)
+		&& str_last_chr(token_content(token)->str) != VAR_SPACE)
 		token_content(ft_lstlast(*l_splitted))->flags |= TOK_CONNECTED;
 	return (0);
 }

@@ -49,11 +49,11 @@ static void	printer_scmd_argv(t_list *l_argv)
 	{
 		if (command == true)
 		{
-			printf("\033[0;33m%s \033[m", token_content(l_argv)->string);
+			printf("\033[0;33m%s \033[m", token_content(l_argv)->str);
 			command = false;
 		}
 		else
-			printf("\033[0;32m%s \033[m", token_content(l_argv)->string);
+			printf("\033[0;32m%s \033[m", token_content(l_argv)->str);
 		l_argv = l_argv->next;
 	}
 }
@@ -63,13 +63,13 @@ static void	printer_scmd_redir(t_list *l_redir)
 	while (l_redir)
 	{
 		if (token_content(l_redir)->flags & TOK_REDIR)
-			printf("\033[0;35m%s \033[m", token_content(l_redir)->string);
+			printf("\033[0;35m%s \033[m", token_content(l_redir)->str);
 		else
 		{
 			if (token_content(l_redir)->flags & TOK_HEREDOC)
 				printf("\033[0;34mhere_doc \033[m");
 			else
-				printf("\033[0;34m%s \033[m", token_content(l_redir)->string);
+				printf("\033[0;34m%s \033[m", token_content(l_redir)->str);
 		}
 		l_redir = l_redir->next;
 	}

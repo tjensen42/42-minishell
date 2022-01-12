@@ -55,7 +55,7 @@ int	exec_scmd_preperation(t_list *scmd, char ***argv)
 	{
 		*argv = l_token_to_split(scmd_content(scmd)->l_argv);
 		if (*argv == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	}
 	return (0);
 }

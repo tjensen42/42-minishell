@@ -10,10 +10,10 @@ int	lexer_token_bin_op(char *str, int *i, t_list **l_token)
 	{
 		token_str = ft_substr(str, *i, 2);
 		if (token_str == NULL)
-			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
+			return (print_error(SHELL_NAME, strerror(ENOMEM), NULL, NULL));
 		token = token_create(token_str, TOK_BIN_OP);
 		if (token == NULL)
-			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
+			return (print_error(SHELL_NAME, strerror(ENOMEM), NULL, NULL));
 		ft_lstadd_back(l_token, token);
 		*i += 2;
 	}
@@ -36,10 +36,10 @@ int	lexer_token_redir(char *str, int *i, t_list **l_token)
 		len++;
 		token_str = ft_substr(str, *i, len);
 		if (token_str == NULL)
-			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
+			return (print_error(SHELL_NAME, strerror(ENOMEM), NULL, NULL));
 		token = token_create(token_str, TOK_REDIR);
 		if (token == NULL)
-			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
+			return (print_error(SHELL_NAME, strerror(ENOMEM), NULL, NULL));
 		ft_lstadd_back(l_token, token);
 		*i += len;
 	}
@@ -55,10 +55,10 @@ int	lexer_token_pipe(char *str, int *i, t_list **l_token)
 	{
 		token_str = ft_substr(str, *i, 1);
 		if (token_str == NULL)
-			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
+			return (print_error(SHELL_NAME, strerror(ENOMEM), NULL, NULL));
 		token = token_create(token_str, TOK_PIPE);
 		if (token == NULL)
-			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
+			return (print_error(SHELL_NAME, strerror(ENOMEM), NULL, NULL));
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}
@@ -74,13 +74,13 @@ int	lexer_token_bracket(char *str, int *i, t_list **l_token)
 	{
 		token_str = ft_substr(str, *i, 1);
 		if (token_str == NULL)
-			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
+			return (print_error(SHELL_NAME, strerror(ENOMEM), NULL, NULL));
 		if (str[*i] == '(')
 			token = token_create(token_str, TOK_O_BRACKET);
 		else
 			token = token_create(token_str, TOK_C_BRACKET);
 		if (token == NULL)
-			return (print_error(SHELL_NAME, ERR_NO_MEM, NULL, NULL));
+			return (print_error(SHELL_NAME, strerror(ENOMEM), NULL, NULL));
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}

@@ -13,7 +13,7 @@ int	env_init(void)
 		return (0);
 	g_env = malloc((i + 1) * sizeof(char *));
 	if (g_env == NULL)
-		return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	i = 0;
 	while (environ[i])
 	{
@@ -21,7 +21,7 @@ int	env_init(void)
 		if (g_env[i] == NULL)
 		{
 			ft_free_split(&g_env);
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		}
 		i++;
 	}

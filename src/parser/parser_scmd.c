@@ -40,7 +40,7 @@ static int	scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
 		next = (*l_token)->next;
 		if (token_content(*l_token)->flags & TOK_REDIR)
 		{
-			if (redir_type(token_content(*l_token)->string) == REDIR_HEREDOC)
+			if (redir_type(token_content(*l_token)->str) == REDIR_HEREDOC)
 			{
 				if (parser_heredoc(*l_token) == ERROR)
 					return (ERROR);

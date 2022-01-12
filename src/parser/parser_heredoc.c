@@ -11,19 +11,19 @@ int	parser_heredoc(t_list *l_token)
 	t_list	*redir_file;
 	int		fd;
 
-	if (l_token && redir_type(token_content(l_token)->string) == REDIR_HEREDOC)
+	if (l_token && redir_type(token_content(l_token)->str) == REDIR_HEREDOC)
 	{
 		redir_file = l_token->next;
 		limiter = token_to_str(redir_file);
 		if (limiter == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		limiter = str_append_str(limiter, "\n");
 		if (limiter == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
-		free(token_content(redir_file)->string);
+			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+		free(token_content(redir_file)->str);
 		token_content(redir_file)->flags |= TOK_HEREDOC;
 		fd = dup(STDIN_FILENO);
-		token_content(redir_file)->string = parser_heredoc_read(limiter);
+		token_content(redir_file)->str = parser_heredoc_read(limiter);
 		if (errno == EBADF)
 		{
 			dup2(fd, STDIN_FILENO);
@@ -32,8 +32,8 @@ int	parser_heredoc(t_list *l_token)
 		}
 		close(fd);
 		free(limiter);
-		if (token_content(redir_file)->string == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+		if (token_content(redir_file)->str == NULL)
+			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		parser_heredoc_merge(redir_file, &l_token);
 	}
 	return (0);

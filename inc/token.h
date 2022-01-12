@@ -34,7 +34,7 @@
 typedef struct s_token_content
 {
 	int		flags;
-	char	*string;
+	char	*str;
 }	t_c_token;
 
 /* ************************************************************************** */

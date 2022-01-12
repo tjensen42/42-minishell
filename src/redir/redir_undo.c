@@ -51,7 +51,7 @@ int	redir_undo_add_fd(t_list **l_undo, int fd)
 	{
 		redir_undo = redir_undo_create(fd, tmp);
 		if (redir_undo == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, ERR_NO_MEM));
+			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		ft_lstadd_back(l_undo, redir_undo);
 	}
 	return (0);

@@ -6,12 +6,12 @@ bool	expand_token_is_wildcard(t_list *token)
 	while (token && token_content(token)->flags & TOK_CONNECTED)
 	{
 		if (!(token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE))
-			&& ft_strchr(token_content(token)->string, '*'))
+			&& ft_strchr(token_content(token)->str, '*'))
 			return (true);
 		token = token->next;
 	}
 	if (token && !(token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE))
-		&& ft_strchr(token_content(token)->string, '*'))
+		&& ft_strchr(token_content(token)->str, '*'))
 		return (true);
 	return (false);
 }
@@ -41,7 +41,7 @@ char	*expand_wildcard_append_str(char *wildcard, t_list *token)
 	int		i;
 	char	*str;
 
-	str = token_content(token)->string;
+	str = token_content(token)->str;
 	if (token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE))
 		return (str_append_str(wildcard, str));
 	i = 0;
@@ -70,10 +70,7 @@ char	**expand_files_current_dir(void)
 	file_names = NULL;
 	dir = opendir("./");
 	if (dir == NULL)
-	{
-		print_error(SHELL_NAME, NULL, NULL, strerror(errno));
-		errno = 0;
-	}
+		print_error_errno(SHELL_NAME, NULL, NULL);
 	if (dir == NULL)
 		return (NULL);
 	dirent = readdir(dir);
