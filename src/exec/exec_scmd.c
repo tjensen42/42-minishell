@@ -7,32 +7,20 @@
 
 #include <readline/readline.h>
 
+static int	exec_builtin(t_list *scmd, char **argv, t_list *l_free);
+
 int	exec_scmd(t_list *scmd, t_list *l_free)
 {
-	int			pid;
-	int			status;
-	char		**argv;
-	t_list		*l_redir_undo;
+	int		pid;
+	int		status;
+	char	**argv;
 
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
 		return (ERROR);
-	if (!(scmd_content(scmd)->l_argv) && scmd_content(scmd)->l_redir)
-	{
-		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
-		if (redir_undo(&l_redir_undo) == ERROR)
-			status = ERROR;
-		return (status);
-	}
+	if (!(scmd_content(scmd)->l_argv))
+		return (0);
 	if (builtin_check(argv))
-	{
-		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
-		if (status != ERROR)
-			status = builtin_exec(argv, l_free);
-		if (redir_undo(&l_redir_undo) == ERROR)
-			status = ERROR;
-		ft_free_split(&argv);
-		return (status);
-	}
+		return (exec_builtin(scmd, argv, l_free));
 	pid = fork();
 	if (pid == 0)
 	{
@@ -47,6 +35,10 @@ int	exec_scmd(t_list *scmd, t_list *l_free)
 
 int	exec_scmd_preperation(t_list *scmd, char ***argv)
 {
+	int		status;
+	t_list	*l_redir_undo;
+
+	status = 0;
 	if (expand_var(scmd_content(scmd)) == ERROR)
 		return (ERROR);
 	if (expand_wildcard(scmd_content(scmd)) == ERROR)
@@ -57,7 +49,13 @@ int	exec_scmd_preperation(t_list *scmd, char ***argv)
 		if (*argv == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	}
-	return (0);
+	else if (scmd_content(scmd)->l_redir)
+	{
+		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
+		if (redir_undo(&l_redir_undo) == ERROR)
+			status = ERROR;
+	}
+	return (status);
 }
 
 int	exec_scmd_exec(char **argv)
@@ -93,4 +91,23 @@ void	exec_scmd_exit(int status, char **argv, t_list *l_free)
 		ft_free_split(&g_env);
 	rl_clear_history();
 	exit(status);
+}
+
+static int	exec_builtin(t_list *scmd, char **argv, t_list *l_free)
+{
+	int		status;
+	t_list	*l_redir_undo;
+
+	if (builtin_check(argv))
+	{
+		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
+		if (status != ERROR)
+			status = builtin_exec(argv, l_free);
+		if (redir_undo(&l_redir_undo) == ERROR)
+			status = ERROR;
+		ft_free_split(&argv);
+		return (status);
+	}
+	else
+		return (ERROR);
 }

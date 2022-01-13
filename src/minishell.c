@@ -12,7 +12,7 @@
 #include <readline/history.h>
 
 char	*minishell_get_line(void);
-int		minishell_process_input(char *input);
+void	minishell_process_input(char *input);
 
 char	**g_env = NULL;
 
@@ -43,7 +43,7 @@ int	main(void)
 	exit(exit_status_get());
 }
 
-int	minishell_process_input(char *input)
+void	minishell_process_input(char *input)
 {
 	t_list	*l_token;
 	t_list	*l_parser;
@@ -62,7 +62,6 @@ int	minishell_process_input(char *input)
 		ft_lstclear(&l_parser, c_cmd_destroy);
 	else if (l_token != NULL)
 		ft_lstclear(&l_token, c_token_destroy);
-	return (0);
 }
 
 char	*minishell_get_line(void)
