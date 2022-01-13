@@ -28,7 +28,10 @@ int	scmd_search_path(char **argv)
 	return (ERROR);
 }
 
-/* Returns 0 if a path was found, if no path matches it returns ERROR and the argv[0] leaves untouched  */
+/*
+**	Returns 0 if a path was found, if no path matches
+**	it returns ERROR and the argv[0] leaves untouched
+*/
 static int	path_split_set(char **path_split, char **argv)
 {
 	int			i;

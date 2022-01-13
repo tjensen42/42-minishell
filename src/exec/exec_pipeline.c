@@ -3,8 +3,11 @@
 #include "builtin.h"
 #include "env.h"
 
-static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i, t_list *l_free);
-static int	exec_pipeline_scmd(t_list *scmd, t_list *l_free);
+static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
+				int i, t_list *l_free);
+static void	exec_pipeline_element(t_list *element, int pipes[2][2],
+				int i, t_list *l_free);
+static void	exec_pipeline_scmd(t_list *scmd, t_list *l_free);
 
 int	exec_pipeline(t_list *pipeline, t_list *l_free)
 {
@@ -18,13 +21,13 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 	iter = cmd_content(pipeline)->l_element;
 	while (iter)
 	{
-		if (iter->next && pipe(pipes[i % 2]) < 0)
-			return (print_error("Too many open files.", NULL, NULL, NULL)); // close all pipes, free and exit
-		pid = fork();
-		if (pid < 0)
-			return (print_error("FORK fail", NULL, NULL, NULL));
-		if (pid == 0)
-			exec_pipeline_element(iter, pipes, i, l_free);
+		pid = exec_pipeline_pipe_fork(iter, pipes, i, l_free);
+		if (pid == -1)
+		{
+			pipes_close(pipes, -1, false);
+			print_error_errno(SHELL_NAME, NULL, NULL);
+			break ;
+		}
 		pipes_close(pipes, i, (iter->next == NULL));
 		iter = iter->next;
 		i++;
@@ -32,7 +35,23 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 	return (exec_wait_for_all(pid));
 }
 
-static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i, t_list *l_free)
+static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
+				int i, t_list *l_free)
+{
+	int			pid;
+
+	if (iter->next && pipe(pipes[i % 2]) < 0)
+		return (ERROR);
+	pid = fork();
+	if (pid < 0)
+		return (ERROR);
+	if (pid == 0)
+		exec_pipeline_element(iter, pipes, i, l_free);
+	return (pid);
+}
+
+static void	exec_pipeline_element(t_list *element, int pipes[2][2],
+				int i, t_list *l_free)
 {
 	int		fd[2];
 
@@ -46,7 +65,7 @@ static void	exec_pipeline_element(t_list *element, int pipes[2][2], int i, t_lis
 		exit(exec_recursive(cmd_content(element)->l_element, l_free));
 }
 
-static int	exec_pipeline_scmd(t_list *scmd, t_list *l_free)
+static void	exec_pipeline_scmd(t_list *scmd, t_list *l_free)
 {
 	int		status;
 	char	**argv;
@@ -60,5 +79,4 @@ static int	exec_pipeline_scmd(t_list *scmd, t_list *l_free)
 	else
 		status = exec_scmd_exec(argv);
 	exec_scmd_exit(status, argv, l_free);
-	return (0);
 }
