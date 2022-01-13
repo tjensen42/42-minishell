@@ -13,8 +13,7 @@ int	builtin_cd(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (chdir(dir) == -1)
 	{
-		print_error(SHELL_NAME, "cd", dir, strerror(errno));
-		errno = 0;
+		print_error_errno(SHELL_NAME, "cd", dir);
 		return (EXIT_FAILURE);
 	}
 	if (argv[1] && ft_strncmp(argv[1], "-", 2) == 0)
@@ -59,8 +58,7 @@ static int	update_pwd(void)
 		env_unset_var("OLDPWD");
 	if (getcwd(buf, sizeof(buf)) == NULL)
 	{
-		print_error(SHELL_NAME, "cd", NULL, strerror(errno));
-		errno = 0;
+		print_error_errno(SHELL_NAME, "cd", NULL);
 		return (ERROR);
 	}
 	if (env_set_env("PWD", buf) == ERROR)

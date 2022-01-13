@@ -1,7 +1,7 @@
 #include "libft.h"
 #include "global.h"
 
-static char *gnl_free_line(char *line);
+static char	*gnl_free_line(char *line);
 
 int	print_error(char *s1, char *s2, char *s3, char *message)
 {
@@ -67,7 +67,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-static char *gnl_free_line(char *line)
+static char	*gnl_free_line(char *line)
 {
 	free(line);
 	return (NULL);

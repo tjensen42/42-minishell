@@ -21,7 +21,7 @@ int	redir_undo(t_list **l_undo)
 		else if (fd_repl_dup != -1)
 		{
 			if (dup2(fd_repl_dup, fd_repl) == -1)
-				status = print_error(SHELL_NAME, NULL, NULL, strerror(errno));
+				status = print_error_errno(SHELL_NAME, NULL, NULL);
 			close(fd_repl_dup);
 		}
 		iter = iter->next;
@@ -43,10 +43,9 @@ int	redir_undo_add_fd(t_list **l_undo, int fd)
 			return (0);
 		iter = iter->next;
 	}
-	errno = 0;
 	tmp = dup(fd);
 	if (tmp == -1 && errno != EBADF)
-		return (print_error(SHELL_NAME, NULL, NULL, strerror(errno)));
+		return (print_error_errno(SHELL_NAME, NULL, NULL));
 	else
 	{
 		redir_undo = redir_undo_create(fd, tmp);

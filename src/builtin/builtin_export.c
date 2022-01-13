@@ -46,27 +46,15 @@ static void	export_print_vars(void)
 
 static bool	export_is_valid_argument(char *arg)
 {
-	if (arg[0] == '=')
+	int	i;
+
+	if (arg[0] == '\0' || arg[0] == '=')
 		return (false);
-	if (!ft_strchr(arg, '='))
-	{
-		if (ft_strchr(arg, '?') || ft_strchr(arg, '$') || ft_strchr(arg, '/'))
-			return (false);
-	}
-	if (ft_strchr(arg, '=') && ft_strchr(arg, '?'))
-	{
-		if (ft_strchr(arg, '?') < ft_strchr(arg, '='))
-			return (false);
-	}
-	if (ft_strchr(arg, '=') && ft_strchr(arg, '$'))
-	{
-		if (ft_strchr(arg, '$') < ft_strchr(arg, '='))
-			return (false);
-	}
-	if (ft_strchr(arg, '=') && ft_strchr(arg, '/'))
-	{
-		if (ft_strchr(arg, '/') < ft_strchr(arg, '='))
-			return (false);
-	}
-	return (true);
+	i = 0;
+	while (arg[i] != '\0' && arg[i] != '=' && is_var_char(arg[i]))
+		i++;
+	if (arg[i] == '\0' || arg[i] == '=')
+		return (true);
+	else
+		return (false);
 }

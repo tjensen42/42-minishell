@@ -1,8 +1,6 @@
 ** WICHTIG **
 
 // heredoc signals
-// print_error_errno einbauen
-// export / unset -> var names define
 
 ** LATER TO DO **
 
