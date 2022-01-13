@@ -110,9 +110,10 @@ test_from_file() {
 				end_of_file=$?
 				((line_count++))
 			done
-			$MINISHELL_PATH/$EXECUTABLE <<< "$INPUT" 2>tmp_err_minishell >tmp_out_minishell
+			INPUT=${INPUT%?}
+			echo -n "$INPUT" | $MINISHELL_PATH/$EXECUTABLE 2>tmp_err_minishell >tmp_out_minishell
 			exit_minishell=$?
-			bash <<< "enable -n .$NL$INPUT" 2>tmp_err_bash >tmp_out_bash
+			echo -n "enable -n .$NL$INPUT" | bash <<< "enable -n .$NL$INPUT" 2>tmp_err_bash >tmp_out_bash
 			exit_bash=$?
 			echo -ne "\033[0;34mSTD_OUT:\033[m "
 			if ! diff -q tmp_out_minishell tmp_out_bash >/dev/null ;
@@ -139,9 +140,9 @@ test_from_file() {
 				echo -ne "\033[0;32mOK\033[m  "
 			fi
 			# echo -ne "\033[0;36mLEAKS:\033[m "
-			# valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt $MINISHELL_PATH/$EXECUTABLE <<< "$INPUT" 2>/dev/null >/dev/null
+			# echo -n "$INPUT" | valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt $MINISHELL_PATH/$EXECUTABLE 2>/dev/null >/dev/null
 			# cat valgrind-out.txt | grep LEAK >/dev/null
-			# leaks -atExit -- $MINISHELL_PATH/$EXECUTABLE <<< "$INPUT" 2>/dev/null >/dev/null
+			# # leaks -atExit -- $MINISHELL_PATH/$EXECUTABLE <<< "$INPUT" 2>/dev/null >/dev/null
 			# if [[ $? == 0 ]] ; then
 			# 	echo -ne "\033[0;31mKO\033[m  "
 			# else
