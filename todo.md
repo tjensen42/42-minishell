@@ -2,10 +2,6 @@
 
 // heredoc signals
 
-** LATER TO DO **
-
-// VAR NAMES safety? bsp: /=1
-
 ** OPTIONAL **
 
 // SEGGG 11: Messages

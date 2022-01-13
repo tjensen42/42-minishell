@@ -3,15 +3,17 @@
 #include "signals.h"
 
 #include <signal.h>
+#include <readline/readline.h>
 
-static char	*parser_heredoc_read(char *limiter);
+static int	parser_heredoc_processing(t_list *redir_file, char **limiter);
+static char	*parser_heredoc_readline(char *limiter);
 static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token);
+static char	*parser_heredoc_gnl(char **limiter);
 
 int	parser_heredoc(t_list *l_token)
 {
 	char	*limiter;
 	t_list	*redir_file;
-	int		fd;
 
 	if (l_token && redir_type(token_content(l_token)->str) == REDIR_HEREDOC)
 	{
@@ -19,31 +21,45 @@ int	parser_heredoc(t_list *l_token)
 		limiter = token_to_str(redir_file);
 		if (limiter == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
-		limiter = str_append_str(limiter, "\n");
-		if (limiter == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
-		free(token_content(redir_file)->str);
-		token_content(redir_file)->flags |= TOK_HEREDOC;
-		fd = dup(STDIN_FILENO);
-		token_content(redir_file)->str = parser_heredoc_read(limiter);
-		if (errno == EBADF)
+		if (parser_heredoc_processing(redir_file, &limiter) == ERROR)
 		{
-			dup2(fd, STDIN_FILENO);
-			close(fd);
+			free(limiter);
 			return (ERROR);
 		}
-		close(fd);
 		free(limiter);
-		if (token_content(redir_file)->str == NULL)
-			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+		token_content(redir_file)->flags |= TOK_HEREDOC;
 		parser_heredoc_merge(redir_file, &l_token);
 	}
 	return (0);
 }
 
-static char	*parser_heredoc_read(char *limiter)
+static int	parser_heredoc_processing(t_list *redir_file, char **limiter)
 {
-	char	*tmp;
+	int	fd;
+
+	fd = dup(STDIN_FILENO);
+	if (fd == -1)
+		return (print_error_errno(SHELL_NAME, NULL, NULL));
+	free(token_content(redir_file)->str);
+	if (isatty(STDIN_FILENO))
+		token_content(redir_file)->str = parser_heredoc_readline(*limiter);
+	else
+		token_content(redir_file)->str = parser_heredoc_gnl(limiter);
+	if (errno == EBADF)
+	{
+		if (dup2(fd, STDIN_FILENO) == -1)
+			print_error_errno(SHELL_NAME, NULL, NULL);
+		close(fd);
+		return (ERROR);
+	}
+	close(fd);
+	if (token_content(redir_file)->str == NULL)
+		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+	return (0);
+}
+
+static char	*parser_heredoc_readline(char *limiter)
+{
 	char	*read_str;
 	char	*here_str;
 
@@ -51,19 +67,44 @@ static char	*parser_heredoc_read(char *limiter)
 	here_str = ft_strdup("");
 	if (here_str == NULL)
 		return (NULL);
-	if (isatty(STDIN_FILENO))
-		write(1, "> ", 2);
-	errno = 0;
-	read_str = get_next_line(STDIN_FILENO);
+	read_str = readline("> ");
 	while (read_str && ft_strncmp(read_str, limiter, ft_strlen(limiter) + 1))
 	{
-		tmp = here_str;
-		here_str = ft_strjoin(here_str, read_str);
+		read_str = str_append_chr(read_str, '\n');
+		if (read_str == NULL)
+		{
+			free(here_str);
+			print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM));
+			return (NULL);
+		}
+		here_str = str_append_str(here_str, read_str);
 		if (here_str == NULL)
 			break ;
-		free(tmp);
-		if (isatty(STDIN_FILENO))
-			write(1, "> ", 2);
+		free(read_str);
+		read_str = readline("> ");
+	}
+	free(read_str);
+	return (here_str);
+}
+
+static char	*parser_heredoc_gnl(char **limiter)
+{
+	char	*read_str;
+	char	*here_str;
+
+	signal(SIGINT, signal_ctlc_heredoc);
+	*limiter = str_append_chr(*limiter, '\n');
+	if (*limiter == NULL)
+		return (NULL);
+	here_str = ft_strdup("");
+	if (here_str == NULL)
+		return (NULL);
+	read_str = get_next_line(STDIN_FILENO);
+	while (read_str && ft_strncmp(read_str, *limiter, ft_strlen(*limiter) + 1))
+	{
+		here_str = str_append_str(here_str, read_str);
+		if (here_str == NULL)
+			break ;
 		free(read_str);
 		read_str = get_next_line(STDIN_FILENO);
 	}
