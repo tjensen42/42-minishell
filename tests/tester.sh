@@ -110,10 +110,10 @@ test_from_file() {
 				end_of_file=$?
 				((line_count++))
 			done
-			INPUT=${INPUT%?}
+			# INPUT=${INPUT%?}
 			echo -n "$INPUT" | $MINISHELL_PATH/$EXECUTABLE 2>tmp_err_minishell >tmp_out_minishell
 			exit_minishell=$?
-			echo -n "enable -n .$NL$INPUT" | bash <<< "enable -n .$NL$INPUT" 2>tmp_err_bash >tmp_out_bash
+			echo -n "enable -n .$NL$INPUT" | bash 2>tmp_err_bash >tmp_out_bash
 			exit_bash=$?
 			echo -ne "\033[0;34mSTD_OUT:\033[m "
 			if ! diff -q tmp_out_minishell tmp_out_bash >/dev/null ;
