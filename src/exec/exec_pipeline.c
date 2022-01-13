@@ -3,6 +3,8 @@
 #include "builtin.h"
 #include "env.h"
 
+#include <readline/readline.h>
+
 static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
 				int i, t_list *l_free);
 static void	exec_pipeline_element(t_list *element, int pipes[2][2],
@@ -53,7 +55,8 @@ static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
 static void	exec_pipeline_element(t_list *element, int pipes[2][2],
 				int i, t_list *l_free)
 {
-	int		fd[2];
+	int	status;
+	int	fd[2];
 
 	pipes_set(fd, pipes, i, (element->next == NULL));
 	dup2(fd[0], STDIN_FILENO);
@@ -62,7 +65,15 @@ static void	exec_pipeline_element(t_list *element, int pipes[2][2],
 	if (cmd_type(element) == CMD_SCMD)
 		exec_pipeline_scmd(element, l_free);
 	else if (cmd_type(element) == CMD_GROUP)
-		exit(exec_recursive(cmd_content(element)->l_element, l_free));
+	{
+		status = exec_recursive(cmd_content(element)->l_element, l_free);
+		if (l_free)
+			ft_lstclear(&l_free, c_cmd_destroy);
+		rl_clear_history();
+		if (g_env)
+			ft_free_split(&g_env);
+		exit (status);
+	}
 }
 
 static void	exec_pipeline_scmd(t_list *scmd, t_list *l_free)

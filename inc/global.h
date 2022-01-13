@@ -51,4 +51,6 @@ int		split_remove_str(char ***split, char *remove_str);
 int		split_replace_str(char ***split, char *old_str, char *new_str);
 int		split_contains_str(char **split, char *str);
 
+char	*get_next_line(int fd);
+
 #endif

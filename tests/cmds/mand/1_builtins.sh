@@ -184,11 +184,11 @@ pwd pwd
 pwd pwd pwd
 
 ### EXPORT ###
-/bin/echo $HALLO
-env | grep HALLO
-export HALLO=42
-/bin/echo $HALLO
-env | grep HALLO
+/bin/echo $HALLO42
+env | grep HALLO42
+export HALLO42=42
+/bin/echo $HALLO42
+env | grep HALLO42
 
 /bin/echo $HOME
 env | grep HOME

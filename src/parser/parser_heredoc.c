@@ -54,7 +54,7 @@ static char	*parser_heredoc_read(char *limiter)
 	if (isatty(STDIN_FILENO))
 		write(1, "> ", 2);
 	errno = 0;
-	read_str = ft_get_next_line(STDIN_FILENO);
+	read_str = get_next_line(STDIN_FILENO);
 	while (read_str && ft_strncmp(read_str, limiter, ft_strlen(limiter) + 1))
 	{
 		tmp = here_str;
@@ -65,7 +65,7 @@ static char	*parser_heredoc_read(char *limiter)
 		if (isatty(STDIN_FILENO))
 			write(1, "> ", 2);
 		free(read_str);
-		read_str = ft_get_next_line(STDIN_FILENO);
+		read_str = get_next_line(STDIN_FILENO);
 	}
 	free(read_str);
 	return (here_str);
