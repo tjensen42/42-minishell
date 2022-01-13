@@ -22,11 +22,13 @@ int	builtin_exit(int argc, char **argv, t_list *l_free)
 		print_error(SHELL_NAME, "exit", NULL, "too many arguments");
 		return (EXIT_FAILURE);
 	}
-	ft_lstclear(&l_free, c_cmd_destroy);
-	rl_clear_history();
+	if (argv)
+		ft_free_split(&argv);
+	if (l_free)
+		ft_lstclear(&l_free, c_cmd_destroy);
 	if (g_env)
 		ft_free_split(&g_env);
-	ft_free_split(&argv);
+	rl_clear_history();
 	exit(exit_num);
 }
 

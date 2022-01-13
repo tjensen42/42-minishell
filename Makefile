@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
+#    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2022/01/12 14:03:32 by hepple           ###   ########.fr        #
+#    Updated: 2022/01/13 12:40:01 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,12 @@ SRCS_REDIR	:= redir.c redir_undo.c
 SRCS_CMD	:= cmd.c scmd.c
 SRCS_TOKEN	:= token.c token_list.c
 SRCS_ENV	:= env.c env_modify.c
-SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_utils.c exec_scmd.c exec_scmd_utils.c exec_wait.c exec_exit_status.c
+SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_pipes.c exec_scmd.c exec_scmd_path.c exec_wait.c exec_exit_status.c
 SRCS_BUILTIN:= builtin_echo.c builtin_cd.c builtin_exit.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c builtin.c
 SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c
 SRCS_SIGNALS:= signals.c
 SRCS_EXPAND	:= expand.c expand_wildcard.c expand_wildcard_utils.c expand_var.c expand_var_split.c
-SRCS_UTILS	:= utils.c utils_lst.c utils_split.c utils_str.c
+SRCS_UTILS	:= utils.c utils_gnl.c utils_lst.c utils_split.c utils_str.c
 
 SRCS		+= $(addprefix lexer/, $(SRCS_LEXER)) $(addprefix parser/, $(SRCS_PARSER)) \
 			   $(addprefix exec/, $(SRCS_EXEC)) $(addprefix printer/, $(SRCS_PRINTER)) \

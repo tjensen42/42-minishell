@@ -69,9 +69,9 @@ static void	exec_pipeline_element(t_list *element, int pipes[2][2],
 		status = exec_recursive(cmd_content(element)->l_element, l_free);
 		if (l_free)
 			ft_lstclear(&l_free, c_cmd_destroy);
-		rl_clear_history();
 		if (g_env)
 			ft_free_split(&g_env);
+		rl_clear_history();
 		exit (status);
 	}
 }

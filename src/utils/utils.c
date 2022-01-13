@@ -1,8 +1,6 @@
 #include "libft.h"
 #include "global.h"
 
-static char	*gnl_free_line(char *line);
-
 int	print_error(char *s1, char *s2, char *s3, char *message)
 {
 	if (s1)
@@ -39,36 +37,4 @@ int	print_error_errno(char *s1, char *s2, char *s3)
 bool	is_var_char(char c)
 {
 	return (ft_isalnum(c) || c == '_');
-}
-
-char	*get_next_line(int fd)
-{
-	int		check;
-	char	buffer;
-	char	*line;
-
-	line = ft_strdup("");
-	if (line == NULL)
-		return (NULL);
-	check = read(fd, &buffer, 1);
-	if (check == -1 || check == 0)
-		return (gnl_free_line(line));
-	while (check > 0)
-	{
-		line = str_append_chr(line, buffer);
-		if (line == NULL)
-			return (NULL);
-		if (buffer == '\n')
-			return (line);
-		check = read(fd, &buffer, 1);
-	}
-	if (check == -1)
-		return (gnl_free_line(line));
-	return (line);
-}
-
-static char	*gnl_free_line(char *line)
-{
-	free(line);
-	return (NULL);
 }
