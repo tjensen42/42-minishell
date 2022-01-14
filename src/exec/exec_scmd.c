@@ -29,8 +29,10 @@ int	exec_scmd(t_list *scmd, t_list *l_free)
 		status = exec_scmd_exec(argv);
 		exec_scmd_exit(status, argv, l_free);
 	}
+	status = exec_wait_pid(pid);
+	print_error_signaled(status, argv[0]);
 	ft_free_split(&argv);
-	return (exec_wait_pid(pid));
+	return (status);
 }
 
 int	exec_scmd_preperation(t_list *scmd, char ***argv)

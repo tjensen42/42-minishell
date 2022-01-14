@@ -9,9 +9,9 @@ int	exec_wait_pid(int last_pid)
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == 3)
-			ft_putendl_fd("Quit: 3", 2);
+			ft_putendl_fd("Quit: 3", STDERR_FILENO);
 		else if (WTERMSIG(status) == 2)
-			ft_putstr_fd("\n", 2);
+			ft_putstr_fd("\n", STDERR_FILENO);
 		status = 128 + WTERMSIG(status);
 	}
 	else if (WIFEXITED(status))

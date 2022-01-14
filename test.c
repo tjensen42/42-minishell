@@ -1,28 +1,26 @@
-// #include <unistd.h>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <signal.h>
-// #include <string.h>
-// #include <errno.h>
-
-// void sig_ctl(int sig)
-// {
-// 	kill(getpid(), SIG)
-// }
-
-// int	main(void)
-// {
-
-// 	// printf("errno: %d\n", errno);
-// 	// close(0);
-// 	// read(0, buf, 200);
-// 	// printf("errno: %d\n", errno);
-
-// 	signal(SIGINT, sig_ctl);
-// 	char buf[200];
-// 	int read_rt = read(0, buf, 200);
-// 	printf("read_rt: %d, errno: %d, buf: %s\n", read_rt, errno, buf);
-// }
-
 #include <unistd.h>
-int main(){write(1, "1\n", 2);}
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <string.h>
+#include <errno.h>
+
+// void signal_handler(int sig)
+// {
+// 	fprintf(stderr, "%d\n", sig);
+// }
+
+int main()
+{
+	// for(int i=0; i < NSIG; i++)
+	// 	signal(i, signal_handler);
+	// char buf[2];
+
+	// int i = 0;
+	while (1)
+	{
+		// buf[i] = 0;
+		// i++;
+	}
+
+}
