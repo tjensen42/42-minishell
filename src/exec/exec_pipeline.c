@@ -15,6 +15,7 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 {
 	int		i;
 	int		pid;
+	int		status;
 	int		pipes[2][2];
 	t_list	*iter;
 
@@ -34,7 +35,8 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 		iter = iter->next;
 		i++;
 	}
-	return (exec_wait_for_all(pid));
+	status = exec_wait_for_all(pid);
+	return (status);
 }
 
 static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
@@ -66,12 +68,8 @@ static void	exec_pipeline_element(t_list *element, int pipes[2][2],
 		exec_pipeline_scmd(element, l_free);
 	else if (cmd_type(element) == CMD_GROUP)
 	{
-		status = exec_recursive(cmd_content(element)->l_element, l_free);
-		if (l_free)
-			ft_lstclear(&l_free, c_cmd_destroy);
-		if (g_env)
-			ft_free_split(&g_env);
-		rl_clear_history();
+		status = exec_recursive(cmd_content(element)->l_element, true, l_free);
+		exec_free_all(NULL, l_free);
 		exit (status);
 	}
 }
@@ -86,7 +84,7 @@ static void	exec_pipeline_scmd(t_list *scmd, t_list *l_free)
 	if (redir(scmd_content(scmd)->l_redir, NULL) == ERROR)
 		exec_scmd_exit(EXIT_FAILURE, argv, l_free);
 	if (builtin_check(argv))
-		status = builtin_exec(argv, l_free);
+		status = builtin_exec(argv, true, l_free);
 	else
 		status = exec_scmd_exec(argv);
 	exec_scmd_exit(status, argv, l_free);

@@ -1,6 +1,8 @@
 #include "exec.h"
 
-int	exec_wait_pid(int last_pid)
+static int	print_error_signaled(int signal, char *name);
+
+int	exec_wait_pid(int last_pid, char *name)
 {
 	int	status;
 
@@ -12,6 +14,7 @@ int	exec_wait_pid(int last_pid)
 			ft_putendl_fd("Quit: 3", STDERR_FILENO);
 		else if (WTERMSIG(status) == 2)
 			ft_putstr_fd("\n", STDERR_FILENO);
+		print_error_signaled(WTERMSIG(status), name);
 		status = 128 + WTERMSIG(status);
 	}
 	else if (WIFEXITED(status))
@@ -24,10 +27,23 @@ int	exec_wait_for_all(int last_pid)
 	int	status;
 	int	pid;
 
-	status = exec_wait_pid(last_pid);
+	status = exec_wait_pid(last_pid, NULL);
 	pid = 0;
 	while (pid >= 0)
 		pid = wait(NULL);
 	errno = 0;
 	return (status);
+}
+
+static int	print_error_signaled(int signal, char *name)
+{
+	if (signal == SIGABRT)
+		print_error(name, NULL, "Abort program", "6");
+	else if (signal == SIGBUS)
+		print_error(name, NULL, "Bus error", "10");
+	else if (signal == SIGSEGV)
+		print_error(name, NULL, "Segmentation fault", "11");
+	else if (signal == SIGTERM)
+		print_error(name, NULL, "Terminated", "15");
+	return (signal);
 }

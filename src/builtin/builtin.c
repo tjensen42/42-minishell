@@ -28,7 +28,7 @@ int	builtin_check(char **argv)
 	return (0);
 }
 
-int	builtin_exec(char **argv, t_list *l_free)
+int	builtin_exec(char **argv, bool subshell, t_list *l_free)
 {
 	int	i_builtin;
 
@@ -37,6 +37,6 @@ int	builtin_exec(char **argv, t_list *l_free)
 		return (ERROR);
 	errno = 0;
 	if (i_builtin == INT_MAX)
-		return (builtin_exit(split_count(argv), argv, l_free));
+		return (builtin_exit(split_count(argv), argv, subshell, l_free));
 	return (g_builtins[i_builtin - 1].func(split_count(argv), argv));
 }

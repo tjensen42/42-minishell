@@ -26,10 +26,11 @@
 /* ************************************************************************** */
 
 // EXEC
-int		exec_recursive(t_list *l_cmd, t_list *l_free);
+int		exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free);
+void	exec_free_all(char **argv, t_list *l_free);
 
 // EXEC_SCMD
-int		exec_scmd(t_list *scmd, t_list *l_free);
+int		exec_scmd(t_list *scmd, bool subshell, t_list *l_free);
 int		exec_scmd_preperation(t_list *scmd, char ***argv);
 int		exec_scmd_exec(char **argv);
 void	exec_scmd_exit(int status, char **argv, t_list *l_free);
@@ -47,7 +48,7 @@ int		pipes_close(int	pipes[2][2], int i, bool last);
 int		scmd_search_path(char **argv);
 
 // EXEC_WAIT
-int		exec_wait_pid(int last_pid);
+int		exec_wait_pid(int last_pid, char *name);
 int		exec_wait_for_all(int last_pid);
 
 // EXEC_EXIT_STATUS

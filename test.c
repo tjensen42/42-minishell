@@ -14,13 +14,13 @@ int main()
 {
 	// for(int i=0; i < NSIG; i++)
 	// 	signal(i, signal_handler);
-	// char buf[2];
+	char buf[2];
 
-	// int i = 0;
+	int i = 0;
 	while (1)
 	{
-		// buf[i] = 0;
-		// i++;
+		buf[i] = 0;
+		i++;
 	}
 
 }

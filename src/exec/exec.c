@@ -6,12 +6,12 @@
 static void	exec_group(t_list *l_cmd, t_list *l_free);
 static bool	exec_op_check(t_list *l_cmd);
 
-int	exec_recursive(t_list *l_cmd, t_list *l_free)
+int	exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free)
 {
 	int	pid;
 
 	if (cmd_type(l_cmd) == CMD_SCMD)
-		exit_status_set(exec_scmd(l_cmd, l_free));
+		exit_status_set(exec_scmd(l_cmd, subshell, l_free));
 	else if (cmd_type(l_cmd) == CMD_PIPELINE)
 		exit_status_set(exec_pipeline(l_cmd, l_free));
 	else if (cmd_type(l_cmd) == CMD_GROUP)
@@ -19,7 +19,7 @@ int	exec_recursive(t_list *l_cmd, t_list *l_free)
 		pid = fork();
 		if (pid == 0)
 			exec_group(l_cmd, l_free);
-		exit_status_set(exec_wait_pid(pid));
+		exit_status_set(exec_wait_pid(pid, NULL));
 	}
 	if (l_cmd->next)
 	{
@@ -30,19 +30,18 @@ int	exec_recursive(t_list *l_cmd, t_list *l_free)
 			if (l_cmd == NULL)
 				return (exit_status_get());
 		}
-		exit_status_set(exec_recursive(l_cmd->next, l_free));
+		exit_status_set(exec_recursive(l_cmd->next, subshell, l_free));
 	}
 	return (exit_status_get());
 }
 
 static void	exec_group(t_list *l_cmd, t_list *l_free)
 {
-	exit_status_set(exec_recursive(cmd_content(l_cmd)->l_element, l_free));
-	ft_lstclear(&l_free, c_cmd_destroy);
-	rl_clear_history();
-	if (g_env)
-		ft_free_split(&g_env);
-	exit(exit_status_get());
+	int	status;
+
+	status = exec_recursive(cmd_content(l_cmd)->l_element, true, l_free);
+	exec_free_all(NULL, l_free);
+	exit(status);
 }
 
 static bool	exec_op_check(t_list *l_cmd)
@@ -53,4 +52,15 @@ static bool	exec_op_check(t_list *l_cmd)
 		return (true);
 	else
 		return (false);
+}
+
+void	exec_free_all(char **argv, t_list *l_free)
+{
+	if (argv)
+		ft_free_split(&argv);
+	if (l_free)
+		ft_lstclear(&l_free, c_cmd_destroy);
+	if (g_env)
+		ft_free_split(&g_env);
+	rl_clear_history();
 }

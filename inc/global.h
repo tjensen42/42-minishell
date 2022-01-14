@@ -34,7 +34,6 @@ extern char	**g_env;
 
 int		print_error(char *s1, char *s2, char *s3, char *message);
 int		print_error_errno(char *s1, char *s2, char *s3);
-int		print_error_signaled(int status, char *name);
 bool	is_var_char(char c);
 
 char	*str_append_str(char *str, char *append);

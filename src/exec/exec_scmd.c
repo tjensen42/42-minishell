@@ -7,9 +7,10 @@
 
 #include <readline/readline.h>
 
-static int	exec_builtin(t_list *scmd, char **argv, t_list *l_free);
+static int	exec_builtin(t_list *scmd, char **argv,
+				bool subshell, t_list *l_free);
 
-int	exec_scmd(t_list *scmd, t_list *l_free)
+int	exec_scmd(t_list *scmd, bool subshell, t_list *l_free)
 {
 	int		pid;
 	int		status;
@@ -20,7 +21,7 @@ int	exec_scmd(t_list *scmd, t_list *l_free)
 	if (!(scmd_content(scmd)->l_argv))
 		return (0);
 	if (builtin_check(argv))
-		return (exec_builtin(scmd, argv, l_free));
+		return (exec_builtin(scmd, argv, subshell, l_free));
 	pid = fork();
 	if (pid == 0)
 	{
@@ -29,8 +30,7 @@ int	exec_scmd(t_list *scmd, t_list *l_free)
 		status = exec_scmd_exec(argv);
 		exec_scmd_exit(status, argv, l_free);
 	}
-	status = exec_wait_pid(pid);
-	print_error_signaled(status, argv[0]);
+	status = exec_wait_pid(pid, argv[0]);
 	ft_free_split(&argv);
 	return (status);
 }
@@ -85,17 +85,12 @@ void	exec_scmd_exit(int status, char **argv, t_list *l_free)
 		else
 			status = EXEC_NOEXEC;
 	}
-	if (argv)
-		ft_free_split(&argv);
-	if (l_free)
-		ft_lstclear(&l_free, c_cmd_destroy);
-	if (g_env)
-		ft_free_split(&g_env);
-	rl_clear_history();
+	exec_free_all(argv, l_free);
 	exit(status);
 }
 
-static int	exec_builtin(t_list *scmd, char **argv, t_list *l_free)
+static int	exec_builtin(t_list *scmd, char **argv,
+				bool subshell, t_list *l_free)
 {
 	int		status;
 	t_list	*l_redir_undo;
@@ -104,7 +99,7 @@ static int	exec_builtin(t_list *scmd, char **argv, t_list *l_free)
 	{
 		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
 		if (status != ERROR)
-			status = builtin_exec(argv, l_free);
+			status = builtin_exec(argv, subshell, l_free);
 		if (redir_undo(&l_redir_undo) == ERROR)
 			status = ERROR;
 		ft_free_split(&argv);

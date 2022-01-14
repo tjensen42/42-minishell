@@ -6,11 +6,11 @@
 
 static bool	num_is_numeric(char *str);
 
-int	builtin_exit(int argc, char **argv, t_list *l_free)
+int	builtin_exit(int argc, char **argv, bool subshell, t_list *l_free)
 {
 	int	exit_num;
 
-	if (isatty(STDERR_FILENO))
+	if (!subshell && isatty(STDERR_FILENO))
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 	exit_num = exit_status_get();
 	if (argc >= 2 && num_is_numeric(argv[1]) == false)
@@ -22,13 +22,7 @@ int	builtin_exit(int argc, char **argv, t_list *l_free)
 		print_error(SHELL_NAME, "exit", NULL, "too many arguments");
 		return (EXIT_FAILURE);
 	}
-	if (argv)
-		ft_free_split(&argv);
-	if (l_free)
-		ft_lstclear(&l_free, c_cmd_destroy);
-	if (g_env)
-		ft_free_split(&g_env);
-	rl_clear_history();
+	exec_free_all(argv, l_free);
 	exit(exit_num);
 }
 
