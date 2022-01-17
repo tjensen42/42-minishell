@@ -5,11 +5,11 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-# include <unistd.h>
-# include <stdbool.h>
-# include <limits.h>
-# include <string.h>
 # include <errno.h>
+# include <limits.h>
+# include <stdbool.h>
+# include <string.h>
+# include <unistd.h>
 
 # include "libft.h"
 
@@ -19,6 +19,7 @@
 
 # define ERROR		-1
 
+# define PROMPT 	"$> "
 # define SHELL_NAME	"minishell"
 # define DEBUG_ENV	"DEBUG"
 

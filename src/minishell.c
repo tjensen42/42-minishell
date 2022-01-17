@@ -2,7 +2,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#include "minishell.h"
 #include "global.h"
 #include "env.h"
 #include "lexer.h"
