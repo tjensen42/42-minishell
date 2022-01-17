@@ -19,12 +19,15 @@ int	exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free)
 		pid = fork();
 		if (pid == 0)
 			exec_group(l_cmd, l_free);
-		exit_status_set(exec_wait_pid(pid, NULL));
+		if (pid == -1)
+			exit_status_set(print_error_errno(SHELL_NAME, NULL, NULL));
+		else
+			exit_status_set(exec_wait_pid(pid, NULL));
 	}
 	if (l_cmd->next)
 	{
 		l_cmd = l_cmd->next;
-		while (exec_op_check(l_cmd))
+		while (l_cmd && exec_op_check(l_cmd))
 		{
 			l_cmd = l_cmd->next->next;
 			if (l_cmd == NULL)

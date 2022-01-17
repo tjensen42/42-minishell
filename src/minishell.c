@@ -31,7 +31,7 @@ int	main(void)
 		if (input == NULL)
 		{
 			if (isatty(STDERR_FILENO))
-				write(STDERR_FILENO, "exit\n", 5);
+				ft_putendl_fd("exit", STDERR_FILENO);
 			termios_change(true);
 			break ;
 		}

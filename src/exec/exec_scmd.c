@@ -41,6 +41,7 @@ int	exec_scmd_preperation(t_list *scmd, char ***argv)
 	t_list	*l_redir_undo;
 
 	status = 0;
+	*argv = NULL;
 	if (expand_var(scmd_content(scmd)) == ERROR)
 		return (ERROR);
 	if (expand_wildcard(scmd_content(scmd)) == ERROR)

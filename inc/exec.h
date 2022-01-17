@@ -42,7 +42,7 @@ int		exec_pipeline(t_list *pipeline, t_list *l_free);
 void	pipes_init(int pipes[2][2]);
 void	pipes_set(int fd[2], int pipes[2][2], int i, bool last);
 int		pipes_close_end(int pipe_end);
-int		pipes_close(int	pipes[2][2], int i, bool last);
+void	pipes_close(int	pipes[2][2], int i, bool last);
 
 // EXEC_SCMD_UTILS
 int		scmd_search_path(char **argv);

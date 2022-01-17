@@ -27,7 +27,8 @@ static int	expand_var_token(t_c_token *c_token)
 	char	*exp_str;
 
 	if (c_token->str == NULL || (c_token->flags & TOK_S_QUOTE)
-		|| !ft_strchr(c_token->str, '$'))
+		|| !ft_strchr(c_token->str, '$')
+		|| (c_token->flags & TOK_REDIR_FILE && c_token->flags & TOK_D_QUOTE))
 		return (0);
 	exp_str = ft_strdup("");
 	if (exp_str == NULL)

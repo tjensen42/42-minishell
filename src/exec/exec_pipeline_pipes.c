@@ -1,6 +1,6 @@
 #include "exec.h"
 
-int	pipes_close(int pipes[2][2], int i, bool last)
+void	pipes_close(int pipes[2][2], int i, bool last)
 {
 	if (i == 0)
 		pipes_close_end(pipes[0][1]);
@@ -23,7 +23,6 @@ int	pipes_close(int pipes[2][2], int i, bool last)
 		pipes_close_end(pipes[1][0]);
 		pipes_close_end(pipes[1][1]);
 	}
-	return (0);
 }
 
 void	pipes_set(int fd[2], int pipes[2][2], int i, bool last)

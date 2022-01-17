@@ -125,12 +125,16 @@ static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token)
 		{
 			if (token_content(iter)->flags & TOK_S_QUOTE)
 				token_content(redir_file)->flags |= TOK_S_QUOTE;
+			if (token_content(iter)->flags & TOK_D_QUOTE)
+				token_content(redir_file)->flags |= TOK_D_QUOTE;
 			tmp = iter->next;
 			lst_node_remove(l_token, iter, c_token_destroy);
 			iter = tmp;
 		}
 		if (token_content(iter)->flags & TOK_S_QUOTE)
 			token_content(redir_file)->flags |= TOK_S_QUOTE;
+		if (token_content(iter)->flags & TOK_D_QUOTE)
+			token_content(redir_file)->flags |= TOK_D_QUOTE;
 		lst_node_remove(l_token, iter, c_token_destroy);
 	}
 }

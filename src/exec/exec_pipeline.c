@@ -15,7 +15,6 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 {
 	int		i;
 	int		pid;
-	int		status;
 	int		pipes[2][2];
 	t_list	*iter;
 
@@ -35,8 +34,7 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 		iter = iter->next;
 		i++;
 	}
-	status = exec_wait_for_all(pid);
-	return (status);
+	return (exec_wait_for_all(pid));
 }
 
 static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
@@ -45,10 +43,10 @@ static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
 	int			pid;
 
 	if (iter->next && pipe(pipes[i % 2]) < 0)
-		return (ERROR);
+		return (-1);
 	pid = fork();
-	if (pid < 0)
-		return (ERROR);
+	if (pid == -1)
+		return (-1);
 	if (pid == 0)
 		exec_pipeline_element(iter, pipes, i, l_free);
 	return (pid);

@@ -13,7 +13,10 @@ int	lexer_token_bin_op(char *str, int *i, t_list **l_token)
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		token = token_create(token_str, TOK_BIN_OP);
 		if (token == NULL)
+		{
+			free(token_str);
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+		}
 		ft_lstadd_back(l_token, token);
 		*i += 2;
 	}
@@ -39,7 +42,10 @@ int	lexer_token_redir(char *str, int *i, t_list **l_token)
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		token = token_create(token_str, TOK_REDIR);
 		if (token == NULL)
+		{
+			free(token_str);
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+		}
 		ft_lstadd_back(l_token, token);
 		*i += len;
 	}
@@ -58,7 +64,10 @@ int	lexer_token_pipe(char *str, int *i, t_list **l_token)
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		token = token_create(token_str, TOK_PIPE);
 		if (token == NULL)
+		{
+			free(token_str);
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+		}
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}
@@ -80,7 +89,10 @@ int	lexer_token_bracket(char *str, int *i, t_list **l_token)
 		else
 			token = token_create(token_str, TOK_C_BRACKET);
 		if (token == NULL)
+		{
+			free(token_str);
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
+		}
 		ft_lstadd_back(l_token, token);
 		(*i)++;
 	}
