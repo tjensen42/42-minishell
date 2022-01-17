@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2022/01/17 14:57:12 by tjensen          ###   ########.fr        #
+#    Updated: 2022/01/17 15:47:15 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c
 SRCS_REDIR	:= redir.c redir_undo.c
 SRCS_SIGNALS:= signals.c
 SRCS_TOKEN	:= token.c token_list.c
-SRCS_UTILS	:= utils_printer.c utils_gnl.c utils_lst.c utils_split.c utils_str.c
+SRCS_UTILS	:= utils_error.c utils_gnl.c utils_lst.c utils_split.c utils_str.c
 
 SRCS		:= minishell.c
 SRCS		+= $(addprefix builtin/, $(SRCS_BUILTIN)) \

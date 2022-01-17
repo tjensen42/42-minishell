@@ -20,6 +20,23 @@ t_list	*cmd_create(int type)
 	return (cmd);
 }
 
+t_c_cmd	*cmd_content(t_list *cmd)
+{
+	return ((t_c_cmd *)cmd->content);
+}
+
+void	c_cmd_destroy(void *c_cmd)
+{
+	if (((t_c_cmd *)c_cmd)->type == CMD_SCMD)
+		c_scmd_destroy(c_cmd);
+	else
+	{
+		if (((t_c_cmd *)c_cmd)->l_element)
+			ft_lstclear(&(((t_c_cmd *)c_cmd)->l_element), c_cmd_destroy);
+		free(c_cmd);
+	}
+}
+
 int	cmd_type(t_list *cmd)
 {
 	return (*(int *)(cmd->content));
@@ -45,21 +62,4 @@ int	cmd_type_from_token(t_list *token)
 	else if (token_content(token)->flags & TOK_C_BRACKET)
 		return (CMD_C_BRACKET);
 	return (ERROR);
-}
-
-t_c_cmd	*cmd_content(t_list *cmd)
-{
-	return ((t_c_cmd *)cmd->content);
-}
-
-void	c_cmd_destroy(void *c_cmd)
-{
-	if (((t_c_cmd *)c_cmd)->type == CMD_SCMD)
-		c_scmd_destroy(c_cmd);
-	else
-	{
-		if (((t_c_cmd *)c_cmd)->l_element)
-			ft_lstclear(&(((t_c_cmd *)c_cmd)->l_element), c_cmd_destroy);
-		free(c_cmd);
-	}
 }

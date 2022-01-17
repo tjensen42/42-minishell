@@ -1,19 +1,5 @@
 #include "token.h"
 
-t_c_token	*token_content(t_list *token)
-{
-	return ((t_c_token *)token->content);
-}
-
-bool	token_is_cmd(t_list *token)
-{
-	if (token == NULL)
-		return (false);
-	if (token_content(token)->flags & (TOK_TEXT | TOK_REDIR))
-		return (true);
-	return (false);
-}
-
 t_list	*token_create(char *string, int type)
 {
 	t_c_token	*c_token;
@@ -31,11 +17,25 @@ t_list	*token_create(char *string, int type)
 	return (token);
 }
 
+t_c_token	*token_content(t_list *token)
+{
+	return ((t_c_token *)token->content);
+}
+
 void	c_token_destroy(void *c_token)
 {
 	free(((t_c_token *)c_token)->str);
 	((t_c_token *)c_token)->str = NULL;
 	free(c_token);
+}
+
+bool	token_is_cmd(t_list *token)
+{
+	if (token == NULL)
+		return (false);
+	if (token_content(token)->flags & (TOK_TEXT | TOK_REDIR))
+		return (true);
+	return (false);
 }
 
 char	*token_to_str(t_list *token)

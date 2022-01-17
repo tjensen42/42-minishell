@@ -22,9 +22,9 @@
 # define REDIR_FILE		0
 # define REDIR_NUM		1
 
-// REDIR_FD_BUILTIN
-# define REDIR_FD_OLD	0
-# define REDIR_FD_NEW	1
+/* ************************************************************************** */
+/* STRUCTS																	  */
+/* ************************************************************************** */
 
 typedef struct s_redir_undo_content
 {

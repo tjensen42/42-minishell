@@ -32,19 +32,19 @@
 /* ************************************************************************** */
 
 // LEXER
-t_list		*lexer(char *input);
+t_list	*lexer(char *input);
 
-// LEXER_TOKEN_TEXT
-int			lexer_token_text(char *str, int *i, t_list **l_token);
-int			lexer_token_quote(char *str, int *i, t_list **l_token);
+// LEXER_SYNTAX
+int		lexer_syntax_check(t_list *l_token);
 
 // LEXER_TOKEN_OTHER
-int			lexer_token_bin_op(char *str, int *i, t_list **l_token);
-int			lexer_token_redir(char *str, int *i, t_list **l_token);
-int			lexer_token_pipe(char *str, int *i, t_list **l_token);
-int			lexer_token_bracket(char *str, int *i, t_list **l_token);
+int		lexer_token_bin_op(char *str, int *i, t_list **l_token);
+int		lexer_token_redir(char *str, int *i, t_list **l_token);
+int		lexer_token_pipe(char *str, int *i, t_list **l_token);
+int		lexer_token_bracket(char *str, int *i, t_list **l_token);
 
-// SYNTAX
-int			lexer_syntax_check(t_list *l_token);
+// LEXER_TOKEN_TEXT
+int		lexer_token_text(char *str, int *i, t_list **l_token);
+int		lexer_token_quote(char *str, int *i, t_list **l_token);
 
 #endif

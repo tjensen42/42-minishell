@@ -8,12 +8,20 @@
 # include "global.h"
 # include "cmd.h"
 
+/* ************************************************************************** */
+/* DEFINES																	  */
+/* ************************************************************************** */
+
 # define WILDCARD	-1
 # define VAR_SPACE	-1
 
 /* ************************************************************************** */
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
+
+// EXPAND
+int		expand_var(t_c_scmd *c_scmd);
+int		expand_wildcard(t_c_scmd *c_scmd);
 
 // EXPAND_VAR_SPLIT
 int		expand_var_splitting(t_list **l_token);
@@ -31,9 +39,5 @@ void	expand_wildcard_replace_connected(t_list **l_token, t_list *old,
 
 // EXPAND_WILDCARD
 int		expand_wildcard_list(t_list	**l_token, char **files);
-
-// EXPAND
-int		expand_var(t_c_scmd *c_scmd);
-int		expand_wildcard(t_c_scmd *c_scmd);
 
 #endif

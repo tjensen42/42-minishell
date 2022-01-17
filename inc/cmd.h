@@ -12,20 +12,20 @@
 /* DEFINES																	  */
 /* ************************************************************************** */
 
-# define CMD_SCMD			1
+# define CMD_SCMD		1
 
-# define CMD_AND			2
-# define CMD_OR				4
-# define CMD_PIPE			8
+# define CMD_AND		2
+# define CMD_OR			4
+# define CMD_PIPE		8
 
-# define CMD_O_BRACKET		16
-# define CMD_C_BRACKET		32
+# define CMD_O_BRACKET	16
+# define CMD_C_BRACKET	32
 
-# define CMD_PIPELINE		64
-# define CMD_GROUP			128
+# define CMD_PIPELINE	64
+# define CMD_GROUP		128
 
-# define CMD_L_SCMD			256
-# define CMD_L_CMD			512
+# define CMD_L_SCMD		256
+# define CMD_L_CMD		512
 
 /* ************************************************************************** */
 /* STRUCTS																	  */
@@ -48,14 +48,16 @@ typedef struct s_cmd_content
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
-t_c_scmd		*scmd_content(t_list *element);
-t_list			*scmd_create(int type);
-void			c_scmd_destroy(void *c_element);
+// CMD
+t_list		*cmd_create(int type);
+t_c_cmd		*cmd_content(t_list *cmd);
+void		c_cmd_destroy(void *c_cmd);
+int			cmd_type(t_list *cmd);
+int			cmd_type_from_token(t_list *token);
 
-t_list			*cmd_create(int type);
-t_c_cmd			*cmd_content(t_list *cmd);
-int				cmd_type(t_list *cmd);
-int				cmd_type_from_token(t_list *token);
-void			c_cmd_destroy(void *c_cmd);
+// SCMD
+t_list		*scmd_create(int type);
+t_c_scmd	*scmd_content(t_list *element);
+void		c_scmd_destroy(void *c_element);
 
 #endif
