@@ -51,7 +51,7 @@ int		exec_wait_for_all(int last_pid);
 int		exec_group(t_list *l_cmd, t_list *l_free);
 
 // EXEC_EXIT_STATUS
-void	exit_status_set(int status);
-int		exit_status_get(void);
+void	exec_exit_status_set(int status);
+int		exec_exit_status_get(void);
 
 #endif

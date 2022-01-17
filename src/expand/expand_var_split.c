@@ -1,12 +1,13 @@
 #include "expand.h"
 #include "lexer.h"
 
-static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token);
-static char	*expand_var_token_needs_splitting(t_list *token);
+static int	expand_var_get_splitted(t_list **l_splitted, t_list *token);
+static char	*expand_var_needs_splitting(t_list *token);
 static void	expand_var_replace_whitespaces(char *str);
-static void	expand_lst_replace(t_list **l_token, t_list *old, t_list *new);
+static void	expand_var_token_replace(t_list **l_token,
+				t_list *old, t_list *new);
 
-int	expand_var_token_list_split(t_list **l_token)
+int	expand_var_splitting(t_list **l_token)
 {
 	t_list	*tmp;
 	t_list	*iter;
@@ -16,16 +17,16 @@ int	expand_var_token_list_split(t_list **l_token)
 	while (iter)
 	{
 		tmp = iter->next;
-		if (expand_var_token_needs_splitting(iter) != NULL)
+		if (expand_var_needs_splitting(iter) != NULL)
 		{
 			l_splitted = NULL;
-			if (expand_var_token_list_split_2(&l_splitted, iter) == ERROR)
+			if (expand_var_get_splitted(&l_splitted, iter) == ERROR)
 				return (ERROR);
 			if (token_content(iter)->str[0] == VAR_SPACE)
 				token_content(
 					lst_node_prev(*l_token, iter))->flags &= ~TOK_CONNECTED;
 			if (l_splitted != NULL)
-				expand_lst_replace(l_token, iter, l_splitted);
+				expand_var_token_replace(l_token, iter, l_splitted);
 			else
 				lst_node_remove(l_token, iter, c_token_destroy);
 		}
@@ -34,7 +35,7 @@ int	expand_var_token_list_split(t_list **l_token)
 	return (0);
 }
 
-static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token) // rename
+static int	expand_var_get_splitted(t_list **l_splitted, t_list *token)
 {
 	t_list	*new_token;
 	char	**split;
@@ -63,7 +64,7 @@ static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token) // 
 	return (0);
 }
 
-static char	*expand_var_token_needs_splitting(t_list *token)
+static char	*expand_var_needs_splitting(t_list *token)
 {
 	int	i;
 
@@ -94,7 +95,7 @@ static void	expand_var_replace_whitespaces(char *str)
 	}
 }
 
-static void	expand_lst_replace(t_list **l_token, t_list *old, t_list *new)
+static void	expand_var_token_replace(t_list **l_token, t_list *old, t_list *new)
 {
 	if (old == *l_token)
 		*l_token = new;

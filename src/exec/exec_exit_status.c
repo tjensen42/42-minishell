@@ -1,20 +1,20 @@
 #include "exec.h"
 
-static int	*exit_status_pointer(void);
+static int	*exec_exit_status_pointer(void);
 
-int	exit_status_get(void)
+int	exec_exit_status_get(void)
 {
-	return (*exit_status_pointer());
+	return (*exec_exit_status_pointer());
 }
 
-void	exit_status_set(int status)
+void	exec_exit_status_set(int status)
 {
 	if (status == ERROR)
 		status = EXIT_FAILURE;
-	*exit_status_pointer() = status;
+	*exec_exit_status_pointer() = status;
 }
 
-static int	*exit_status_pointer(void)
+static int	*exec_exit_status_pointer(void)
 {
 	static int	last_exit_status = 0;
 

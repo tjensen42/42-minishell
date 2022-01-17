@@ -8,9 +8,9 @@ int	expand_var(t_c_scmd *c_scmd)
 	if (status != ERROR)
 		status = expand_var_token_list(c_scmd->l_redir);
 	if (status != ERROR)
-		status = expand_var_token_list_split(&(c_scmd->l_argv));
+		status = expand_var_splitting(&(c_scmd->l_argv));
 	if (status != ERROR)
-		status = expand_var_token_list_split(&(c_scmd->l_redir));
+		status = expand_var_splitting(&(c_scmd->l_redir));
 	return (status);
 }
 

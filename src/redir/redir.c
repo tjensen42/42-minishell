@@ -1,5 +1,6 @@
+#include <fcntl.h>
+
 #include "redir.h"
-# include <fcntl.h>
 
 static int	redir_process(char *redir, char *file, t_list **l_undo);
 static int	redir_fd(char *redir, int type);

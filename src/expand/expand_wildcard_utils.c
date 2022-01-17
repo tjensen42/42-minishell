@@ -90,7 +90,8 @@ char	**expand_files_current_dir(void)
 	return (file_names);
 }
 
-void	expand_lst_replace_connected(t_list **l_token, t_list *old, t_list *new)
+void	expand_wildcard_replace_connected(t_list **l_token,
+			t_list *old, t_list *new)
 {
 	t_list	*tmp;
 	t_list	*prev;

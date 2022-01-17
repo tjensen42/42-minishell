@@ -26,7 +26,7 @@ int	expand_wildcard_list(t_list	**l_token, char **files)
 			if (expand_wildcard_token(iter, &l_wildcard, files) == ERROR)
 				return (ERROR);
 			if (l_wildcard != NULL)
-				expand_lst_replace_connected(l_token, iter, l_wildcard);
+				expand_wildcard_replace_connected(l_token, iter, l_wildcard);
 		}
 		iter = tmp;
 	}

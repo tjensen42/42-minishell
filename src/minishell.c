@@ -38,7 +38,7 @@ int	main(void)
 	rl_clear_history();
 	if (g_env)
 		ft_free_split(&g_env);
-	exit(exit_status_get());
+	exit(exec_exit_status_get());
 }
 
 static void	minishell_process_input(char *input)

@@ -79,7 +79,7 @@ static int	expand_var_append_exit(char **exp_str)
 {
 	char	*exit_str;
 
-	exit_str = ft_itoa(exit_status_get());
+	exit_str = ft_itoa(exec_exit_status_get());
 	if (exit_str == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	*exp_str = str_append_str(*exp_str, exit_str);

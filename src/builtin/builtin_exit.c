@@ -9,7 +9,7 @@ int	builtin_exit(int argc, char **argv, bool subshell, t_list *l_free)
 
 	if (!subshell && isatty(STDERR_FILENO))
 		ft_putstr_fd("exit\n", STDERR_FILENO);
-	exit_num = exit_status_get();
+	exit_num = exec_exit_status_get();
 	if (argc >= 2 && num_is_numeric(argv[1]) == false)
 		exit_num = 255;
 	else if (argc == 2)
