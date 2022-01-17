@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_modify.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:25:42 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:26:35 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "env.h"
 
 int	env_unset_var(char *name)
@@ -13,9 +25,9 @@ int	env_unset_var(char *name)
 
 int	env_put_var(char *str)
 {
-	int		status;
-	char	*new_var;
 	char	*old_var;
+	char	*new_var;
+	int		status;
 
 	if (str == NULL || ft_strchr(str, '=') == NULL)
 		return (ERROR);
@@ -35,9 +47,9 @@ int	env_put_var(char *str)
 
 int	env_set_env(char *name, char *value)
 {
-	int		status;
-	char	*tmp;
 	char	*var_str;
+	char	*tmp;
+	int		status;
 
 	if (name == NULL || value == NULL)
 		return (ERROR);

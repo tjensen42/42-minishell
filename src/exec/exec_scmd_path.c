@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_scmd_path.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:31:58 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:33:24 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sys/stat.h>
 
 #include "exec.h"
 #include "env.h"
 
+static int	path_find_path(char **path_split, char **argv);
 static char	**path_split_get(void);
 static int	path_split_append_slash(char **path_split);
-static int	path_find_path(char **path_split, char **argv);
 
 int	scmd_search_path(char **argv)
 {
@@ -28,15 +40,11 @@ int	scmd_search_path(char **argv)
 	return (ERROR);
 }
 
-/*
-**	Returns 0 if a path was found, if no path matches
-**	it returns ERROR and the argv[0] leaves untouched
-*/
 static int	path_find_path(char **path_split, char **argv)
 {
-	int			i;
-	char		*tmp;
 	struct stat	s;
+	char		*tmp;
+	int			i;
 
 	i = 0;
 	while (path_split && path_split[i])
@@ -83,8 +91,8 @@ static char	**path_split_get(void)
 
 static int	path_split_append_slash(char **path_split)
 {
-	int		i;
 	char	*tmp;
+	int		i;
 
 	i = 0;
 	while (path_split && path_split[i])

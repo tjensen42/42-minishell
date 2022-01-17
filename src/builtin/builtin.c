@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:14:12 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:22:28 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtin.h"
 
 static const struct s_builtins	g_builtins[] = {
@@ -12,8 +24,8 @@ static const struct s_builtins	g_builtins[] = {
 
 int	builtin_check(char **argv)
 {
-	int	i;
 	int	c_name;
+	int	i;
 
 	i = 0;
 	if (argv[0] && !ft_strncmp(argv[0], "exit", 5))

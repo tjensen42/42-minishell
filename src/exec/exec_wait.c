@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_wait.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:35:04 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:35:05 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 
 static int	print_error_signaled(int signal, char *name);
@@ -24,8 +36,8 @@ int	exec_wait_pid(int last_pid, char *name)
 
 int	exec_wait_for_all(int last_pid)
 {
-	int	status;
 	int	pid;
+	int	status;
 
 	status = exec_wait_pid(last_pid, NULL);
 	pid = 0;

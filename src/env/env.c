@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:26:52 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:27:05 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "env.h"
 
 int	env_init(void)
 {
-	int			i;
 	extern char	**environ;
+	int			i;
 
 	i = split_count(environ);
 	if (i == 0)
@@ -39,8 +51,8 @@ char	*env_get_value(char *name)
 
 char	*env_find_var(char *name)
 {
-	int	i;
 	int	l_name;
+	int	i;
 
 	if (name == NULL || g_env == NULL)
 		return (NULL);

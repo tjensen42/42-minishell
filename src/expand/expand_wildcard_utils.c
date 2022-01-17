@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_wildcard_utils.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:38:37 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:39:13 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <dirent.h>
 
 #include "expand.h"
@@ -39,8 +51,8 @@ char	*expand_pattern_get(t_list *token)
 
 char	*expand_wildcard_append_str(char *wildcard, t_list *token)
 {
-	int		i;
 	char	*str;
+	int		i;
 
 	str = token_content(token)->str;
 	if (token_content(token)->flags & (TOK_D_QUOTE | TOK_S_QUOTE))
@@ -93,9 +105,9 @@ char	**expand_files_current_dir(void)
 void	expand_wildcard_replace_connected(t_list **l_token,
 			t_list *old, t_list *new)
 {
-	t_list	*tmp;
 	t_list	*prev;
 	t_list	*iter;
+	t_list	*tmp;
 
 	iter = old;
 	prev = lst_node_prev(*l_token, old);

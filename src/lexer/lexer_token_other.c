@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_token_other.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:41:22 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:41:42 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 int	lexer_token_bin_op(char *str, int *i, t_list **l_token)
 {
-	char	*token_str;
 	t_list	*token;
+	char	*token_str;
 
 	if ((str[*i] == '&' && str[*i + 1] == '&')
 		|| (str[*i] == '|' && str[*i + 1] == '|'))
@@ -25,9 +37,9 @@ int	lexer_token_bin_op(char *str, int *i, t_list **l_token)
 
 int	lexer_token_redir(char *str, int *i, t_list **l_token)
 {
-	int		len;
-	char	*token_str;
 	t_list	*token;
+	char	*token_str;
+	int		len;
 
 	len = 0;
 	while (ft_isdigit(str[*i + len]))
@@ -54,8 +66,8 @@ int	lexer_token_redir(char *str, int *i, t_list **l_token)
 
 int	lexer_token_pipe(char *str, int *i, t_list **l_token)
 {
-	char	*token_str;
 	t_list	*token;
+	char	*token_str;
 
 	if (str[*i] == '|')
 	{
@@ -76,8 +88,8 @@ int	lexer_token_pipe(char *str, int *i, t_list **l_token)
 
 int	lexer_token_bracket(char *str, int *i, t_list **l_token)
 {
-	char	*token_str;
 	t_list	*token;
+	char	*token_str;
 
 	if (str[*i] == '(' || str[*i] == ')')
 	{

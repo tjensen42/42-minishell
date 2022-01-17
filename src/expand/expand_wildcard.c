@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_wildcard.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:39:18 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:40:23 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expand.h"
 
 static int		expand_wildcard_token(t_list *token, t_list **l_wildcard,
 					char **files);
-static bool		expand_pattern_match_file(char *pattern, char **split,
-					char *file);
 static t_list	*expand_pattern_to_list(char *pattern, char **split,
 					char **files);
+static bool		expand_pattern_match_file(char *pattern, char **split,
+					char *file);
 
 int	expand_wildcard_list(t_list	**l_token, char **files)
 {
-	t_list	*tmp;
-	t_list	*iter;
 	t_list	*l_wildcard;
+	t_list	*iter;
+	t_list	*tmp;
 
 	iter = *l_token;
 	while (iter)
@@ -37,8 +49,8 @@ static int	expand_wildcard_token(t_list *token, t_list **l_wildcard,
 				char **files)
 {
 	t_list	*iter;
-	char	*pattern;
 	char	**split;
+	char	*pattern;
 
 	pattern = expand_pattern_get(token);
 	split = ft_split(pattern, WILDCARD);
@@ -66,10 +78,10 @@ static int	expand_wildcard_token(t_list *token, t_list **l_wildcard,
 static t_list	*expand_pattern_to_list(char *pattern, char **split,
 					char **files)
 {
-	int		i;
-	char	*tmp;
-	t_list	*new_token;
 	t_list	*l_wildcard;
+	t_list	*new_token;
+	char	*tmp;
+	int		i;
 
 	l_wildcard = NULL;
 	i = 0;
@@ -94,8 +106,8 @@ static t_list	*expand_pattern_to_list(char *pattern, char **split,
 
 static bool	expand_pattern_match_file(char *pattern, char **split, char *file)
 {
-	int		i;
 	char	*shift_fname;
+	int		i;
 
 	shift_fname = file;
 	i = 0;

@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_scmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:33:32 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:34:29 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
-#include "cmd.h"
 #include "builtin.h"
-#include "signals.h"
+#include "cmd.h"
 #include "env.h"
 #include "expand.h"
+#include "signals.h"
 
 static int	exec_builtin(t_list *scmd, char **argv,
 				bool subshell, t_list *l_free);
 
 int	exec_scmd(t_list *scmd, bool subshell, t_list *l_free)
 {
+	char	**argv;
 	int		pid;
 	int		status;
-	char	**argv;
 
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
 		return (ERROR);
@@ -39,8 +51,8 @@ int	exec_scmd(t_list *scmd, bool subshell, t_list *l_free)
 
 int	exec_scmd_preperation(t_list *scmd, char ***argv)
 {
-	int		status;
 	t_list	*l_redir_undo;
+	int		status;
 
 	status = 0;
 	*argv = NULL;
@@ -96,8 +108,8 @@ void	exec_scmd_free_exit(int status, char **argv, t_list *l_free)
 static int	exec_builtin(t_list *scmd, char **argv,
 				bool subshell, t_list *l_free)
 {
-	int		status;
 	t_list	*l_redir_undo;
+	int		status;
 
 	if (builtin_check(argv))
 	{

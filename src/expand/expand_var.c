@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_var.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:37:46 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:38:22 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expand.h"
-#include "exec.h"
 #include "env.h"
+#include "exec.h"
 
 static int	expand_var_token(t_c_token *c_token);
-static int	expand_var_append(char **exp_str, char *str);
-static int	expand_var_append_exit(char **exp_str);
 static int	expand_var_expansion(t_c_token *c_token, char **exp_str, int *i);
+static int	expand_var_append_exit(char **exp_str);
+static int	expand_var_append(char **exp_str, char *str);
 
 int	expand_var_token_list(t_list *l_token)
 {
@@ -23,8 +35,8 @@ int	expand_var_token_list(t_list *l_token)
 
 static int	expand_var_token(t_c_token *c_token)
 {
-	int		i;
 	char	*exp_str;
+	int		i;
 
 	if (c_token->str == NULL || (c_token->flags & TOK_S_QUOTE)
 		|| !ft_strchr(c_token->str, '$')

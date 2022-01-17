@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_group.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:43:40 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:43:55 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 static t_list	*group_open(t_list *l_cmd);
@@ -34,8 +46,8 @@ int	parser_cmd_group_merge(t_list **l_cmd)
 
 static t_list	*group_open(t_list *l_cmd)
 {
-	t_list	*iter;
 	t_list	*open;
+	t_list	*iter;
 
 	open = NULL;
 	iter = l_cmd;

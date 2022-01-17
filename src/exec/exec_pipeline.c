@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_pipeline.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:31:07 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:31:48 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
-#include "cmd.h"
 #include "builtin.h"
+#include "cmd.h"
 
 static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
 				int i, t_list *l_free);
@@ -10,10 +22,10 @@ static void	exec_pipeline_scmd(t_list *scmd, t_list *l_free);
 
 int	exec_pipeline(t_list *pipeline, t_list *l_free)
 {
-	int		i;
-	int		pid;
-	int		pipes[2][2];
 	t_list	*iter;
+	int		pipes[2][2];
+	int		pid;
+	int		i;
 
 	pipes_init(pipes);
 	i = 0;
@@ -52,8 +64,8 @@ static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
 static void	exec_pipeline_element(t_list *element, int pipes[2][2],
 				int i, t_list *l_free)
 {
-	int	status;
 	int	fd[2];
+	int	status;
 
 	pipes_set(fd, pipes, i, (element->next == NULL));
 	dup2(fd[0], STDIN_FILENO);
@@ -71,8 +83,8 @@ static void	exec_pipeline_element(t_list *element, int pipes[2][2],
 
 static void	exec_pipeline_scmd(t_list *scmd, t_list *l_free)
 {
-	int		status;
 	char	**argv;
+	int		status;
 
 	if (exec_scmd_preperation(scmd, &argv) == ERROR)
 		exec_scmd_free_exit(EXIT_FAILURE, argv, l_free);

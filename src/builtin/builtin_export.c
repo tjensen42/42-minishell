@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:13:40 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:22:09 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtin.h"
 #include "env.h"
 
-static void	export_print_vars(void);
-static bool	export_is_valid_argument(char *arg);
+static void	print_vars(void);
+static bool	is_valid_argument(char *arg);
 
 int	builtin_export(int argc, char **argv)
 {
-	int	i;
 	int	status;
+	int	i;
 
 	status = EXIT_SUCCESS;
 	if (argc == 1)
-		export_print_vars();
+		print_vars();
 	i = 1;
 	while (argc > 1 && argv[i])
 	{
-		if (export_is_valid_argument(argv[i]) == false)
+		if (is_valid_argument(argv[i]) == false)
 		{
 			print_error(SHELL_NAME, argv[i], NULL, "not a valid identifier");
 			status = EXIT_FAILURE;
@@ -27,11 +39,11 @@ int	builtin_export(int argc, char **argv)
 	return (status);
 }
 
-static void	export_print_vars(void)
+static void	print_vars(void)
 {
-	int		i;
-	int		l_var_name;
 	char	**env_copy;
+	int		l_var_name;
+	int		i;
 
 	if (g_env == NULL || *g_env == NULL)
 		return ;
@@ -55,7 +67,7 @@ static void	export_print_vars(void)
 	free(env_copy);
 }
 
-static bool	export_is_valid_argument(char *arg)
+static bool	is_valid_argument(char *arg)
 {
 	int	i;
 

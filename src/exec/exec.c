@@ -1,8 +1,20 @@
-#include "exec.h"
-#include "cmd.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:36:04 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:36:24 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdio.h>
 #include <readline/readline.h>
+
+#include "exec.h"
+#include "cmd.h"
 
 static bool	exec_operator_jump(t_list *l_cmd);
 
@@ -25,16 +37,6 @@ int	exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free)
 	return (exec_exit_status_get());
 }
 
-static bool	exec_operator_jump(t_list *l_cmd)
-{
-	if (cmd_content(l_cmd)->type & CMD_AND && exec_exit_status_get() != 0)
-		return (true);
-	else if (cmd_content(l_cmd)->type & CMD_OR && exec_exit_status_get() == 0)
-		return (true);
-	else
-		return (false);
-}
-
 void	exec_free_all(char **argv, t_list *l_free)
 {
 	if (argv)
@@ -44,4 +46,14 @@ void	exec_free_all(char **argv, t_list *l_free)
 	if (g_env)
 		ft_free_split(&g_env);
 	rl_clear_history();
+}
+
+static bool	exec_operator_jump(t_list *l_cmd)
+{
+	if (cmd_content(l_cmd)->type & CMD_AND && exec_exit_status_get() != 0)
+		return (true);
+	else if (cmd_content(l_cmd)->type & CMD_OR && exec_exit_status_get() == 0)
+		return (true);
+	else
+		return (false);
 }

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_heredoc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:44:03 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:44:50 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <signal.h>
 #include <stdio.h>
 #include <readline/readline.h>
-#include <signal.h>
 
 #include "parser.h"
 #include "redir.h"
@@ -8,13 +20,13 @@
 
 static int	parser_heredoc_processing(t_list *redir_file, char **limiter);
 static char	*parser_heredoc_readline(char *limiter);
-static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token);
 static char	*parser_heredoc_gnl(char **limiter);
+static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token);
 
 int	parser_heredoc(t_list *l_token)
 {
-	char	*limiter;
 	t_list	*redir_file;
+	char	*limiter;
 
 	if (l_token && redir_type(token_content(l_token)->str) == REDIR_HEREDOC)
 	{
@@ -115,8 +127,8 @@ static char	*parser_heredoc_gnl(char **limiter)
 
 static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token)
 {
-	t_list	*tmp;
 	t_list	*iter;
+	t_list	*tmp;
 
 	if (token_content(redir_file)->flags & TOK_CONNECTED)
 	{

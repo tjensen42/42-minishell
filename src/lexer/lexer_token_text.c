@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_token_text.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:41:54 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:42:29 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 static int	lexer_text_len(char *str);
@@ -6,9 +18,9 @@ static int	lexer_other_len(char *chr);
 
 int	lexer_token_text(char *str, int *i, t_list **l_token)
 {
-	int		len;
-	char	*token_str;
 	t_list	*token;
+	char	*token_str;
+	int		len;
 
 	len = lexer_text_len(&str[*i]);
 	if (len > 0)
@@ -29,9 +41,9 @@ int	lexer_token_text(char *str, int *i, t_list **l_token)
 
 int	lexer_token_quote(char *str, int *i, t_list **l_token)
 {
-	int		len;
-	char	*token_str;
 	t_list	*token;
+	char	*token_str;
+	int		len;
 
 	len = lexer_quote_len(&str[*i]);
 	if (len == ERROR)
@@ -75,8 +87,8 @@ static int	lexer_text_len(char *str)
 
 static int	lexer_quote_len(char *str)
 {
-	int		i;
 	char	mark;
+	int		i;
 
 	if (str == NULL || *str == '\0')
 		return (0);

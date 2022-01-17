@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_var_split.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:37:06 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:37:30 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expand.h"
 #include "lexer.h"
 
@@ -9,9 +21,9 @@ static void	expand_var_token_replace(t_list **l_token,
 
 int	expand_var_splitting(t_list **l_token)
 {
-	t_list	*tmp;
-	t_list	*iter;
 	t_list	*l_splitted;
+	t_list	*iter;
+	t_list	*tmp;
 
 	iter = *l_token;
 	while (iter)

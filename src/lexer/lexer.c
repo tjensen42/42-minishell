@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:42:47 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:43:19 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
-#include "printer.h"
 #include "env.h"
 #include "exec.h"
+#include "printer.h"
 
 static t_list	*lexer_token_list_get(char *input);
 static int		lexer_redir_mark_files(t_list *l_token);
@@ -32,8 +44,8 @@ t_list	*lexer(char *input)
 
 static t_list	*lexer_token_list_get(char *input)
 {
-	int		i;
 	t_list	*l_token;
+	int		i;
 
 	l_token = NULL;
 	i = 0;
