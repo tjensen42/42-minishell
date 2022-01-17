@@ -9,6 +9,14 @@ rm tmp_redir_out
 
 sleep 0 | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
 
+>tmp_out | echo 1
+cat tmp_out
+rm -f tmp_out
+
+echo 1 | >tmp_out
+cat tmp_out
+rm -f tmp_out
+
 grep 1 < filedoesnotexist | echo 1 | grep 1 | head -1 | cat
 
 grep 1 < filedoesnotexist | echo 1 | grep 1 > tmp_out | head -1 | cat

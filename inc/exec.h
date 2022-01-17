@@ -33,7 +33,7 @@ void	exec_free_all(char **argv, t_list *l_free);
 int		exec_scmd(t_list *scmd, bool subshell, t_list *l_free);
 int		exec_scmd_preperation(t_list *scmd, char ***argv);
 int		exec_scmd_exec(char **argv);
-void	exec_scmd_exit(int status, char **argv, t_list *l_free);
+void	exec_scmd_free_exit(int status, char **argv, t_list *l_free);
 
 // EXEC_PIPELINE
 int		exec_pipeline(t_list *pipeline, t_list *l_free);
@@ -50,6 +50,9 @@ int		scmd_search_path(char **argv);
 // EXEC_WAIT
 int		exec_wait_pid(int last_pid, char *name);
 int		exec_wait_for_all(int last_pid);
+
+// EXEC_GROUP
+int		exec_group(t_list *l_cmd, t_list *l_free);
 
 // EXEC_EXIT_STATUS
 void	exit_status_set(int status);

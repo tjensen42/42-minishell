@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/27 22:03:08 by tjensen           #+#    #+#              #
-#    Updated: 2022/01/13 12:40:01 by tjensen          ###   ########.fr        #
+#    Updated: 2022/01/17 13:12:31 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,27 +16,36 @@
 
 NAME		:= minishell
 
-SRCS		:= minishell.c
-
-SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
-SRCS_PARSER	:= parser.c parser_scmd.c parser_pipeline.c parser_group.c parser_heredoc.c
-SRCS_REDIR	:= redir.c redir_undo.c
+SRCS_BUILTIN:= builtin_echo.c builtin_cd.c builtin_exit.c builtin_pwd.c \
+			   builtin_env.c builtin_export.c builtin_unset.c builtin.c
 SRCS_CMD	:= cmd.c scmd.c
-SRCS_TOKEN	:= token.c token_list.c
 SRCS_ENV	:= env.c env_modify.c
-SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_pipes.c exec_scmd.c exec_scmd_path.c exec_wait.c exec_exit_status.c
-SRCS_BUILTIN:= builtin_echo.c builtin_cd.c builtin_exit.c builtin_pwd.c builtin_env.c builtin_export.c builtin_unset.c builtin.c
+SRCS_EXEC	:= exec.c exec_pipeline.c exec_pipeline_pipes.c exec_scmd.c \
+			   exec_scmd_path.c exec_wait.c exec_group.c exec_exit_status.c
+SRCS_EXPAND	:= expand.c expand_wildcard.c expand_wildcard_utils.c \
+			   expand_var.c expand_var_split.c
+SRCS_LEXER	:= lexer.c lexer_syntax.c lexer_token_other.c lexer_token_text.c
+SRCS_PARSER	:= parser.c parser_scmd.c parser_pipeline.c parser_group.c \
+			   parser_heredoc.c
 SRCS_PRINTER:= printer_token.c printer_scmd.c printer_cmd.c
+SRCS_REDIR	:= redir.c redir_undo.c
 SRCS_SIGNALS:= signals.c
-SRCS_EXPAND	:= expand.c expand_wildcard.c expand_wildcard_utils.c expand_var.c expand_var_split.c
+SRCS_TOKEN	:= token.c token_list.c
 SRCS_UTILS	:= utils.c utils_gnl.c utils_lst.c utils_split.c utils_str.c
 
-SRCS		+= $(addprefix lexer/, $(SRCS_LEXER)) $(addprefix parser/, $(SRCS_PARSER)) \
-			   $(addprefix exec/, $(SRCS_EXEC)) $(addprefix printer/, $(SRCS_PRINTER)) \
-			   $(addprefix builtin/, $(SRCS_BUILTIN)) $(addprefix utils/, $(SRCS_UTILS)) \
-			   $(addprefix signals/, $(SRCS_SIGNALS)) $(addprefix redir/, $(SRCS_REDIR)) \
-			   $(addprefix expand/, $(SRCS_EXPAND)) $(addprefix env/, $(SRCS_ENV)) \
-			   $(addprefix cmd/, $(SRCS_CMD)) $(addprefix token/, $(SRCS_TOKEN))
+SRCS		:= minishell.c
+SRCS		+= $(addprefix builtin/, $(SRCS_BUILTIN)) \
+			   $(addprefix cmd/, $(SRCS_CMD)) \
+			   $(addprefix env/, $(SRCS_ENV)) \
+			   $(addprefix exec/, $(SRCS_EXEC)) \
+			   $(addprefix expand/, $(SRCS_EXPAND)) \
+			   $(addprefix lexer/, $(SRCS_LEXER)) \
+			   $(addprefix parser/, $(SRCS_PARSER)) \
+			   $(addprefix printer/, $(SRCS_PRINTER)) \
+			   $(addprefix redir/, $(SRCS_REDIR)) \
+			   $(addprefix signals/, $(SRCS_SIGNALS)) \
+			   $(addprefix token/, $(SRCS_TOKEN)) \
+			   $(addprefix utils/, $(SRCS_UTILS))
 
 LDLIBS		:= -lft -lreadline
 
@@ -131,4 +140,4 @@ else
 endif
 
 test:
-	@cd tests && chmod +x tester.sh && ./tester.sh a
+	@cd tests && bash tester.sh a

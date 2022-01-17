@@ -5,7 +5,7 @@
 
 static char	**path_split_get(void);
 static int	path_split_append_slash(char **path_split);
-static int	path_split_set(char **path_split, char **argv);
+static int	path_find_path(char **path_split, char **argv);
 
 int	scmd_search_path(char **argv)
 {
@@ -17,7 +17,7 @@ int	scmd_search_path(char **argv)
 		path_split = path_split_get();
 		if (path_split == NULL)
 			return (ERROR);
-		if (path_split_set(path_split, argv) == 0)
+		if (path_find_path(path_split, argv) == 0)
 		{
 			ft_free_split(&path_split);
 			return (0);
@@ -32,7 +32,7 @@ int	scmd_search_path(char **argv)
 **	Returns 0 if a path was found, if no path matches
 **	it returns ERROR and the argv[0] leaves untouched
 */
-static int	path_split_set(char **path_split, char **argv)
+static int	path_find_path(char **path_split, char **argv)
 {
 	int			i;
 	char		*tmp;

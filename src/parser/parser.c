@@ -24,7 +24,7 @@ t_list	*parser(t_list *l_token)
 	if (env_var_is_value(DEBUG_ENV, "printer"))
 	{
 		printer_cmd(l_cmd);
-		printf("\n");
+		write(1, "\n", 1);
 	}
 	return (l_cmd);
 }

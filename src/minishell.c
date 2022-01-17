@@ -75,7 +75,7 @@ char	*minishell_get_line(void)
 	if (isatty(STDIN_FILENO))
 		input = readline(prompt);
 	else
-		input = get_next_line(STDIN_FILENO);
+		input = minishell_get_next_line(STDIN_FILENO);
 	if (input == NULL)
 		return (NULL);
 	else if (input && input[0])

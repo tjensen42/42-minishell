@@ -2,7 +2,7 @@
 
 static t_list	*pipeline_start(t_list *l_cmd);
 static t_list	*pipeline_end(t_list *pipeline);
-static void		pipeline_content(t_c_cmd *c_pl, t_list *start, t_list *end);
+static void		pipeline_cleanup(t_c_cmd *c_pl, t_list *start, t_list *end);
 
 int	parser_cmd_pipeline_merge(t_list **l_cmd)
 {
@@ -18,7 +18,7 @@ int	parser_cmd_pipeline_merge(t_list **l_cmd)
 	if (pipeline == NULL)
 		return (ERROR);
 	lst_relink(l_cmd, pipeline, start, end);
-	pipeline_content(cmd_content(pipeline), start, end);
+	pipeline_cleanup(cmd_content(pipeline), start, end);
 	return (1);
 }
 
@@ -63,7 +63,7 @@ static t_list	*pipeline_end(t_list *pipeline)
 	return (NULL);
 }
 
-static void	pipeline_content(t_c_cmd *c_pl, t_list *start, t_list *end)
+static void	pipeline_cleanup(t_c_cmd *c_pl, t_list *start, t_list *end)
 {
 	t_list	*next;
 	t_list	*iter;

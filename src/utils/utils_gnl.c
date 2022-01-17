@@ -2,7 +2,7 @@
 
 static char	*gnl_free_line(char *line);
 
-char	*get_next_line(int fd)
+char	*minishell_get_next_line(int fd)
 {
 	int		check;
 	char	buffer;

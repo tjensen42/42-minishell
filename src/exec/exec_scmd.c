@@ -23,12 +23,16 @@ int	exec_scmd(t_list *scmd, bool subshell, t_list *l_free)
 	if (builtin_check(argv))
 		return (exec_builtin(scmd, argv, subshell, l_free));
 	pid = fork();
+	if (pid == -1)
+		ft_free_split(&argv);
+	if (pid == -1)
+		return (print_error_errno(SHELL_NAME, NULL, NULL));
 	if (pid == 0)
 	{
 		if (redir(scmd_content(scmd)->l_redir, NULL) == ERROR)
-			exec_scmd_exit(EXIT_FAILURE, argv, l_free);
+			exec_scmd_free_exit(EXIT_FAILURE, argv, l_free);
 		status = exec_scmd_exec(argv);
-		exec_scmd_exit(status, argv, l_free);
+		exec_scmd_free_exit(status, argv, l_free);
 	}
 	status = exec_wait_pid(pid, argv[0]);
 	ft_free_split(&argv);
@@ -63,29 +67,30 @@ int	exec_scmd_preperation(t_list *scmd, char ***argv)
 
 int	exec_scmd_exec(char **argv)
 {
+	int	status;
+
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	termios_change(true);
-	errno = 0;
 	if (!ft_strchr(argv[0], '/') && env_get_value("PATH") != NULL)
+	{
 		if (scmd_search_path(argv) == ERROR)
+		{
+			print_error(SHELL_NAME, argv[0], NULL, "command not found");
 			return (EXEC_NOTFOUND);
+		}
+	}
 	execve(argv[0], argv, g_env);
-	print_error(SHELL_NAME, argv[0], NULL, strerror(errno));
-	return (EXIT_FAILURE);
+	if (errno == ENOENT)
+		status = EXEC_NOTFOUND;
+	else
+		status = EXEC_NOEXEC;
+	print_error_errno(SHELL_NAME, argv[0], NULL);
+	return (status);
 }
 
-void	exec_scmd_exit(int status, char **argv, t_list *l_free)
+void	exec_scmd_free_exit(int status, char **argv, t_list *l_free)
 {
-	if (status == EXEC_NOTFOUND)
-		print_error(SHELL_NAME, argv[0], NULL, "command not found");
-	else if (status && errno)
-	{
-		if (errno == ENOENT)
-			status = EXEC_NOTFOUND;
-		else
-			status = EXEC_NOEXEC;
-	}
 	exec_free_all(argv, l_free);
 	exit(status);
 }

@@ -99,14 +99,14 @@ static char	*parser_heredoc_gnl(char **limiter)
 	here_str = ft_strdup("");
 	if (here_str == NULL)
 		return (NULL);
-	read_str = get_next_line(STDIN_FILENO);
+	read_str = minishell_get_next_line(STDIN_FILENO);
 	while (read_str && ft_strncmp(read_str, *limiter, ft_strlen(*limiter) + 1))
 	{
 		here_str = str_append_str(here_str, read_str);
 		if (here_str == NULL)
 			break ;
 		free(read_str);
-		read_str = get_next_line(STDIN_FILENO);
+		read_str = minishell_get_next_line(STDIN_FILENO);
 	}
 	free(read_str);
 	return (here_str);
