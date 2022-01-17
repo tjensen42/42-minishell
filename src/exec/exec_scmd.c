@@ -6,9 +6,11 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:33:32 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:34:29 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 18:27:09 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <signal.h>
 
 #include "exec.h"
 #include "builtin.h"

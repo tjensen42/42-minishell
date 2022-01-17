@@ -6,10 +6,11 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:57:32 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:58:04 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 18:26:56 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>

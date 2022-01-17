@@ -6,9 +6,12 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:35:04 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:35:05 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 18:27:48 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <signal.h>
+#include <sys/wait.h>
 
 #include "exec.h"
 
