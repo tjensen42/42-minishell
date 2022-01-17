@@ -3,6 +3,7 @@
 
 static void	export_print_vars(void);
 static bool	export_is_valid_argument(char *arg);
+static void	export_sort_split(char **split);
 
 int	builtin_export(int argc, char **argv)
 {
@@ -29,19 +30,30 @@ int	builtin_export(int argc, char **argv)
 
 static void	export_print_vars(void)
 {
-	int	i;
-	int	l_var_name;
+	int		i;
+	int		l_var_name;
+	char	**env_copy;
 
-	if (g_env == NULL)
+	if (g_env == NULL || *g_env == NULL)
 		return ;
-	i = 0;
-	while (g_env[i])
+	env_copy = malloc((split_count(g_env) + 1) * sizeof(char *));
+	if (env_copy == NULL)
 	{
-		l_var_name = ft_strchr(g_env[i], '=') - g_env[i];
-		printf("%.*s", l_var_name + 1, g_env[i]);
-		printf("\"%s\"\n", env_get_value(g_env[i]));
+		print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM));
+		return ;
+	}
+	env_copy = ft_memcpy(env_copy, g_env,
+			(split_count(g_env) + 1) * sizeof(char *));
+	export_sort_split(env_copy);
+	i = 0;
+	while (env_copy[i])
+	{
+		l_var_name = ft_strchr(env_copy[i], '=') - env_copy[i];
+		printf("%.*s", l_var_name + 1, env_copy[i]);
+		printf("\"%s\"\n", env_get_value(env_copy[i]));
 		i++;
 	}
+	free(env_copy);
 }
 
 static bool	export_is_valid_argument(char *arg)
@@ -57,4 +69,30 @@ static bool	export_is_valid_argument(char *arg)
 		return (true);
 	else
 		return (false);
+}
+
+static void	export_sort_split(char **split)
+{
+	int		i;
+	int		j;
+	int		i_strs;
+	char	*tmp;
+
+	i_strs = split_count(split);
+	i = 0;
+	while (i < i_strs - 1)
+	{
+		j = 0;
+		while (j < (i_strs - 1 - i))
+		{
+			if (ft_strncmp(split[j], split[j + 1], ft_strlen(split[j]) + 1) > 0)
+			{
+				tmp = split[j];
+				split[j] = split[j + 1];
+				split[j + 1] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
 }

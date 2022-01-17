@@ -2,9 +2,6 @@
 
 ** OPTIONAL **
 
-// Unsorted export output
-// Wildcard expansion sorting nach ASCII (Split nach ASCII sortieren)
-
 // header files structure
 
 ** SOLVED **
@@ -15,6 +12,7 @@
 // exit printen in SUBSHELLS
 // free_all function before exit....
 // heredoc && printer at same time
+// Unsorted export output
 
 // HEREDOC var expansion for s_quote/d_qoute
 
