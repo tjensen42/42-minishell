@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:30:27 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:30:28 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 15:55:40 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	pipes_close(int pipes[2][2], int i, bool last)
+static int	pipes_close_end(int pipe_end);
+
+void	exec_pipeline_pipes_close(int pipes[2][2], int i, bool last)
 {
 	if (i == 0)
 		pipes_close_end(pipes[0][1]);
@@ -37,7 +39,7 @@ void	pipes_close(int pipes[2][2], int i, bool last)
 	}
 }
 
-void	pipes_set(int fd[2], int pipes[2][2], int i, bool last)
+void	exec_pipeline_pipes_set(int fd[2], int pipes[2][2], int i, bool last)
 {
 	if (i == 0)
 	{
@@ -61,7 +63,7 @@ void	pipes_set(int fd[2], int pipes[2][2], int i, bool last)
 	}
 }
 
-void	pipes_init(int pipes[2][2])
+void	exec_pipeline_pipes_init(int pipes[2][2])
 {
 	pipes[0][0] = -1;
 	pipes[0][1] = -1;
@@ -69,7 +71,7 @@ void	pipes_init(int pipes[2][2])
 	pipes[1][1] = -1;
 }
 
-int	pipes_close_end(int pipe_end)
+static int	pipes_close_end(int pipe_end)
 {
 	if (pipe_end == -1)
 		return (0);

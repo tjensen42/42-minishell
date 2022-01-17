@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:36:04 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:36:24 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 16:08:09 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "exec.h"
 #include "cmd.h"
 
-static bool	exec_operator_jump(t_list *l_cmd);
+static bool	exec_operator_skip(t_list *l_cmd);
 
 int	exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free)
 {
@@ -29,7 +29,7 @@ int	exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free)
 	if (l_cmd->next)
 	{
 		l_cmd = l_cmd->next;
-		while (l_cmd && exec_operator_jump(l_cmd))
+		while (l_cmd && exec_operator_skip(l_cmd))
 			l_cmd = l_cmd->next->next;
 		if (l_cmd != NULL)
 			exec_exit_status_set(exec_recursive(l_cmd->next, subshell, l_free));
@@ -48,7 +48,7 @@ void	exec_free_all(char **argv, t_list *l_free)
 	rl_clear_history();
 }
 
-static bool	exec_operator_jump(t_list *l_cmd)
+static bool	exec_operator_skip(t_list *l_cmd)
 {
 	if (cmd_content(l_cmd)->type & CMD_AND && exec_exit_status_get() != 0)
 		return (true);

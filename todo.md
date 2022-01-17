@@ -1,9 +1,6 @@
 ** WICHTIG **
 
-// naming in header files for all functions
-
 ** OPTIONAL **
-
 
 ** SOLVED **
 // header files structure

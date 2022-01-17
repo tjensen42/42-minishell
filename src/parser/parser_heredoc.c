@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:44:03 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:44:50 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 16:11:07 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 #include "redir.h"
 #include "signals.h"
 
-static int	parser_heredoc_processing(t_list *redir_file, char **limiter);
-static char	*parser_heredoc_readline(char *limiter);
-static char	*parser_heredoc_gnl(char **limiter);
-static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token);
+static int	heredoc_processing(t_list *redir_file, char **limiter);
+static char	*heredoc_readline(char *limiter);
+static char	*heredoc_gnl(char **limiter);
+static void	heredoc_merge(t_list *redir_file, t_list **l_token);
 
 int	parser_heredoc(t_list *l_token)
 {
@@ -34,19 +34,19 @@ int	parser_heredoc(t_list *l_token)
 		limiter = token_to_str(redir_file);
 		if (limiter == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
-		if (parser_heredoc_processing(redir_file, &limiter) == ERROR)
+		if (heredoc_processing(redir_file, &limiter) == ERROR)
 		{
 			free(limiter);
 			return (ERROR);
 		}
 		free(limiter);
 		token_content(redir_file)->flags |= TOK_HEREDOC;
-		parser_heredoc_merge(redir_file, &l_token);
+		heredoc_merge(redir_file, &l_token);
 	}
 	return (0);
 }
 
-static int	parser_heredoc_processing(t_list *redir_file, char **limiter)
+static int	heredoc_processing(t_list *redir_file, char **limiter)
 {
 	int	fd;
 
@@ -55,9 +55,9 @@ static int	parser_heredoc_processing(t_list *redir_file, char **limiter)
 		return (print_error_errno(SHELL_NAME, NULL, NULL));
 	free(token_content(redir_file)->str);
 	if (isatty(STDIN_FILENO))
-		token_content(redir_file)->str = parser_heredoc_readline(*limiter);
+		token_content(redir_file)->str = heredoc_readline(*limiter);
 	else
-		token_content(redir_file)->str = parser_heredoc_gnl(limiter);
+		token_content(redir_file)->str = heredoc_gnl(limiter);
 	if (errno == EBADF)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
@@ -71,7 +71,7 @@ static int	parser_heredoc_processing(t_list *redir_file, char **limiter)
 	return (0);
 }
 
-static char	*parser_heredoc_readline(char *limiter)
+static char	*heredoc_readline(char *limiter)
 {
 	char	*read_str;
 	char	*here_str;
@@ -100,7 +100,7 @@ static char	*parser_heredoc_readline(char *limiter)
 	return (here_str);
 }
 
-static char	*parser_heredoc_gnl(char **limiter)
+static char	*heredoc_gnl(char **limiter)
 {
 	char	*read_str;
 	char	*here_str;
@@ -125,7 +125,7 @@ static char	*parser_heredoc_gnl(char **limiter)
 	return (here_str);
 }
 
-static void	parser_heredoc_merge(t_list *redir_file, t_list **l_token)
+static void	heredoc_merge(t_list *redir_file, t_list **l_token)
 {
 	t_list	*iter;
 	t_list	*tmp;

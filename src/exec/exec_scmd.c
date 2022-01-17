@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:33:32 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 18:27:09 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 18:30:30 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	exec_scmd_exec(char **argv)
 	termios_change(true);
 	if (!ft_strchr(argv[0], '/') && env_get_value("PATH") != NULL)
 	{
-		if (scmd_search_path(argv) == ERROR)
+		if (exec_scmd_search_path(argv) == ERROR)
 		{
 			print_error(SHELL_NAME, argv[0], NULL, "command not found");
 			return (EXEC_NOTFOUND);
