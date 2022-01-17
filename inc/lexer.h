@@ -5,9 +5,6 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-# include <stdbool.h>
-
-# include "libft.h"
 # include "global.h"
 # include "token.h"
 

@@ -1,5 +1,4 @@
 #include "builtin.h"
-#include "exec.h"
 
 int	builtin_echo(int argc __attribute((unused)), char **argv)
 {

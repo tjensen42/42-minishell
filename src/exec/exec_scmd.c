@@ -5,8 +5,6 @@
 #include "env.h"
 #include "expand.h"
 
-#include <readline/readline.h>
-
 static int	exec_builtin(t_list *scmd, char **argv,
 				bool subshell, t_list *l_free);
 

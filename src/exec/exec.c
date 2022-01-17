@@ -1,6 +1,7 @@
 #include "exec.h"
 #include "cmd.h"
 
+#include <stdio.h>
 #include <readline/readline.h>
 
 static bool	exec_operator_jump(t_list *l_cmd);

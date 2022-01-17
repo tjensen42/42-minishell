@@ -34,7 +34,7 @@ int	expand_var_token_list_split(t_list **l_token)
 	return (0);
 }
 
-static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token)
+static int	expand_var_token_list_split_2(t_list **l_splitted, t_list *token) // rename
 {
 	t_list	*new_token;
 	char	**split;

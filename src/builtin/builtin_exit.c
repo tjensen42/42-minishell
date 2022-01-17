@@ -1,8 +1,5 @@
 #include "builtin.h"
 #include "exec.h"
-#include "cmd.h"
-
-#include <readline/readline.h>
 
 static bool	num_is_numeric(char *str);
 

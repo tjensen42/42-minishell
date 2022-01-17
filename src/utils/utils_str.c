@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "global.h"
 
 char	*str_append_str(char *str, char *append)

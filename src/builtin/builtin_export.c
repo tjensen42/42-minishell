@@ -62,7 +62,7 @@ static bool	export_is_valid_argument(char *arg)
 	if (arg[0] == '\0' || arg[0] == '=')
 		return (false);
 	i = 0;
-	while (arg[i] != '\0' && arg[i] != '=' && is_var_char(arg[i]))
+	while (arg[i] != '\0' && arg[i] != '=' && env_is_var_char(arg[i]))
 		i++;
 	if (arg[i] == '\0' || arg[i] == '=')
 		return (true);

@@ -5,11 +5,6 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-# include <stdbool.h>
-# include <limits.h>
-# include <fcntl.h>
-
-# include "libft.h"
 # include "global.h"
 # include "token.h"
 

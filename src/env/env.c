@@ -1,7 +1,4 @@
-#include "libft.h"
 #include "env.h"
-#include "global.h"
-#include "lexer.h"
 
 int	env_init(void)
 {
@@ -70,4 +67,9 @@ bool	env_var_is_value(char *var_name, char *value)
 		if (ft_strncmp(env_value, value, ft_strlen(value) + 1) == 0)
 			return (true);
 	return (false);
+}
+
+bool	env_is_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
 }

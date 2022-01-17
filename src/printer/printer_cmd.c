@@ -1,6 +1,4 @@
-#include <stdio.h>
 #include "printer.h"
-#include "parser.h"
 #include "cmd.h"
 
 static void	printer_cmd_recursive(t_list *l_cmd);

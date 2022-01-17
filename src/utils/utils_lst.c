@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "global.h"
 
 int	lst_node_remove(t_list **lst, t_list *node, void (*del)(void *))

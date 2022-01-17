@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "printer.h"
 #include "token.h"
 

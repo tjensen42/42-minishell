@@ -12,7 +12,7 @@ int	builtin_unset(int argc __attribute((unused)), char **argv)
 	while (argv[i])
 	{
 		j = 0;
-		while (argv[i][j] && is_var_char(argv[i][j]))
+		while (argv[i][j] && env_is_var_char(argv[i][j]))
 			j++;
 		if (argv[i][j] != '\0' || argv[i][0] == '\0')
 		{

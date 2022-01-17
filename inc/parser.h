@@ -5,11 +5,6 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdbool.h>
-
-# include "libft.h"
 # include "global.h"
 # include "token.h"
 # include "cmd.h"

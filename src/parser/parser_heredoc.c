@@ -1,9 +1,10 @@
+#include <stdio.h>
+#include <readline/readline.h>
+#include <signal.h>
+
 #include "parser.h"
 #include "redir.h"
 #include "signals.h"
-
-#include <signal.h>
-#include <readline/readline.h>
 
 static int	parser_heredoc_processing(t_list *redir_file, char **limiter);
 static char	*parser_heredoc_readline(char *limiter);

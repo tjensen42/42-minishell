@@ -1,4 +1,5 @@
 #include <dirent.h>
+
 #include "expand.h"
 
 bool	expand_token_is_wildcard(t_list *token)

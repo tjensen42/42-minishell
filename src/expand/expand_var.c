@@ -58,14 +58,14 @@ static int	expand_var_expansion(t_c_token *c_token, char **exp_str, int *i)
 			return (ERROR);
 		(*i)++;
 	}
-	else if (c_token->str[*i] == '$' && (is_var_char(c_token->str[*i + 1])
+	else if (c_token->str[*i] == '$' && (env_is_var_char(c_token->str[*i + 1])
 			|| (c_token->str[*i + 1] == '\0'
 				&& !(c_token->flags & (TOK_S_QUOTE | TOK_D_QUOTE))
 				&& c_token->flags & TOK_CONNECTED)))
 	{
 		if (expand_var_append(exp_str, &(c_token->str[*i])) == ERROR)
 			return (ERROR);
-		while (is_var_char(c_token->str[*i + 1]))
+		while (env_is_var_char(c_token->str[*i + 1]))
 			(*i)++;
 	}
 	else
@@ -99,7 +99,7 @@ static int	expand_var_append(char **exp_str, char *str)
 	if (var_name == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	i = 1;
-	while (is_var_char(str[i]))
+	while (env_is_var_char(str[i]))
 	{
 		var_name = str_append_chr(var_name, str[i]);
 		if (var_name == NULL)

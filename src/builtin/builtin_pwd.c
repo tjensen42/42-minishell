@@ -1,4 +1,3 @@
-#include <limits.h>
 #include "builtin.h"
 
 int	builtin_pwd(int argc __attribute((unused)),

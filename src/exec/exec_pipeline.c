@@ -1,9 +1,6 @@
 #include "exec.h"
 #include "cmd.h"
 #include "builtin.h"
-#include "env.h"
-
-#include <readline/readline.h>
 
 static int	exec_pipeline_pipe_fork(t_list *iter, int pipes[2][2],
 				int i, t_list *l_free);

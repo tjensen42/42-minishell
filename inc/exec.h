@@ -5,10 +5,6 @@
 /* INCLUDES																	  */
 /* ************************************************************************** */
 
-# include <stdbool.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-
 # include "libft.h"
 # include "global.h"
 # include "redir.h"

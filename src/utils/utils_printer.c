@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "global.h"
 
 int	print_error(char *s1, char *s2, char *s3, char *message)
@@ -32,9 +31,4 @@ int	print_error_errno(char *s1, char *s2, char *s3)
 	print_error(s1, s2, s3, strerror(errno));
 	errno = 0;
 	return (ERROR);
-}
-
-bool	is_var_char(char c)
-{
-	return (ft_isalnum(c) || c == '_');
 }

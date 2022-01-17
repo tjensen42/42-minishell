@@ -1,5 +1,7 @@
 ** WICHTIG **
 
+// naming in header files for all functions
+
 ** OPTIONAL **
 
 // header files structure
@@ -18,3 +20,13 @@
 
 ** NOT TO DO **
 // ./minishe*l wildcards in current dir mit "./"
+
+
+
+
+
+
+
+// exit status in exec?
+// env in global?
+

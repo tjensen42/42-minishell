@@ -6,8 +6,8 @@
 /* ************************************************************************** */
 
 # include <unistd.h>
-# include <stdio.h>
 # include <stdbool.h>
+# include <limits.h>
 # include <string.h>
 # include <errno.h>
 
@@ -34,7 +34,6 @@ extern char	**g_env;
 
 int		print_error(char *s1, char *s2, char *s3, char *message);
 int		print_error_errno(char *s1, char *s2, char *s3);
-bool	is_var_char(char c);
 
 char	*str_append_str(char *str, char *append);
 char	*str_append_chr(char *str, char append);

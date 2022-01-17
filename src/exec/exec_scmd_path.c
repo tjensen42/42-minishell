@@ -1,7 +1,7 @@
-#include "exec.h"
-#include "token.h"
-#include "env.h"
 #include <sys/stat.h>
+
+#include "exec.h"
+#include "env.h"
 
 static char	**path_split_get(void);
 static int	path_split_append_slash(char **path_split);

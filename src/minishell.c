@@ -1,18 +1,17 @@
-#include "lexer.h"
-#include "parser.h"
-#include "minishell.h"
-#include "printer.h"
-#include "env.h"
-#include "global.h"
-#include "exec.h"
-#include "signals.h"
-
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
-char	*minishell_get_line(void);
-void	minishell_process_input(char *input);
+#include "minishell.h"
+#include "global.h"
+#include "env.h"
+#include "lexer.h"
+#include "parser.h"
+#include "exec.h"
+#include "signals.h"
+
+static char	*minishell_get_line(void);
+static void	minishell_process_input(char *input);
 
 char	**g_env = NULL;
 
@@ -43,7 +42,7 @@ int	main(void)
 	exit(exit_status_get());
 }
 
-void	minishell_process_input(char *input)
+static void	minishell_process_input(char *input)
 {
 	t_list	*l_token;
 	t_list	*l_parser;
@@ -64,7 +63,7 @@ void	minishell_process_input(char *input)
 		ft_lstclear(&l_token, c_token_destroy);
 }
 
-char	*minishell_get_line(void)
+static char	*minishell_get_line(void)
 {
 	char	*input;
 	char	*prompt;

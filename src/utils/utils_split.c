@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "global.h"
 
 int	split_count(char **split)
