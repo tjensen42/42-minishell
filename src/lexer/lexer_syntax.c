@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:41:01 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:41:02 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 16:09:47 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-static int	lexer_syntax_bin_op(t_list *l_token);
-static int	lexer_syntax_pipe(t_list *l_token);
-static int	lexer_syntax_brackets(t_list *l_token);
-static int	lexer_syntax_missing_op(t_list *l_token);
+static int	syntax_bin_op(t_list *l_token);
+static int	syntax_pipe(t_list *l_token);
+static int	syntax_brackets(t_list *l_token);
+static int	syntax_missing_op(t_list *l_token);
 
 int	lexer_syntax_check(t_list *l_token)
 {
-	if (lexer_syntax_brackets(l_token) == ERROR)
+	if (syntax_brackets(l_token) == ERROR)
 		return (ERROR);
-	if (lexer_syntax_bin_op(l_token) == ERROR)
+	if (syntax_bin_op(l_token) == ERROR)
 		return (ERROR);
-	if (lexer_syntax_pipe(l_token) == ERROR)
+	if (syntax_pipe(l_token) == ERROR)
 		return (ERROR);
-	if (lexer_syntax_missing_op(l_token) == ERROR)
+	if (syntax_missing_op(l_token) == ERROR)
 		return (ERROR);
 	return (0);
 }
 
-static int	lexer_syntax_bin_op(t_list *l_token)
+static int	syntax_bin_op(t_list *l_token)
 {
 	if (l_token && token_content(l_token)->flags & TOK_BIN_OP)
 		return (print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_LIST));
@@ -57,7 +57,7 @@ static int	lexer_syntax_bin_op(t_list *l_token)
 	return (0);
 }
 
-static int	lexer_syntax_pipe(t_list *l_token)
+static int	syntax_pipe(t_list *l_token)
 {
 	if (l_token && token_content(l_token)->flags & TOK_PIPE)
 		return (print_error(SHELL_NAME, ERR_SYNTAX, NULL, ERR_PIPE));
@@ -83,7 +83,7 @@ static int	lexer_syntax_pipe(t_list *l_token)
 	return (0);
 }
 
-static int	lexer_syntax_brackets(t_list *l_token)
+static int	syntax_brackets(t_list *l_token)
 {
 	int	count;
 
@@ -111,7 +111,7 @@ static int	lexer_syntax_brackets(t_list *l_token)
 	return (0);
 }
 
-static int	lexer_syntax_missing_op(t_list *l_token)
+static int	syntax_missing_op(t_list *l_token)
 {
 	while (l_token)
 	{

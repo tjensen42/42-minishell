@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 16:01:36 by tjensen           #+#    #+#             */
+/*   Updated: 2022/01/17 16:01:37 by tjensen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXEC_H
 # define EXEC_H
 
@@ -32,16 +44,15 @@ int		exec_exit_status_get(void);
 int		exec_group(t_list *l_cmd, t_list *l_free);
 
 // EXEC_PIPELINE_PIPES
-void	pipes_init(int pipes[2][2]);
-void	pipes_set(int fd[2], int pipes[2][2], int i, bool last);
-int		pipes_close_end(int pipe_end);
-void	pipes_close(int	pipes[2][2], int i, bool last);
+void	exec_pipeline_pipes_init(int pipes[2][2]);
+void	exec_pipeline_pipes_set(int fd[2], int pipes[2][2], int i, bool last);
+void	exec_pipeline_pipes_close(int	pipes[2][2], int i, bool last);
 
 // EXEC_PIPELINE
 int		exec_pipeline(t_list *pipeline, t_list *l_free);
 
 // EXEC_SCMD_PATH
-int		scmd_search_path(char **argv);
+int		exec_scmd_search_path(char **argv);
 
 // EXEC_SCMD
 int		exec_scmd(t_list *scmd, bool subshell, t_list *l_free);

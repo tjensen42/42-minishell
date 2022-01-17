@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:37:46 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:38:22 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 16:21:43 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include "exec.h"
 
 static int	expand_var_token(t_c_token *c_token);
-static int	expand_var_expansion(t_c_token *c_token, char **exp_str, int *i);
-static int	expand_var_append_exit(char **exp_str);
-static int	expand_var_append(char **exp_str, char *str);
+static int	expanded_str_get(t_c_token *c_token, char **exp_str, int *i);
+static int	expanded_str_append_exit_code(char **exp_str);
+static int	expanded_str_append_var(char **exp_str, char *str);
 
 int	expand_var_token_list(t_list *l_token)
 {
@@ -50,7 +50,7 @@ static int	expand_var_token(t_c_token *c_token)
 	{
 		while (c_token->str[i] == '$' && c_token->str[i + 1] == '$')
 			i++;
-		if (expand_var_expansion(c_token, &exp_str, &i) == ERROR)
+		if (expanded_str_get(c_token, &exp_str, &i) == ERROR)
 		{
 			free(exp_str);
 			return (ERROR);
@@ -62,11 +62,11 @@ static int	expand_var_token(t_c_token *c_token)
 	return (0);
 }
 
-static int	expand_var_expansion(t_c_token *c_token, char **exp_str, int *i)
+static int	expanded_str_get(t_c_token *c_token, char **exp_str, int *i)
 {
 	if (c_token->str[*i] == '$' && c_token->str[*i + 1] == '?')
 	{
-		if (expand_var_append_exit(exp_str) == ERROR)
+		if (expanded_str_append_exit_code(exp_str) == ERROR)
 			return (ERROR);
 		(*i)++;
 	}
@@ -75,7 +75,7 @@ static int	expand_var_expansion(t_c_token *c_token, char **exp_str, int *i)
 				&& !(c_token->flags & (TOK_S_QUOTE | TOK_D_QUOTE))
 				&& c_token->flags & TOK_CONNECTED)))
 	{
-		if (expand_var_append(exp_str, &(c_token->str[*i])) == ERROR)
+		if (expanded_str_append_var(exp_str, &(c_token->str[*i])) == ERROR)
 			return (ERROR);
 		while (env_is_var_char(c_token->str[*i + 1]))
 			(*i)++;
@@ -87,7 +87,7 @@ static int	expand_var_expansion(t_c_token *c_token, char **exp_str, int *i)
 	return (0);
 }
 
-static int	expand_var_append_exit(char **exp_str)
+static int	expanded_str_append_exit_code(char **exp_str)
 {
 	char	*exit_str;
 
@@ -101,7 +101,7 @@ static int	expand_var_append_exit(char **exp_str)
 	return (0);
 }
 
-static int	expand_var_append(char **exp_str, char *str)
+static int	expanded_str_append_var(char **exp_str, char *var)
 {
 	char	*var_name;
 	char	*var_value;
@@ -111,9 +111,9 @@ static int	expand_var_append(char **exp_str, char *str)
 	if (var_name == NULL)
 		return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 	i = 1;
-	while (env_is_var_char(str[i]))
+	while (env_is_var_char(var[i]))
 	{
-		var_name = str_append_chr(var_name, str[i]);
+		var_name = str_append_chr(var_name, var[i]);
 		if (var_name == NULL)
 			return (print_error(SHELL_NAME, NULL, NULL, strerror(ENOMEM)));
 		i++;

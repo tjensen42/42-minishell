@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:42:47 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:43:19 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 16:10:40 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "exec.h"
 #include "printer.h"
 
-static t_list	*lexer_token_list_get(char *input);
-static int		lexer_redir_mark_files(t_list *l_token);
+static t_list	*token_list_get(char *input);
+static int		redir_mark_files(t_list *l_token);
 
 t_list	*lexer(char *input)
 {
 	t_list		*l_token;
 
-	l_token = lexer_token_list_get(input);
+	l_token = token_list_get(input);
 	if (l_token == NULL)
 		return (NULL);
 	if (lexer_syntax_check(l_token) == ERROR)
@@ -31,7 +31,7 @@ t_list	*lexer(char *input)
 		ft_lstclear(&l_token, c_token_destroy);
 		return (NULL);
 	}
-	if (lexer_redir_mark_files(l_token) == ERROR)
+	if (redir_mark_files(l_token) == ERROR)
 	{
 		exec_exit_status_set(ERR_SYNTAX_EXIT);
 		ft_lstclear(&l_token, c_token_destroy);
@@ -42,7 +42,7 @@ t_list	*lexer(char *input)
 	return (l_token);
 }
 
-static t_list	*lexer_token_list_get(char *input)
+static t_list	*token_list_get(char *input)
 {
 	t_list	*l_token;
 	int		i;
@@ -71,7 +71,7 @@ static t_list	*lexer_token_list_get(char *input)
 	return (l_token);
 }
 
-static int	lexer_redir_mark_files(t_list *l_token)
+static int	redir_mark_files(t_list *l_token)
 {
 	while (l_token)
 	{

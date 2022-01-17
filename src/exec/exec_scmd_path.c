@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_scmd_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:31:58 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:33:24 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 16:06:36 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include "exec.h"
 #include "env.h"
 
-static int	path_find_path(char **path_split, char **argv);
+static int	path_find(char **path_split, char **argv);
 static char	**path_split_get(void);
 static int	path_split_append_slash(char **path_split);
 
-int	scmd_search_path(char **argv)
+int	exec_scmd_search_path(char **argv)
 {
 	char	**path_split;
 
@@ -29,7 +29,7 @@ int	scmd_search_path(char **argv)
 		path_split = path_split_get();
 		if (path_split == NULL)
 			return (ERROR);
-		if (path_find_path(path_split, argv) == 0)
+		if (path_find(path_split, argv) == 0)
 		{
 			ft_free_split(&path_split);
 			return (0);
@@ -40,7 +40,7 @@ int	scmd_search_path(char **argv)
 	return (ERROR);
 }
 
-static int	path_find_path(char **path_split, char **argv)
+static int	path_find(char **path_split, char **argv)
 {
 	struct stat	s;
 	char		*tmp;

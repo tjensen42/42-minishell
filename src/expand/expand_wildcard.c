@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:39:18 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:40:23 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 16:14:44 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static int		expand_wildcard_token(t_list *token, t_list **l_wildcard,
 					char **files);
 static t_list	*expand_pattern_to_list(char *pattern, char **split,
 					char **files);
-static bool		expand_pattern_match_file(char *pattern, char **split,
-					char *file);
+static bool		pattern_match_file(char *pattern, char **split, char *file);
 
 int	expand_wildcard_list(t_list	**l_token, char **files)
 {
@@ -87,7 +86,7 @@ static t_list	*expand_pattern_to_list(char *pattern, char **split,
 	i = 0;
 	while (files[i])
 	{
-		if (expand_pattern_match_file(pattern, split, files[i]))
+		if (pattern_match_file(pattern, split, files[i]))
 		{
 			tmp = ft_strdup(files[i]);
 			new_token = token_create(tmp, TOK_WILDCARD);
@@ -104,7 +103,7 @@ static t_list	*expand_pattern_to_list(char *pattern, char **split,
 	return (l_wildcard);
 }
 
-static bool	expand_pattern_match_file(char *pattern, char **split, char *file)
+static bool	pattern_match_file(char *pattern, char **split, char *file)
 {
 	char	*shift_fname;
 	int		i;

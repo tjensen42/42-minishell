@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:57:32 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:58:04 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 16:14:07 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #include "parser.h"
 #include "signals.h"
 
-static void	minishell_process_input(char *input);
-static char	*minishell_get_line(void);
+static char	*get_input(void);
+static void	process_input(char *input);
 
 char	**g_env = NULL;
 
@@ -37,7 +37,7 @@ int	main(void)
 	{
 		signal(SIGINT, signal_ctlc);
 		termios_change(false);
-		input = minishell_get_line();
+		input = get_input();
 		if (input == NULL)
 		{
 			if (isatty(STDERR_FILENO))
@@ -45,7 +45,7 @@ int	main(void)
 			termios_change(true);
 			break ;
 		}
-		minishell_process_input(input);
+		process_input(input);
 	}
 	rl_clear_history();
 	if (g_env)
@@ -53,7 +53,26 @@ int	main(void)
 	exit(exec_exit_status_get());
 }
 
-static void	minishell_process_input(char *input)
+static char	*get_input(void)
+{
+	char	*input;
+	char	*prompt;
+
+	prompt = env_get_value("PS1");
+	if (prompt == NULL)
+		prompt = PROMPT;
+	if (isatty(STDIN_FILENO))
+		input = readline(prompt);
+	else
+		input = minishell_get_next_line(STDIN_FILENO);
+	if (input == NULL)
+		return (NULL);
+	else if (input && input[0])
+		add_history(input);
+	return (input);
+}
+
+static void	process_input(char *input)
 {
 	t_list	*l_token;
 	t_list	*l_parser;
@@ -72,23 +91,4 @@ static void	minishell_process_input(char *input)
 		ft_lstclear(&l_parser, c_cmd_destroy);
 	else if (l_token != NULL)
 		ft_lstclear(&l_token, c_token_destroy);
-}
-
-static char	*minishell_get_line(void)
-{
-	char	*input;
-	char	*prompt;
-
-	prompt = env_get_value("PS1");
-	if (prompt == NULL)
-		prompt = PROMPT;
-	if (isatty(STDIN_FILENO))
-		input = readline(prompt);
-	else
-		input = minishell_get_next_line(STDIN_FILENO);
-	if (input == NULL)
-		return (NULL);
-	else if (input && input[0])
-		add_history(input);
-	return (input);
 }

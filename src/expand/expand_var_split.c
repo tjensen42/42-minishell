@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var_split.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:37:06 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:37:30 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/17 15:59:26 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 #include "lexer.h"
 
-static int	expand_var_get_splitted(t_list **l_splitted, t_list *token);
-static char	*expand_var_needs_splitting(t_list *token);
-static void	expand_var_replace_whitespaces(char *str);
-static void	expand_var_token_replace(t_list **l_token,
-				t_list *old, t_list *new);
+static int	var_get_splitted(t_list **l_splitted, t_list *token);
+static char	*var_needs_splitting(t_list *token);
+static void	var_replace_whitespaces(char *str);
+static void	var_token_replace(t_list **l_token, t_list *old, t_list *new);
 
 int	expand_var_splitting(t_list **l_token)
 {
@@ -29,16 +28,16 @@ int	expand_var_splitting(t_list **l_token)
 	while (iter)
 	{
 		tmp = iter->next;
-		if (expand_var_needs_splitting(iter) != NULL)
+		if (var_needs_splitting(iter) != NULL)
 		{
 			l_splitted = NULL;
-			if (expand_var_get_splitted(&l_splitted, iter) == ERROR)
+			if (var_get_splitted(&l_splitted, iter) == ERROR)
 				return (ERROR);
 			if (token_content(iter)->str[0] == VAR_SPACE)
 				token_content(
 					lst_node_prev(*l_token, iter))->flags &= ~TOK_CONNECTED;
 			if (l_splitted != NULL)
-				expand_var_token_replace(l_token, iter, l_splitted);
+				var_token_replace(l_token, iter, l_splitted);
 			else
 				lst_node_remove(l_token, iter, c_token_destroy);
 		}
@@ -47,13 +46,13 @@ int	expand_var_splitting(t_list **l_token)
 	return (0);
 }
 
-static int	expand_var_get_splitted(t_list **l_splitted, t_list *token)
+static int	var_get_splitted(t_list **l_splitted, t_list *token)
 {
 	t_list	*new_token;
 	char	**split;
 	int		i;
 
-	expand_var_replace_whitespaces(token_content(token)->str);
+	var_replace_whitespaces(token_content(token)->str);
 	split = ft_split(token_content(token)->str, VAR_SPACE);
 	if (split == NULL)
 		return (ERROR);
@@ -76,7 +75,7 @@ static int	expand_var_get_splitted(t_list **l_splitted, t_list *token)
 	return (0);
 }
 
-static char	*expand_var_needs_splitting(t_list *token)
+static char	*var_needs_splitting(t_list *token)
 {
 	int	i;
 
@@ -94,7 +93,7 @@ static char	*expand_var_needs_splitting(t_list *token)
 	return (NULL);
 }
 
-static void	expand_var_replace_whitespaces(char *str)
+static void	var_replace_whitespaces(char *str)
 {
 	int	i;
 
@@ -107,7 +106,7 @@ static void	expand_var_replace_whitespaces(char *str)
 	}
 }
 
-static void	expand_var_token_replace(t_list **l_token, t_list *old, t_list *new)
+static void	var_token_replace(t_list **l_token, t_list *old, t_list *new)
 {
 	if (old == *l_token)
 		*l_token = new;
