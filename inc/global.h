@@ -46,10 +46,9 @@ int		lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 
 int		split_count(char **argv);
 int		split_append_str(char ***split, char *str);
-
 int		split_remove_str(char ***split, char *remove_str);
 int		split_replace_str(char ***split, char *old_str, char *new_str);
-int		split_contains_str(char **split, char *str);
+void	split_sort(char **split);
 
 char	*minishell_get_next_line(int fd);
 

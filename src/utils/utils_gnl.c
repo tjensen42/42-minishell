@@ -1,6 +1,6 @@
 #include "global.h"
 
-static char	*gnl_free_line(char *line);
+static char	*minishell_gnl_free_line(char *line);
 
 char	*minishell_get_next_line(int fd)
 {
@@ -13,7 +13,7 @@ char	*minishell_get_next_line(int fd)
 		return (NULL);
 	check = read(fd, &buffer, 1);
 	if (check == -1 || check == 0)
-		return (gnl_free_line(line));
+		return (minishell_gnl_free_line(line));
 	while (check > 0)
 	{
 		line = str_append_chr(line, buffer);
@@ -24,11 +24,11 @@ char	*minishell_get_next_line(int fd)
 		check = read(fd, &buffer, 1);
 	}
 	if (check == -1)
-		return (gnl_free_line(line));
+		return (minishell_gnl_free_line(line));
 	return (line);
 }
 
-static char	*gnl_free_line(char *line)
+static char	*minishell_gnl_free_line(char *line)
 {
 	free(line);
 	return (NULL);

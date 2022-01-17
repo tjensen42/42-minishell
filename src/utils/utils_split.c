@@ -37,8 +37,6 @@ int	split_remove_str(char ***split, char *remove_str)
 	int		i;
 	char	**new_split;
 
-	if (!split_contains_str(*split, remove_str))
-		return (ERROR);
 	new_split = malloc(split_count(*split) * sizeof(char *));
 	if (new_split == NULL)
 		return (ERROR);
@@ -76,16 +74,28 @@ int	split_replace_str(char ***split, char *old_str, char *new_str)
 	return (0);
 }
 
-int	split_contains_str(char **split, char *str)
+void	split_sort(char **split)
 {
-	int	i;
+	int		i;
+	int		j;
+	int		i_strs;
+	char	*tmp;
 
-	if (split == NULL || str == NULL)
-		return (false);
+	i_strs = split_count(split);
 	i = 0;
-	while (split[i] && split[i] != str)
+	while (i < i_strs - 1)
+	{
+		j = 0;
+		while (j < (i_strs - 1 - i))
+		{
+			if (ft_strncmp(split[j], split[j + 1], ft_strlen(split[j]) + 1) > 0)
+			{
+				tmp = split[j];
+				split[j] = split[j + 1];
+				split[j + 1] = tmp;
+			}
+			j++;
+		}
 		i++;
-	if (split[i] == str)
-		return (true);
-	return (false);
+	}
 }

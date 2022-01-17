@@ -3,7 +3,6 @@
 
 static void	export_print_vars(void);
 static bool	export_is_valid_argument(char *arg);
-static void	export_sort_split(char **split);
 
 int	builtin_export(int argc, char **argv)
 {
@@ -44,7 +43,7 @@ static void	export_print_vars(void)
 	}
 	env_copy = ft_memcpy(env_copy, g_env,
 			(split_count(g_env) + 1) * sizeof(char *));
-	export_sort_split(env_copy);
+	split_sort(env_copy);
 	i = 0;
 	while (env_copy[i])
 	{
@@ -69,30 +68,4 @@ static bool	export_is_valid_argument(char *arg)
 		return (true);
 	else
 		return (false);
-}
-
-static void	export_sort_split(char **split)
-{
-	int		i;
-	int		j;
-	int		i_strs;
-	char	*tmp;
-
-	i_strs = split_count(split);
-	i = 0;
-	while (i < i_strs - 1)
-	{
-		j = 0;
-		while (j < (i_strs - 1 - i))
-		{
-			if (ft_strncmp(split[j], split[j + 1], ft_strlen(split[j]) + 1) > 0)
-			{
-				tmp = split[j];
-				split[j] = split[j + 1];
-				split[j + 1] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
 }
