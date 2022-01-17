@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_str.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:57:17 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:57:21 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "global.h"
 
 char	*str_append_str(char *str, char *append)
@@ -12,8 +24,8 @@ char	*str_append_str(char *str, char *append)
 
 char	*str_append_chr(char *str, char append)
 {
-	int		i;
 	char	*new_str;
+	int		i;
 
 	if (str == NULL)
 		return (NULL);

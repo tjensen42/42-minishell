@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_split.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:56:43 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:57:10 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "global.h"
 
 int	split_count(char **split)
@@ -12,8 +24,8 @@ int	split_count(char **split)
 
 int	split_append_str(char ***split, char *new_str)
 {
-	int		i;
 	char	**new_split;
+	int		i;
 
 	new_split = malloc((split_count(*split) + 2) * sizeof(char *));
 	if (new_split == NULL)
@@ -33,8 +45,8 @@ int	split_append_str(char ***split, char *new_str)
 
 int	split_remove_str(char ***split, char *remove_str)
 {
-	int		i;
 	char	**new_split;
+	int		i;
 
 	new_split = malloc(split_count(*split) * sizeof(char *));
 	if (new_split == NULL)
@@ -75,10 +87,10 @@ int	split_replace_str(char ***split, char *old_str, char *new_str)
 
 void	split_sort(char **split)
 {
+	char	*tmp;
+	int		i_strs;
 	int		i;
 	int		j;
-	int		i_strs;
-	char	*tmp;
 
 	i_strs = split_count(split);
 	i = 0;

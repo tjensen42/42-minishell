@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_list.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:55:15 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:55:27 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "token.h"
 
 static int	l_token_count_strings(t_list *l_token);
@@ -5,9 +17,9 @@ static int	l_token_append_connected(t_list **l_token, char **split_str);
 
 char	**l_token_to_split(t_list *l_token)
 {
-	int		i;
-	char	**split;
 	t_list	*iter;
+	char	**split;
+	int		i;
 
 	if (l_token == NULL)
 		return (NULL);

@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_undo.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:53:37 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:54:06 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "redir.h"
 
-static t_c_redir_undo	*redir_undo_content(t_list *redir_undo);
 static t_list			*redir_undo_create(int fd_repl, int fd_repl_dup);
+static t_c_redir_undo	*redir_undo_content(t_list *redir_undo);
 
 int	redir_undo(t_list **l_undo)
 {
-	int		status;
+	t_list	*iter;
 	int		fd_repl;
 	int		fd_repl_dup;
-	t_list	*iter;
+	int		status;
 
 	status = 0;
 	iter = *l_undo;
@@ -32,9 +44,9 @@ int	redir_undo(t_list **l_undo)
 
 int	redir_undo_add_fd(t_list **l_undo, int fd)
 {
-	int		tmp;
-	t_list	*iter;
 	t_list	*redir_undo;
+	t_list	*iter;
+	int		tmp;
 
 	iter = *l_undo;
 	while (iter)

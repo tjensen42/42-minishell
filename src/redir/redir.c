@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:53:06 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:53:30 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 
 #include "redir.h"
@@ -8,8 +20,8 @@ static int	redir_open_file(char *file, int type);
 
 int	redir(t_list *l_token, t_list **l_undo)
 {
-	char	*tmp;
 	t_list	*iter;
+	char	*tmp;
 
 	if (l_undo)
 		*l_undo = NULL;
@@ -59,8 +71,8 @@ int	redir_type(char *redir)
 static int	redir_process(char *redir, char *file, t_list **l_undo)
 {
 	int	fd[2];
-	int	status;
 	int	type;
+	int	status;
 
 	status = 0;
 	type = redir_type(redir);
@@ -82,8 +94,8 @@ static int	redir_process(char *redir, char *file, t_list **l_undo)
 
 static int	redir_fd(char *redir, int type)
 {
-	int		i;
 	long	fd;
+	int		i;
 
 	fd = 0;
 	i = 0;

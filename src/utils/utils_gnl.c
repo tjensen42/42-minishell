@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_gnl.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:56:21 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:56:30 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "global.h"
 
 static char	*minishell_gnl_free_line(char *line);
 
 char	*minishell_get_next_line(int fd)
 {
-	int		check;
-	char	buffer;
 	char	*line;
+	char	buffer;
+	int		check;
 
 	line = ft_strdup("");
 	if (line == NULL)

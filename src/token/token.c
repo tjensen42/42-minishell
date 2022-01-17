@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:55:38 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:55:47 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "token.h"
 
 t_list	*token_create(char *string, int type)
@@ -40,8 +52,8 @@ bool	token_is_cmd(t_list *token)
 
 char	*token_to_str(t_list *token)
 {
-	char	*tmp;
 	char	*str;
+	char	*tmp;
 
 	if (token == NULL || token_content(token)->str == NULL)
 		return (NULL);

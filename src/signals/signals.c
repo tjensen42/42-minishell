@@ -1,8 +1,20 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <termios.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:54:36 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:55:05 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <signal.h>
+#include <stdio.h>
 #include <readline/readline.h>
+#include <termios.h>
+#include <unistd.h>
 
 #include "signals.h"
 
@@ -31,8 +43,8 @@ void	signal_ctlc_heredoc(int sig)
 
 int	termios_change(bool echo_ctl_chr)
 {
-	int				status;
 	struct termios	terminos_p;
+	int				status;
 
 	status = tcgetattr(STDOUT_FILENO, &terminos_p);
 	if (status == -1)

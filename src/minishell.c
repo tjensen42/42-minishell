@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 15:57:32 by hepple            #+#    #+#             */
+/*   Updated: 2022/01/17 15:58:04 by hepple           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
 #include "global.h"
 #include "env.h"
+#include "exec.h"
 #include "lexer.h"
 #include "parser.h"
-#include "exec.h"
 #include "signals.h"
 
-static char	*minishell_get_line(void);
 static void	minishell_process_input(char *input);
+static char	*minishell_get_line(void);
 
 char	**g_env = NULL;
 
