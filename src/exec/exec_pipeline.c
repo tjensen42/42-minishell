@@ -6,7 +6,7 @@
 /*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:31:07 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 15:57:37 by tjensen          ###   ########.fr       */
+/*   Updated: 2022/01/30 10:12:34 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 	int		i;
 
 	exec_pipeline_pipes_init(pipes);
+	pid = -1;
 	i = 0;
 	iter = cmd_content(pipeline)->l_element;
 	while (iter)
