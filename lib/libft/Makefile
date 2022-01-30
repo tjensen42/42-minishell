@@ -6,7 +6,7 @@
 #    By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/17 11:48:30 by hepple            #+#    #+#              #
-#    Updated: 2021/11/16 11:38:38 by tjensen          ###   ########.fr        #
+#    Updated: 2022/01/30 10:10:00 by tjensen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,14 @@ P		=	\033[0;35m
 T		=	\033[0;36m
 
 # N = no color, R = red, G = green, Y = yellow, B = blue, P = purple, T = turquoise
+
+# ********************* #
+#      S Y S T E M      #
+# ********************* #
+
+ifeq ($(shell uname -s), Linux)
+	CFLAGS += -D LINUX -Wno-unused-result
+endif
 
 # ********************* #
 #       R U L E S       #
