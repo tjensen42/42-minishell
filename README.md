@@ -1,8 +1,5 @@
 # minishell
 
-
-A parser is divided into two parts: a ​Lexical Analyzer​ or ​Lexer​ takes the input characters and puts the characters together into words called ​tokens​, and a ​Parser ​that processes the tokens according to a grammar and build the command table.
-
 ### Install dependencies on 42 Macs
 
 ```
