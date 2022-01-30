@@ -6,7 +6,7 @@
 /*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:01:36 by tjensen           #+#    #+#             */
-/*   Updated: 2022/01/17 16:01:37 by tjensen          ###   ########.fr       */
+/*   Updated: 2022/01/30 09:35:12 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		exec_group(t_list *l_cmd, t_list *l_free);
 // EXEC_PIPELINE_PIPES
 void	exec_pipeline_pipes_init(int pipes[2][2]);
 void	exec_pipeline_pipes_set(int fd[2], int pipes[2][2], int i, bool last);
-void	exec_pipeline_pipes_close(int	pipes[2][2], int i, bool last);
+void	exec_pipeline_pipes_close(int pipes[2][2], int i, bool last);
 
 // EXEC_PIPELINE
 int		exec_pipeline(t_list *pipeline, t_list *l_free);
