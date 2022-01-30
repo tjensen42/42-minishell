@@ -1,5 +1,7 @@
 ** WICHTIG **
 
+tests drin lassen?! Ansonsten auch make rule löschen
+
 ** OPTIONAL **
 
 ** SOLVED **
