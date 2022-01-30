@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:57:32 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 18:30:36 by hepple           ###   ########.fr       */
+/*   Updated: 2022/01/30 09:52:00 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*get_input(void)
 		input = minishell_get_next_line(STDIN_FILENO);
 	if (input == NULL)
 		return (NULL);
-	else if (input && input[0])
+	else if (isatty(STDIN_FILENO) && input && input[0])
 		add_history(input);
 	return (input);
 }
