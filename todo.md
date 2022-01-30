@@ -2,6 +2,7 @@
 
 tests drin lassen?! Ansonsten auch make rule löschen
 here_doc replace line etc???
+README command hinzufügen um readline zu installieren...
 
 ** OPTIONAL **
 
