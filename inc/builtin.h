@@ -6,7 +6,7 @@
 /*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 16:01:00 by tjensen           #+#    #+#             */
-/*   Updated: 2022/01/17 16:01:01 by tjensen          ###   ########.fr       */
+/*   Updated: 2022/01/30 09:50:19 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ struct s_builtins
 /* FUNCTION PROTOTYPES														  */
 /* ************************************************************************** */
 
+// BUILTIN
+int	builtin_check(char **argv);
+int	builtin_exec(char **argv, bool subshell, t_list *l_free);
+
 // BUILTIN_CD
 int	builtin_cd(int argc, char **argv);
 
@@ -55,9 +59,5 @@ int	builtin_pwd(int argc, char **argv);
 
 // BUILTIN_UNSET
 int	builtin_unset(int argc, char **argv);
-
-// BUILTIN
-int	builtin_check(char **argv);
-int	builtin_exec(char **argv, bool subshell, t_list *l_free);
 
 #endif
