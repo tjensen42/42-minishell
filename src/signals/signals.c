@@ -6,7 +6,7 @@
 /*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:54:36 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/17 18:42:48 by tjensen          ###   ########.fr       */
+/*   Updated: 2022/01/30 12:08:45 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	signal_ctlc_heredoc(int sig)
 	{
 		close(STDIN_FILENO);
 		write(STDERR_FILENO, "\n", 1);
-		// rl_replace_line("", 0);
-		// rl_redisplay();
 	}
 }
 
