@@ -1,4 +1,4 @@
-# minishell
+# 42-minishell
 
 The objective of this project is to create a simple shell, like an own little bash.
 It is the first group project in the 42 core curriculum.
@@ -13,6 +13,10 @@ For everything else the subject allows only to use a few low-level functions and
 
 ## Features
 
+- History of previous entered commands
+
+- ```&&``` and ```||``` with parenthesis for priorities
+- Wildcards * in the current working directory
 
 ## How to use
 
@@ -98,3 +102,15 @@ For all next commands you will execute in the minishell you will see the differe
 ```
 export PS1='enter your prompt wish...$ '
 ```
+
+
+<br>
+<hr>
+<b>*All 42 projects must be written in C (later C++) in accordance to the 42 School Norm.<br></b>
+<br>
+
+> #### Sample restrictions:
+> - All variables have to be declared and aligned at the top of each function
+> - Each function can not have more then 25 lines
+> - Projects should be created with allowed std functions otherwise it is cheating
+
