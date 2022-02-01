@@ -22,6 +22,7 @@ For everything else the subject allows only to use a few low-level functions and
 - ```’``` (single quotes - prevent from interpreting meta-characters in quoted sequence)
 - ```"``` (double quotes - prevent from interpreting meta-characters in quoted sequence except for $)
 - ```$?``` expands to the last exit status
+- ```|``` separate cmds by pipes; output of a cmd is connected to the input of the next cmd via a pipe
 - ```&&``` and ```||``` with parenthesis for priorities
 
 ### Builtins:
