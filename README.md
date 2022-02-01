@@ -51,7 +51,6 @@ The current version of minishell is developed and tested on macOS, but it should
 - GNU Make
 - GNU Readline library
 
-1. Download/Clone this repo
 ```
 git clone <repo-url> minishell
 ```
