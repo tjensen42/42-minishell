@@ -16,8 +16,8 @@ For everything else the subject allows only to use a few low-level functions and
 ### Basics:
 - History of previous entered commands
 - Search and launch the right executable (based on the PATH variable, using a relative or an absolute path)
-- ```’``` (single quote - prevent the shell from interpreting the meta-characters in the quoted sequence)
-- ```"``` (double quote - prevent the shell from interpreting the meta-characters in the quoted sequence except for $)
+- ```’``` (single quotes - prevent from interpreting meta-characters in quoted sequence)
+- ```"``` (double quotes - prevent from interpreting meta-characters in quoted sequence except for $)
 - Environment variables ($ followed by a sequence of characters) expand to their values
 - ```$?``` expands to the last exit status
 - ctrl-C, ctrl-D and ctrl-\ behave like in bash
