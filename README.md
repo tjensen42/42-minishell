@@ -14,7 +14,7 @@ For everything else the subject allows only to use a few low-level functions and
 
 ## How to use
 
-*The current version of minishell is developed and tested on macOS, but it should work on all UNIX/LINUX based systems as well.
+The current version of minishell is developed and tested on macOS, but it should work on all UNIX/LINUX based systems as well.
 
 <b>Requirements:</b>
 - GCC / CLANG Compiler
@@ -32,27 +32,8 @@ cd minishell && make release
 ./minishell
 ```
 
-## Activate debug mode
-
-enter minishell and export the DEBUG env:
-
-```
-export DEBUG=printer
-```
-
-For all next commands you will execute in the minishell you will see the different processing steps from the lexer and parser with syntax highlighting.
-
-## Change the command line prompt
-1. Enter the SHELL
-```
-./minishell
-```
-2. Export the PS1 env (also works in Bash and other similar shells)
-```
-export PS1='enter your prompt wish...$ '
-```
-
-## Install readline with (brew)[https://brew.sh/]
+## Dependencies
+### Install readline with [brew](https://brew.sh/)
 ```
 brew install readline
 ```
@@ -87,4 +68,24 @@ echo 'export C_INCLUDE_PATH="$HOME/.brew/include:$C_INCLUDE_PATH"' >> ~/.zshrc
 
 ```
 echo 'export LIBRARY_PATH="$HOME/.brew/lib:$LIBRARY_PATH"' >> ~/.zshrc
+```
+
+## Activate debug mode
+
+Enter minishell and export the DEBUG env:
+
+```
+export DEBUG=printer
+```
+
+For all next commands you will execute in the minishell you will see the different processing steps from the lexer and parser with syntax highlighting.
+
+## Change the command line prompt
+1. Enter the SHELL
+```
+./minishell
+```
+2. Export the PS1 env (also works in Bash and other similar shells)
+```
+export PS1='enter your prompt wish...$ '
 ```
