@@ -16,11 +16,11 @@ For everything else the subject allows only to use a few low-level functions and
 ### Basics:
 - History of previous entered commands
 - Search and launch the right executable (based on the PATH variable, using a relative or an absolute path)
+- Environment variables ($ followed by a sequence of characters) expand to their values
+- ctrl-C, ctrl-D and ctrl-\ behave like in bash
 - ```’``` (single quotes - prevent from interpreting meta-characters in quoted sequence)
 - ```"``` (double quotes - prevent from interpreting meta-characters in quoted sequence except for $)
-- Environment variables ($ followed by a sequence of characters) expand to their values
 - ```$?``` expands to the last exit status
-- ctrl-C, ctrl-D and ctrl-\ behave like in bash
 
 ### Builtins:
 - ```echo``` with option -n
@@ -33,27 +33,15 @@ For everything else the subject allows only to use a few low-level functions and
 
 ### Redirections:
 
-- ```[n]``` (optional) specifies the file descriptor, if not specified it is stdout or stdin
+```[n]``` (optional) specifies the file descriptor, if not specified it is stdout or stdin
 
-<b>Redirecting Input</b>
-```
-[n]< file
-```
+<b>Redirecting Input</b> ```[n]< file```
 
-<b>Here Documents</b>
-```
-[n]<< limiter
-```
+<b>Here Documents</b> ```[n]<< limiter```
 
-<b>Redirecting Output</b>
-```
-[n]< file
-```
+<b>Redirecting Output</b> ```[n]< file```
 
-<b>Appending Redirected Output</b>
-```
-[n]>> file
-```
+<b>Appending Redirected Output</b> ```[n]>> file```
 
 - ```&&``` and ```||``` with parenthesis for priorities
 - Wildcards * in the current working directory
