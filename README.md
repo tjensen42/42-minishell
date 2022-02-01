@@ -8,12 +8,52 @@ It is the first group project in the 42 core curriculum.
 For the project we were allowed to use GNU's readline library which handles the terminal interaction (history & input reading).
 For everything else the subject allows only to use a few low-level functions and a few POSIX system calls.
 
-<b>Allowed funcktions:</b>
-```readline, rl_clear_history, rl_on_new_line,rl_replace_line, rl_redisplay, add_history,printf, malloc, free, write, access, open, read,close, fork, wait, waitpid, wait3, wait4, signal,sigaction, sigemptyset, sigaddset, kill, exit,getcwd, chdir, stat, lstat, fstat, unlink, execve,dup, dup2, pipe, opendir, readdir, closedir,strerror, perror, isatty, ttyname, ttyslot, ioctl,getenv, tcsetattr, tcgetattr, tgetent, tgetflag,tgetnum, tgetstr, tgoto, tputs```
+<b>Allowed functions:</b>
+```readline, rl_clear_history, rl_on_new_line,rl_replace_line, rl_redisplay, add_history, printf, malloc, free, write, access, open, read,close, fork, wait, waitpid, wait3, wait4, signal, sigaction, sigemptyset, sigaddset, kill, exit, getcwd, chdir, stat, lstat, fstat, unlink, execve, dup, dup2, pipe, opendir, readdir, closedir, strerror, perror, isatty, ttyname, ttyslot, ioctl, getenv, tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs```
 
 ## Features
 
+### Basics:
 - History of previous entered commands
+- Search and launch the right executable (based on the PATH variable, using a relative or an absolute path)
+- ```’``` (single quote - prevent the shell from interpreting the meta-characters in the quoted sequence)
+- ```"``` (double quote - prevent the shell from interpreting the meta-characters in the quoted sequence except for $)
+- Environment variables ($ followed by a sequence of characters) expand to their values
+- ```$?``` expands to the last exit status
+- ctrl-C, ctrl-D and ctrl-\ behave like in bash
+
+### Builtins:
+- ```echo``` with option -n
+- ```cd``` (relative or absolute path, ```-``` for OLDPWD, without arg for HOME)
+- ```pwd``` without options
+- ```export``` without options
+- ```unset``` without options
+- ```env``` without options
+- ```exit [n]``` without options
+
+### Redirections:
+
+- ```[n]``` (optional) specifies the file descriptor, if not specified it is stdout or stdin
+
+<b>Redirecting Input</b>
+```
+[n]< file
+```
+
+<b>Here Documents</b>
+```
+[n]<< limiter
+```
+
+<b>Redirecting Output</b>
+```
+[n]< file
+```
+
+<b>Appending Redirected Output</b>
+```
+[n]>> file
+```
 
 - ```&&``` and ```||``` with parenthesis for priorities
 - Wildcards * in the current working directory
