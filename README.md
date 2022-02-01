@@ -32,7 +32,7 @@ For everything else the subject allows only to use a few low-level functions and
 - ```export``` without options
 - ```unset``` without options
 - ```env``` without options
-- ```exit [n]``` without options
+- ```exit [exit_status]``` without options
 
 ### Redirections:
 
