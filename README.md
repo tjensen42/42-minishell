@@ -37,10 +37,10 @@ For everything else the subject allows only to use a few low-level functions and
 
 ```[n]``` (optional) specifies the file descriptor, if not specified it is stdout or stdin
 
-- <b>Redirecting Input</b> ```[n]< file```
-- <b>Here Documents</b> ```[n]<< limiter```
-- <b>Redirecting Output</b> ```[n]< file```
-- <b>Appending Redirected Output</b> ```[n]>> file```
+- ```[n]< file``` Redirecting Input
+- ```[n]<< limiter``` Here Documents
+- ```[n]< file``` Redirecting Output
+- ```[n]>> file``` Appending Redirected Output
 
 ## How to use
 
