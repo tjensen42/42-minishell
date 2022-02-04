@@ -6,7 +6,7 @@
 /*   By: tjensen <tjensen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 15:31:07 by hepple            #+#    #+#             */
-/*   Updated: 2022/01/30 10:12:34 by tjensen          ###   ########.fr       */
+/*   Updated: 2022/02/04 15:44:05 by tjensen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	exec_pipeline(t_list *pipeline, t_list *l_free)
 		if (pid == -1)
 		{
 			exec_pipeline_pipes_close(pipes, -1, false);
-			print_error_errno(SHELL_NAME, NULL, NULL);
 			break ;
 		}
 		exec_pipeline_pipes_close(pipes, i, (iter->next == NULL));
@@ -53,10 +52,16 @@ static int	pipeline_pipe_fork(t_list *iter, int pipes[2][2],
 	int			pid;
 
 	if (iter->next && pipe(pipes[i % 2]) < 0)
+	{
+		print_error_errno(SHELL_NAME, "pipe error", NULL);
 		return (-1);
+	}
 	pid = fork();
 	if (pid == -1)
+	{
+		print_error_errno(SHELL_NAME, "fork error", NULL);
 		return (-1);
+	}
 	if (pid == 0)
 		pipeline_element(iter, pipes, i, l_free);
 	return (pid);
