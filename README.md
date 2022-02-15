@@ -81,6 +81,9 @@ echo 'export C_INCLUDE_PATH="/usr/local/opt/readline/include:$C_INCLUDE_PATH"' >
 ```
 echo 'export LIBRARY_PATH="/usr/local/opt/readline/lib:$LIBRARY_PATH"' >> ~/.zshrc
 ```
+```
+source ~/.zshrc
+```
 
 ### Install readline on 42 Macs
 
