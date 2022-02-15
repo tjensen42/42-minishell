@@ -76,7 +76,7 @@ Add the path to the lib
 
 Replace ~/.zshrc with ~/.bashrc if you use bash instead of zsh
 ```
-echo 'export 'C_INCLUDE_PATH="/usr/local/opt/readline/include:$C_INCLUDE_PATH"' >> ~/.zshrc
+echo 'export C_INCLUDE_PATH="/usr/local/opt/readline/include:$C_INCLUDE_PATH"' >> ~/.zshrc
 ```
 ```
 echo 'export LIBRARY_PATH="/usr/local/opt/readline/lib:$LIBRARY_PATH"' >> ~/.zshrc
