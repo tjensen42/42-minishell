@@ -40,7 +40,7 @@ For everything else the subject allows only to use a few low-level functions and
 
 - ```[n]< file``` Redirecting Input
 - ```[n]<< limiter``` Here Documents
-- ```[n]< file``` Redirecting Output
+- ```[n]> file``` Redirecting Output
 - ```[n]>> file``` Appending Redirected Output
 
 ## How to use
