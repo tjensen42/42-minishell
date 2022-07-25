@@ -53,7 +53,7 @@ The current version of minishell is developed and tested on macOS, but it should
 - GNU Readline library
 
 ```
-git clone git@github.com:tjensen42/42-minishell.git minishell
+git clone https://github.com/tjensen42/42-minishell.git minishell
 ```
 ```
 cd minishell && make release
