@@ -79,10 +79,11 @@ rm -rf "tmp_test folder"
 export tmp_test="/bin/echo 42"
 $tmp_test
 $tmp_test 42
-unset tmp_test
 export tmp_test="/bin/echo"
 $tmp_test 42 42
-unset tmp_test
+
+export tmp_test="/bin/echo 42"
+"tmp_test"
 
 ### VARIABLE SPLITTING ###
 export X="  A  B  "
