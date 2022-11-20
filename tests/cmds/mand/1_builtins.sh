@@ -95,7 +95,7 @@ cd /
 pwd
 
 pwd
-cd '/////' 2>/dev/null
+cd '/////'
 pwd
 
 pwd
@@ -107,7 +107,7 @@ cd "doesntexist"
 pwd
 
 pwd
-cd "doesntexist" 2>/dev/null
+cd "doesntexist"
 pwd
 
 pwd
@@ -115,7 +115,7 @@ cd ../../..
 pwd
 
 pwd
-cd "wtf" 2>/dev/null
+cd "wtf"
 pwd
 
 pwd
