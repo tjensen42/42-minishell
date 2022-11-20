@@ -76,9 +76,12 @@ cd ..
 rm -rf "tmp_test folder"
 
 ### SCMD IN VARIABLE ###
-export tmp_test="/bin/echo 1" && $tmp_test
+export tmp_test="/bin/echo 42"
+$tmp_test
+$tmp_test 42
 unset tmp_test
-export tmp_test="/bin/echo" && $tmp_test 1
+export tmp_test="/bin/echo"
+$tmp_test 42 42
 unset tmp_test
 
 ### VARIABLE SPLITTING ###
